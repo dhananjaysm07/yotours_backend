@@ -1,0 +1,78 @@
+import { Field, ID, ObjectType } from "@nestjs/graphql";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { DestinationStatus } from "../enums/destination-status.enum";
+import { Tour } from "src/tour/entities/tour.entity";
+import { ImageEntity } from "src/image/entities/image.entity";
+import { Tag } from "src/tag/entities/tag.entity";
+import { Attraction } from "src/attraction-ticket/entities/attraction.entity";
+import { Thing } from "src/thing/entities/thing.entity";
+
+@ObjectType()
+@Entity({ name: "Destination" })
+export class Destination {
+  @Field((type) => ID!)
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
+
+  @Field((type) => String)
+  @Column({ type: "varchar", nullable: false, unique: true })
+  destinationName: string;
+
+  @Field((type) => String)
+  @Column({ type: "varchar", nullable: true })
+  continent: string;
+
+  @Field((type) => String)
+  @Column({ type: "varchar", nullable: true })
+  country: string;
+
+  //bannerImage
+  @Field((type) => String)
+  @Column({ type: "text", nullable: false })
+  bannerImage: string;
+
+  //banner heading
+  @Field((type) => String)
+  @Column({ type: "varchar", nullable: false })
+  bannerHeading: string;
+
+  @Field((type) => String)
+  @Column({ type: "text", nullable: true })
+  description: string;
+
+  @Field((type) => Boolean)
+  @Column({ type: "boolean", default: false })
+  isPopular: boolean;
+
+  //images
+  @OneToMany(() => ImageEntity, (image) => image.destination, {
+    eager: true, // if you want to automatically load images with the tour
+    cascade: true, // if you want to automatically save images when saving a tour
+  })
+  @Field(() => [ImageEntity])
+  images: ImageEntity[];
+
+  @Field(() => Tag)
+  @ManyToOne(() => Tag, (tag) => tag.destinations, { eager: true })
+  tag: Tag;
+
+  @Field(() => [Tour])
+  @OneToMany(() => Tour, (tour) => tour.destination, { eager: true })
+  tours: Tour[];
+
+  @Field(() => [Attraction])
+  @OneToMany(() => Attraction, (attraction) => attraction.destination, {
+    eager: true,
+  })
+  attractions: Attraction[];
+
+  @Field(() => [Thing])
+  @OneToMany(() => Thing, (thing) => thing.destination, { eager: true })
+  things: Thing[];
+}

@@ -1,0 +1,450 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: ID!
+  username: String!
+  password: String!
+  email: String!
+  firstName: String!
+  lastName: String!
+  roles: [String!]!
+}
+
+type StatusResult {
+  message: String!
+  success: Boolean!
+  id: ID!
+}
+
+type AuthenticatedPayload {
+  access_token: String!
+}
+
+type Tour {
+  id: ID!
+  tourTitle: String!
+  price: String!
+  currency: String!
+  location: String!
+  tourHyperlink: String!
+  images: [ImageEntity!]!
+  tag: Tag!
+  destination: Destination!
+}
+
+type Thing {
+  id: ID!
+  thingTitle: String!
+  thingDescription: String!
+  thingHyperlink: String!
+  images: [ImageEntity!]!
+  tag: Tag!
+  destination: Destination!
+}
+
+type Destination {
+  id: ID!
+  destinationName: String!
+  continent: String!
+  country: String!
+  bannerImage: String!
+  bannerHeading: String!
+  description: String!
+  isPopular: Boolean!
+  images: [ImageEntity!]!
+  tag: Tag!
+  tours: [Tour!]!
+  attractions: [Attraction!]!
+  things: [Thing!]!
+}
+
+type ImageEntity {
+  id: ID!
+  imageUrl: String!
+}
+
+type Attraction {
+  id: ID!
+  attractionTitle: String!
+  price: String!
+  currency: String!
+  location: String!
+  attractionHyperlink: String!
+  images: [ImageEntity!]!
+  tag: Tag!
+  destination: Destination!
+}
+
+type Tag {
+  id: String!
+  name: String!
+  active: Boolean!
+}
+
+type Highlight {
+  id: ID!
+  title: String!
+  description: String!
+  url: String!
+}
+
+type Photo {
+  id: ID!
+  url: String!
+  packageGeneral: PackageGeneral!
+}
+
+type TextArray {
+  id: ID!
+  section: String!
+  values: [String!]!
+}
+
+type Itinerary {
+  id: ID!
+  dayNumber: Float!
+  description: String!
+  textArrays: [TextArray!]!
+}
+
+type Sight {
+  id: ID!
+}
+
+type HotelArray {
+  id: ID!
+  section: String!
+  values: [String!]!
+}
+
+type HotelDetails {
+  id: ID!
+  city: String!
+  hotelName: String!
+  rating: String!
+  days: String!
+  nights: String!
+  hotelArrays: [HotelArray!]
+}
+
+type InterCity {
+  id: ID!
+  fromCity: String!
+  toCity: String!
+  mode: String!
+  modeDescription: String!
+}
+
+type LocationDetails {
+  id: ID!
+  hotelDetails: [HotelDetails!]
+  intercityTransfers: [InterCity!]
+  sights: [Sight!]
+  airportTransfer: Boolean!
+  localTransfer: Boolean!
+}
+
+type TravelDate {
+  id: ID!
+  fromDate: String!
+  toDate: String!
+}
+
+type DateDetails {
+  id: ID!
+  bookingFromDate: String!
+  bookingToDate: String!
+  travelDates: [TravelDate!]!
+}
+
+type PackageGeneral {
+  id: ID!
+  title: String!
+  type: String!
+  dates: [DateDetails!]!
+  summary: String!
+  currentStep: Float!
+  destinations: [Destination!]!
+  highlights: [Highlight!]!
+  photos: [Photo!]!
+  itineraries: [Itinerary!]!
+  locationDetails: LocationDetails!
+}
+
+type Content {
+  id: ID!
+  heroHeading: String!
+  heroSubheading: String!
+  heroImage: String!
+  footerLinks: [String!]!
+  footerLogo: String!
+  socialLinks: [String!]!
+}
+
+type Query {
+  findAllUser: [User!]!
+  findUserById(id: String!): User!
+  getPackageGeneral(id: String!): PackageGeneral!
+  getPackageGeneralWithItineraries(id: String!): PackageGeneral!
+  getPackageGeneralWithLocationDetails(id: String!): PackageGeneral!
+  getPackageWithItinerary(packageId: ID!): PackageGeneral!
+  getDestinations: [Destination!]!
+  getDestination(id: String!): Destination
+  getAllTags: [Tag!]!
+  getTagById(id: String!): Tag!
+  getTours: [Tour!]!
+  findOne(id: String!): Tour!
+  getAttractions: [Attraction!]!
+  getAttraction(id: String!): Attraction!
+  getContent: Content!
+  getThings: [Thing!]!
+  getThing(id: String!): Thing!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): StatusResult!
+  removeUser(id: String!): StatusResult!
+  register(registerInput: RegisterInput!): AuthenticatedPayload!
+  login(loginInput: LoginInput!): AuthenticatedPayload!
+  createPackageGeneral(createPackageGeneralInput: CreatePackageGeneralInput!): PackageGeneral!
+  deletePackageGeneral(id: String!): String!
+  addItineraryToPackage(packageId: ID!, itineraryInput: [ItineraryInput!]!): [String!]!
+  addLocationDetailsToPackage(packageId: ID!, locationDetailsInput: LocationDetailsInput!): LocationDetails!
+  createDestination(createDestinationInput: CreateDestinationInput!): Destination!
+  updateDestination(updateDestinationInput: UpdateDestinationInput!): Destination!
+  deleteDestination(destinationId: String!): Boolean!
+  createTag(createTagDto: CreateTagDTO!): Tag!
+  updateTag(updateTagDto: UpdateTagDTO!): Tag!
+  removeTag(tagId: String!): StatusResult!
+  activateTag(tagId: String!): Tag!
+  deactivateTag(tagId: String!): Tag!
+  createTour(createTourInput: CreateTourInput!): Tour!
+  updateTour(updateTourInput: UpdateTourInput!): Tour!
+  createAttraction(createAttractionInput: CreateAttractionInput!): Attraction!
+  updateAttraction(updateAttractionInput: UpdateAttractionInput!): Attraction!
+  createContent(createContentInput: CreateContentInput!): Content!
+  updateContent(updateContentInput: UpdateContentInput!): Content!
+  createThing(createThingInput: CreateThingInput!): Thing!
+  updateThing(updateThingInput: UpdateThingInput!): Thing!
+}
+
+input CreateUserInput {
+  username: String!
+  password: String!
+  email: String!
+  firstName: String!
+  lastName: String!
+}
+
+input UpdateUserInput {
+  password: String!
+  firstName: String!
+  lastName: String!
+}
+
+input RegisterInput {
+  username: String!
+  password: String!
+  email: String!
+  firstName: String!
+  lastName: String!
+}
+
+input LoginInput {
+  username: String!
+  password: String!
+}
+
+input CreatePackageGeneralInput {
+  title: String!
+  type: String!
+  summary: String!
+  currentStep: Float!
+  destinationIds: [ID!]!
+  highlights: [HighlightInput!]!
+  photos: [PhotoInput!]!
+}
+
+input HighlightInput {
+  title: String!
+  description: String!
+  url: String!
+}
+
+input PhotoInput {
+  url: String!
+}
+
+input ItineraryInput {
+  id: String
+  dayNumber: Float!
+  description: String!
+  textArrays: [TextArrayInput!]!
+}
+
+input TextArrayInput {
+  id: String
+  section: String!
+  values: [String!]!
+}
+
+input LocationDetailsInput {
+  hotelDetails: [HotelDetailsInput!]
+  intercityTransfers: [IntercityTransfersInput!]
+  sights: [SightseeingInput!]
+  airportTransfer: Boolean
+  localTransfer: Boolean
+}
+
+input HotelDetailsInput {
+  id: String
+  city: String!
+  hotelName: String!
+  rating: String!
+  days: String!
+  nights: String!
+  hotelArrays: [HotelArrayInput!]!
+}
+
+input HotelArrayInput {
+  id: String
+  section: String!
+  values: [String!]!
+}
+
+input IntercityTransfersInput {
+  id: String
+  fromCity: String!
+  toCity: String!
+  mode: String!
+  modeDescription: String!
+}
+
+input SightseeingInput {
+  id: String
+  name: String!
+  description: String!
+  city: String!
+}
+
+input CreateDestinationInput {
+  destinationName: String!
+  continent: String
+  country: String
+  bannerImage: String!
+  bannerHeading: String!
+  description: String
+  isPopular: Boolean! = false
+  imageUrls: [String!]
+  tagId: String
+}
+
+input UpdateDestinationInput {
+  destinationName: String
+  continent: String
+  country: String
+  bannerImage: String
+  bannerHeading: String
+  description: String
+  isPopular: Boolean = false
+  imageUrls: [String!]
+  tagId: String
+  destinationId: ID!
+}
+
+input CreateTagDTO {
+  name: String!
+  active: Boolean! = true
+}
+
+input UpdateTagDTO {
+  name: String
+  active: Boolean = true
+  id: ID!
+}
+
+input CreateTourInput {
+  tourTitle: String!
+  price: String!
+  location: String!
+  currency: String!
+  tourHyperlink: String!
+  imageUrls: [String!]
+  destinationId: ID!
+  tagId: ID
+}
+
+input UpdateTourInput {
+  tourTitle: String
+  price: String
+  location: String
+  currency: String
+  tourHyperlink: String
+  imageUrls: [String!]
+  destinationId: ID
+  tagId: ID
+  tourId: ID!
+}
+
+input CreateAttractionInput {
+  attractionTitle: String!
+  price: String!
+  currency: String!
+  location: String!
+  attractionHyperlink: String!
+  imageUrls: [String!]
+  destinationId: ID!
+  tagId: ID
+}
+
+input UpdateAttractionInput {
+  attractionTitle: String
+  price: String
+  currency: String
+  location: String
+  attractionHyperlink: String
+  imageUrls: [String!]
+  destinationId: ID
+  tagId: ID
+  attractionId: ID!
+}
+
+input CreateContentInput {
+  heroHeading: String!
+  heroSubheading: String!
+  heroImage: String!
+  footerLinks: [String!]!
+  footerLogo: String!
+  socialLinks: [String!]!
+}
+
+input UpdateContentInput {
+  id: ID!
+  heroHeading: String
+  heroImage: String
+  footerLinks: [String!]
+  footerLogo: String
+  socialLinks: [String!]
+}
+
+input CreateThingInput {
+  thingTitle: String!
+  thingDescription: String!
+  thingHyperlink: String
+  imageUrls: [String!]
+  tagId: ID
+  destinationId: ID!
+}
+
+input UpdateThingInput {
+  thingTitle: String
+  thingDescription: String
+  thingHyperlink: String
+  imageUrls: [String!]
+  tagId: ID
+  destinationId: ID
+  thingId: ID!
+}
