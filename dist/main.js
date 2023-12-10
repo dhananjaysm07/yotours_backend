@@ -14,7 +14,9 @@ async function bootstrap() {
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
         credentials: true,
     });
-    await app.listen(process.env.PORT);
+    await app.listen(process.env.PORT, "0.0.0.0", () => {
+        console.log(`Server is running on port ${process.env.PORT}`);
+    });
 }
 bootstrap();
 //# sourceMappingURL=main.js.map
