@@ -12,6 +12,6 @@ async function bootstrap() {
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed HTTP methods
     credentials: true, // This allows session cookies to be sent back and forth
   });
-  await app.listen(process.env.PORT);
+  await app.listen(process.env.PORT, "0.0.0.0");
 }
 bootstrap();
