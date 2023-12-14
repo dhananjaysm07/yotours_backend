@@ -10,7 +10,7 @@ async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.useGlobalPipes(new common_1.ValidationPipe());
     app.enableCors({
-        origin: ["http://localhost:5173", "http://localhost:3001"],
+        origin: "*",
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
         credentials: true,
     });

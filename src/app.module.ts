@@ -21,8 +21,8 @@ import { ThingModule } from "./thing/thing.module";
       context: ({ req }) => ({ req }),
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), "src/schema.gql"),
-      playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      playground: true,
+      // plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
     UserModule,
     AuthModule,
@@ -32,7 +32,7 @@ import { ThingModule } from "./thing/thing.module";
     TourModule,
     AttractionModule,
     ContentModule,
-    ThingModule
+    ThingModule,
   ],
   providers: [],
 })

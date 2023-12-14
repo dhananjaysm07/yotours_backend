@@ -13,6 +13,10 @@ export class UpdateContentInput {
 
   @Field({ nullable: true })
   @IsString()
+  heroSubheading?: string;
+
+  @Field({ nullable: true })
+  @IsString()
   heroImage?: string;
 
   @Field(() => [String], { nullable: true })
