@@ -26,4 +26,8 @@ export class CreateContentInput {
   @Field(() => [String])
   @IsString({ each: true })
   socialLinks: string[];
+
+  @Field()
+  @IsString()
+  tnc: string;
 }

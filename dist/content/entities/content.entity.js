@@ -36,7 +36,7 @@ __decorate([
 ], Content.prototype, "heroImage", void 0);
 __decorate([
     (0, graphql_1.Field)(() => [String]),
-    (0, typeorm_1.Column)('simple-array'),
+    (0, typeorm_1.Column)("simple-array"),
     __metadata("design:type", Array)
 ], Content.prototype, "footerLinks", void 0);
 __decorate([
@@ -46,9 +46,14 @@ __decorate([
 ], Content.prototype, "footerLogo", void 0);
 __decorate([
     (0, graphql_1.Field)(() => [String]),
-    (0, typeorm_1.Column)('simple-array'),
+    (0, typeorm_1.Column)("simple-array"),
     __metadata("design:type", Array)
 ], Content.prototype, "socialLinks", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], Content.prototype, "tnc", void 0);
 Content = __decorate([
     (0, graphql_1.ObjectType)(),
     (0, typeorm_1.Entity)({ name: "Content" })

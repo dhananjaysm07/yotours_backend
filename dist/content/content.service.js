@@ -31,9 +31,6 @@ let ContentService = class ContentService {
                 .createQueryBuilder("content")
                 .orderBy("content.id", "ASC")
                 .getOne();
-            if (existingContent) {
-                throw new Error("Content already exists");
-            }
             const newContent = this.contentRepository.create(createContentInput);
             const savedContent = await queryRunner.manager.save(content_entity_1.Content, newContent);
             await queryRunner.commitTransaction();
@@ -62,7 +59,9 @@ let ContentService = class ContentService {
         await queryRunner.connect();
         await queryRunner.startTransaction();
         try {
-            const existingContent = await this.contentRepository.findOne({ where: { id: updateContentInput.id } });
+            const existingContent = await this.contentRepository.findOne({
+                where: { id: updateContentInput.id },
+            });
             if (!existingContent) {
                 throw new common_1.NotFoundException("Content not found");
             }

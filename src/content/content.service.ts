@@ -22,14 +22,14 @@ export class ContentService {
     try {
       // Find the existing content
       const existingContent = await this.contentRepository
-      .createQueryBuilder("content")
-      .orderBy("content.id", "ASC") // assuming 'id' is your primary key
-      .getOne();
+        .createQueryBuilder("content")
+        .orderBy("content.id", "ASC") // assuming 'id' is your primary key
+        .getOne();
 
       // If it exists, throw an error
-      if (existingContent) {
-        throw new Error("Content already exists");
-      }
+      // if (existingContent) {
+      //   throw new Error("Content already exists");
+      // }
 
       const newContent = this.contentRepository.create(createContentInput);
       const savedContent = await queryRunner.manager.save(Content, newContent);
@@ -65,9 +65,11 @@ export class ContentService {
     await queryRunner.connect();
     await queryRunner.startTransaction();
 
-    try { 
+    try {
       // Find the existing content
-      const existingContent = await this.contentRepository.findOne({where:{id: updateContentInput.id}});
+      const existingContent = await this.contentRepository.findOne({
+        where: { id: updateContentInput.id },
+      });
 
       // If it doesn't exist, throw an error
       if (!existingContent) {

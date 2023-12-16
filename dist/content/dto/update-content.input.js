@@ -28,6 +28,11 @@ __decorate([
     (0, graphql_1.Field)({ nullable: true }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
+], UpdateContentInput.prototype, "heroSubheading", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
 ], UpdateContentInput.prototype, "heroImage", void 0);
 __decorate([
     (0, graphql_1.Field)(() => [String], { nullable: true }),
@@ -44,6 +49,11 @@ __decorate([
     (0, class_validator_1.IsString)({ each: true }),
     __metadata("design:type", Array)
 ], UpdateContentInput.prototype, "socialLinks", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UpdateContentInput.prototype, "tnc", void 0);
 UpdateContentInput = __decorate([
     (0, graphql_1.InputType)()
 ], UpdateContentInput);

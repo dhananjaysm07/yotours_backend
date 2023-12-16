@@ -6,4 +6,5 @@ export declare class Content {
     footerLinks: string[];
     footerLogo: string;
     socialLinks: string[];
+    tnc: string;
 }

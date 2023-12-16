@@ -5,4 +5,5 @@ export declare class CreateContentInput {
     footerLinks: string[];
     footerLogo: string;
     socialLinks: string[];
+    tnc: string;
 }

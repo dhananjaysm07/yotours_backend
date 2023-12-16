@@ -7,7 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
-const default_1 = require("@apollo/server/plugin/landingPage/default");
 const apollo_1 = require("@nestjs/apollo");
 const common_1 = require("@nestjs/common");
 const graphql_1 = require("@nestjs/graphql");
@@ -32,8 +31,7 @@ AppModule = __decorate([
                 context: ({ req }) => ({ req }),
                 driver: apollo_1.ApolloDriver,
                 autoSchemaFile: (0, path_1.join)(process.cwd(), "src/schema.gql"),
-                playground: false,
-                plugins: [(0, default_1.ApolloServerPluginLandingPageLocalDefault)()],
+                playground: true,
             }),
             user_module_1.UserModule,
             auth_module_1.AuthModule,
@@ -43,7 +41,7 @@ AppModule = __decorate([
             tour_module_1.TourModule,
             attraction_module_1.AttractionModule,
             content_module_1.ContentModule,
-            thing_module_1.ThingModule
+            thing_module_1.ThingModule,
         ],
         providers: [],
     })

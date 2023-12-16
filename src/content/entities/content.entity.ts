@@ -1,6 +1,5 @@
-
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { ObjectType, Field, ID } from "@nestjs/graphql";
 
 @ObjectType()
 @Entity({ name: "Content" })
@@ -22,7 +21,7 @@ export class Content {
   heroImage: string;
 
   @Field(() => [String])
-  @Column('simple-array')
+  @Column("simple-array")
   footerLinks: string[];
 
   @Field()
@@ -30,6 +29,10 @@ export class Content {
   footerLogo: string;
 
   @Field(() => [String])
-  @Column('simple-array')
+  @Column("simple-array")
   socialLinks: string[];
+
+  @Field()
+  @Column({ nullable: true })
+  tnc: string;
 }

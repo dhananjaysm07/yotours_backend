@@ -181,6 +181,7 @@ type Content {
   footerLinks: [String!]!
   footerLogo: String!
   socialLinks: [String!]!
+  tnc: String!
 }
 
 type Query {
@@ -419,15 +420,18 @@ input CreateContentInput {
   footerLinks: [String!]!
   footerLogo: String!
   socialLinks: [String!]!
+  tnc: String!
 }
 
 input UpdateContentInput {
   id: ID!
   heroHeading: String
+  heroSubheading: String
   heroImage: String
   footerLinks: [String!]
   footerLogo: String
   socialLinks: [String!]
+  tnc: String!
 }
 
 input CreateThingInput {

@@ -30,4 +30,8 @@ export class UpdateContentInput {
   @Field(() => [String], { nullable: true })
   @IsString({ each: true })
   socialLinks?: string[];
+
+  @Field()
+  @IsString()
+  tnc?: string;
 }
