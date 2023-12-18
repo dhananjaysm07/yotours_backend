@@ -33,7 +33,7 @@ __decorate([
     __metadata("design:type", String)
 ], Tour.prototype, "price", void 0);
 __decorate([
-    (0, graphql_1.Field)((type) => String),
+    (0, graphql_1.Field)((type) => String, { nullable: true }),
     (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
     __metadata("design:type", String)
 ], Tour.prototype, "currency", void 0);
@@ -43,10 +43,15 @@ __decorate([
     __metadata("design:type", String)
 ], Tour.prototype, "location", void 0);
 __decorate([
-    (0, graphql_1.Field)((type) => String),
+    (0, graphql_1.Field)((type) => String, { nullable: true }),
     (0, typeorm_1.Column)({ type: "text", nullable: true }),
     __metadata("design:type", String)
 ], Tour.prototype, "tourHyperlink", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => String, { nullable: true }),
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    __metadata("design:type", String)
+], Tour.prototype, "tourBokunId", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => image_entity_1.ImageEntity, (image) => image.tour, {
         eager: true,

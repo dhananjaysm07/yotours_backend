@@ -26,7 +26,7 @@ __decorate([
 ], CreateTourInput.prototype, "price", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateTourInput.prototype, "location", void 0);
 __decorate([
@@ -36,9 +36,14 @@ __decorate([
 ], CreateTourInput.prototype, "currency", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateTourInput.prototype, "tourHyperlink", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateTourInput.prototype, "tourBokunId", void 0);
 __decorate([
     (0, graphql_1.Field)(() => [String], { nullable: true }),
     (0, class_validator_1.IsOptional)(),

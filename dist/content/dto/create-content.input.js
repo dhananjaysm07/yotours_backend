@@ -49,6 +49,11 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateContentInput.prototype, "tnc", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateContentInput.prototype, "bokunChannelId", void 0);
 CreateContentInput = __decorate([
     (0, graphql_1.InputType)()
 ], CreateContentInput);

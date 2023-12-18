@@ -30,4 +30,9 @@ export class CreateContentInput {
   @Field()
   @IsString()
   tnc: string;
+
+  @Field()
+  @IsString()
+  bokunChannelId: string;
+  
 }

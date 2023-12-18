@@ -7,4 +7,5 @@ export declare class Content {
     footerLogo: string;
     socialLinks: string[];
     tnc: string;
+    bokunChannelId: string;
 }

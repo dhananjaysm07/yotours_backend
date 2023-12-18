@@ -25,7 +25,7 @@ export class Tour {
   @Column({ type: "varchar", nullable: false })
   price: string;
   //add currency field
-  @Field((type) => String)
+  @Field((type) => String, { nullable: true })
   @Column({ type: "varchar", nullable: true })
   currency: string;
 
@@ -33,9 +33,13 @@ export class Tour {
   @Column({ type: "varchar", nullable: false })
   location: string;
   
-  @Field((type) => String)
+  @Field((type) => String, { nullable: true })
   @Column({ type: "text", nullable: true })
   tourHyperlink: string;
+
+  @Field((type) => String, { nullable: true })
+  @Column({ type: "varchar", nullable: true })
+  tourBokunId: string;
 
   @OneToMany(() => ImageEntity, (image) => image.tour, {
     eager: true, // if you want to automatically load images with the tour

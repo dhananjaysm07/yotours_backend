@@ -4,6 +4,7 @@ export declare class CreateTourInput {
     location: string;
     currency: string;
     tourHyperlink: string;
+    tourBokunId: string;
     imageUrls?: string[];
     destinationId: string;
     tagId?: string;

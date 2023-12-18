@@ -46,7 +46,7 @@ __decorate([
     __metadata("design:type", Array)
 ], Thing.prototype, "images", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => tag_entity_1.Tag),
+    (0, graphql_1.Field)(() => tag_entity_1.Tag, { nullable: true }),
     (0, typeorm_1.ManyToOne)(() => tag_entity_1.Tag, (tag) => tag.things),
     __metadata("design:type", tag_entity_1.Tag)
 ], Thing.prototype, "tag", void 0);

@@ -8,6 +8,7 @@ export declare class Tour {
     currency: string;
     location: string;
     tourHyperlink: string;
+    tourBokunId: string;
     images: ImageEntity[];
     tag: Tag;
     destination: Destination;

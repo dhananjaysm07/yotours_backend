@@ -36,7 +36,7 @@ export class Thing {
   @Field(() => [ImageEntity])
   images: ImageEntity[];
 
-  @Field(()=> Tag)
+  @Field(()=> Tag, { nullable: true })
   @ManyToOne(() => Tag, (tag) => tag.things)
   tag: Tag;
 

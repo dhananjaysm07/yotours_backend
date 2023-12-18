@@ -20,7 +20,7 @@ export class CreateTourInput {
   price: string;
 
   @Field(() => String)
-  @IsNotEmpty()
+@IsString()
   location: string;
 
   //add currency field
@@ -29,8 +29,12 @@ export class CreateTourInput {
   currency: string;
 
   @Field(() => String)
-  @IsNotEmpty()
+  @IsString()
   tourHyperlink: string;
+
+  @Field(() => String)
+  @IsString()
+  tourBokunId: string;
 
   @Field(() => [String], { nullable: true })
   @IsOptional()

@@ -35,4 +35,8 @@ export class Content {
   @Field()
   @Column({ nullable: true })
   tnc: string;
+
+  @Field()
+  @Column({ nullable: true })
+  bokunChannelId: string;
 }

@@ -34,4 +34,8 @@ export class UpdateContentInput {
   @Field()
   @IsString()
   tnc?: string;
+
+  @Field()
+  @IsString()
+  bokunChannelId: string;
 }

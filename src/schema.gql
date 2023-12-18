@@ -26,9 +26,10 @@ type Tour {
   id: ID!
   tourTitle: String!
   price: String!
-  currency: String!
+  currency: String
   location: String!
-  tourHyperlink: String!
+  tourHyperlink: String
+  tourBokunId: String
   images: [ImageEntity!]!
   tag: Tag!
   destination: Destination!
@@ -40,7 +41,7 @@ type Thing {
   thingDescription: String!
   thingHyperlink: String!
   images: [ImageEntity!]!
-  tag: Tag!
+  tag: Tag
   destination: Destination!
 }
 
@@ -182,6 +183,7 @@ type Content {
   footerLogo: String!
   socialLinks: [String!]!
   tnc: String!
+  bokunChannelId: String!
 }
 
 type Query {
@@ -373,6 +375,7 @@ input CreateTourInput {
   location: String!
   currency: String!
   tourHyperlink: String!
+  tourBokunId: String!
   imageUrls: [String!]
   destinationId: ID!
   tagId: ID
@@ -384,6 +387,7 @@ input UpdateTourInput {
   location: String
   currency: String
   tourHyperlink: String
+  tourBokunId: String
   imageUrls: [String!]
   destinationId: ID
   tagId: ID
@@ -421,6 +425,7 @@ input CreateContentInput {
   footerLogo: String!
   socialLinks: [String!]!
   tnc: String!
+  bokunChannelId: String!
 }
 
 input UpdateContentInput {
@@ -432,6 +437,7 @@ input UpdateContentInput {
   footerLogo: String
   socialLinks: [String!]
   tnc: String!
+  bokunChannelId: String!
 }
 
 input CreateThingInput {
