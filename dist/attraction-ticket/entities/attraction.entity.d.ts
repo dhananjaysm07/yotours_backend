@@ -7,6 +7,7 @@ export declare class Attraction {
     price: string;
     currency: string;
     location: string;
+    attractionBokunId: string;
     attractionHyperlink: string;
     images: ImageEntity[];
     tag: Tag;

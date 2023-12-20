@@ -37,5 +37,9 @@ export class UpdateContentInput {
 
   @Field()
   @IsString()
+  privacy?: string;
+
+  @Field()
+  @IsString()
   bokunChannelId: string;
 }

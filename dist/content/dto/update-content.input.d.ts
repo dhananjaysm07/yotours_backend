@@ -7,5 +7,6 @@ export declare class UpdateContentInput {
     footerLogo?: string;
     socialLinks?: string[];
     tnc?: string;
+    privacy?: string;
     bokunChannelId: string;
 }

@@ -33,6 +33,10 @@ export class CreateContentInput {
 
   @Field()
   @IsString()
+  privacy: string;
+
+  @Field()
+  @IsString()
   bokunChannelId: string;
   
 }

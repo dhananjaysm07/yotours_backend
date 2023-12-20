@@ -6,25 +6,25 @@ import { IsArray, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validat
 @InputType()
 export class CreateAttractionInput {
   @Field(() => String)
-  @IsNotEmpty()
+  @IsString()
   attractionTitle: string;
 
   @Field(() => String)
-  @IsNotEmpty()
+  @IsString()
   price: string;
 
   //add currency field
   //add currency field
   @Field(() => String)
-  @IsNotEmpty()
+  @IsString()
   currency: string;
   
   @Field(() => String)
-  @IsNotEmpty()
+  @IsString()
   location: string;
 
   @Field(() => String)
-  @IsNotEmpty()
+  @IsString()
   attractionHyperlink: string;
 
   @Field(() => [String], { nullable: true })
@@ -39,4 +39,9 @@ export class CreateAttractionInput {
 
   @Field(() => ID, { nullable: true })
   tagId?: string;
+
+  @Field(() => String)
+  @IsString()
+  attractionBokunId: string;
+
 }

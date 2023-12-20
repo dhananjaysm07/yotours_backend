@@ -43,6 +43,11 @@ __decorate([
     __metadata("design:type", String)
 ], Attraction.prototype, "location", void 0);
 __decorate([
+    (0, graphql_1.Field)((type) => String, { nullable: true }),
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    __metadata("design:type", String)
+], Attraction.prototype, "attractionBokunId", void 0);
+__decorate([
     (0, graphql_1.Field)((type) => String),
     (0, typeorm_1.Column)({ type: "text", nullable: true }),
     __metadata("design:type", String)

@@ -6,5 +6,6 @@ export declare class CreateContentInput {
     footerLogo: string;
     socialLinks: string[];
     tnc: string;
+    privacy: string;
     bokunChannelId: string;
 }

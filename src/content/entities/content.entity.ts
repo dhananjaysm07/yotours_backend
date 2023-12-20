@@ -38,5 +38,9 @@ export class Content {
 
   @Field()
   @Column({ nullable: true })
+  privacy: string;
+  
+  @Field()
+  @Column({ nullable: true })
   bokunChannelId: string;
 }

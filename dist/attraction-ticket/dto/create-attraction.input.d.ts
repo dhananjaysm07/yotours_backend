@@ -7,4 +7,5 @@ export declare class CreateAttractionInput {
     imageUrls?: string[];
     destinationId: string;
     tagId?: string;
+    attractionBokunId: string;
 }

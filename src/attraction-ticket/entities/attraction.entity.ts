@@ -34,6 +34,10 @@ export class Attraction {
   @Column({ type: "varchar", nullable: false })
   location: string;
 
+  @Field((type) => String, { nullable: true })
+  @Column({ type: "varchar", nullable: true })
+  attractionBokunId: string;
+  
   @Field((type) => String)
   @Column({ type: "text", nullable: true })
   attractionHyperlink: string;
@@ -52,4 +56,6 @@ export class Attraction {
   @ManyToOne(() => Destination, (destination) => destination.attractions, {})
   @Field(() => Destination)
   destination: Destination;
+
+  
 }

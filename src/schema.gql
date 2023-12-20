@@ -72,6 +72,7 @@ type Attraction {
   price: String!
   currency: String!
   location: String!
+  attractionBokunId: String
   attractionHyperlink: String!
   images: [ImageEntity!]!
   tag: Tag!
@@ -183,6 +184,7 @@ type Content {
   footerLogo: String!
   socialLinks: [String!]!
   tnc: String!
+  privacy: String!
   bokunChannelId: String!
 }
 
@@ -403,6 +405,7 @@ input CreateAttractionInput {
   imageUrls: [String!]
   destinationId: ID!
   tagId: ID
+  attractionBokunId: String!
 }
 
 input UpdateAttractionInput {
@@ -414,6 +417,7 @@ input UpdateAttractionInput {
   imageUrls: [String!]
   destinationId: ID
   tagId: ID
+  attractionBokunId: String
   attractionId: ID!
 }
 
@@ -425,6 +429,7 @@ input CreateContentInput {
   footerLogo: String!
   socialLinks: [String!]!
   tnc: String!
+  privacy: String!
   bokunChannelId: String!
 }
 
@@ -437,6 +442,7 @@ input UpdateContentInput {
   footerLogo: String
   socialLinks: [String!]
   tnc: String!
+  privacy: String!
   bokunChannelId: String!
 }
 

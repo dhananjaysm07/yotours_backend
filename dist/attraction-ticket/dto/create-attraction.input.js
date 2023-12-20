@@ -16,27 +16,27 @@ let CreateAttractionInput = class CreateAttractionInput {
 };
 __decorate([
     (0, graphql_1.Field)(() => String),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateAttractionInput.prototype, "attractionTitle", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateAttractionInput.prototype, "price", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateAttractionInput.prototype, "currency", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateAttractionInput.prototype, "location", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateAttractionInput.prototype, "attractionHyperlink", void 0);
 __decorate([
@@ -55,6 +55,11 @@ __decorate([
     (0, graphql_1.Field)(() => graphql_1.ID, { nullable: true }),
     __metadata("design:type", String)
 ], CreateAttractionInput.prototype, "tagId", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateAttractionInput.prototype, "attractionBokunId", void 0);
 CreateAttractionInput = __decorate([
     (0, graphql_1.InputType)()
 ], CreateAttractionInput);
