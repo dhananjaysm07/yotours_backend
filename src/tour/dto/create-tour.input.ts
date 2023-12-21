@@ -16,16 +16,14 @@ export class CreateTourInput {
   tourTitle: string;
 
   @Field(() => String)
-  @IsNotEmpty()
   price: string;
 
   @Field(() => String)
-@IsString()
+  @IsString()
   location: string;
 
   //add currency field
   @Field(() => String)
-  @IsNotEmpty()
   currency: string;
 
   @Field(() => String)

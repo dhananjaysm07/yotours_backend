@@ -24,22 +24,22 @@ __decorate([
 ], Attraction.prototype, "id", void 0);
 __decorate([
     (0, graphql_1.Field)((type) => String),
-    (0, typeorm_1.Column)({ type: "varchar", nullable: false }),
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
     __metadata("design:type", String)
 ], Attraction.prototype, "attractionTitle", void 0);
 __decorate([
-    (0, graphql_1.Field)((type) => String),
-    (0, typeorm_1.Column)({ type: "varchar", nullable: false }),
+    (0, graphql_1.Field)((type) => String, { nullable: true }),
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
     __metadata("design:type", String)
 ], Attraction.prototype, "price", void 0);
 __decorate([
-    (0, graphql_1.Field)((type) => String),
+    (0, graphql_1.Field)((type) => String, { nullable: true }),
     (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
     __metadata("design:type", String)
 ], Attraction.prototype, "currency", void 0);
 __decorate([
     (0, graphql_1.Field)((type) => String),
-    (0, typeorm_1.Column)({ type: "varchar", nullable: false }),
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
     __metadata("design:type", String)
 ], Attraction.prototype, "location", void 0);
 __decorate([
@@ -48,7 +48,7 @@ __decorate([
     __metadata("design:type", String)
 ], Attraction.prototype, "attractionBokunId", void 0);
 __decorate([
-    (0, graphql_1.Field)((type) => String),
+    (0, graphql_1.Field)((type) => String, { nullable: true }),
     (0, typeorm_1.Column)({ type: "text", nullable: true }),
     __metadata("design:type", String)
 ], Attraction.prototype, "attractionHyperlink", void 0);
@@ -61,8 +61,8 @@ __decorate([
     __metadata("design:type", Array)
 ], Attraction.prototype, "images", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => tag_entity_1.Tag),
-    (0, typeorm_1.ManyToOne)(() => tag_entity_1.Tag, (tag) => tag.attractions),
+    (0, graphql_1.Field)(() => tag_entity_1.Tag, { nullable: true }),
+    (0, typeorm_1.ManyToOne)(() => tag_entity_1.Tag, (tag) => tag.attractions, { eager: true, nullable: true }),
     __metadata("design:type", tag_entity_1.Tag)
 ], Attraction.prototype, "tag", void 0);
 __decorate([

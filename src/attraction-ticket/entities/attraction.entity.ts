@@ -18,27 +18,27 @@ export class Attraction {
   id: string;
 
   @Field((type) => String)
-  @Column({ type: "varchar", nullable: false })
+  @Column({ type: "varchar", nullable: true })
   attractionTitle: string;
 
-  @Field((type) => String)
-  @Column({ type: "varchar", nullable: false })
+  @Field((type) => String, { nullable: true })
+  @Column({ type: "varchar", nullable: true })
   price: string;
 
   //addinig currency field
-  @Field((type) => String)
+  @Field((type) => String, { nullable: true })
   @Column({ type: "varchar", nullable: true })
   currency: string;
   
   @Field((type) => String)
-  @Column({ type: "varchar", nullable: false })
+  @Column({ type: "varchar", nullable: true })
   location: string;
 
   @Field((type) => String, { nullable: true })
   @Column({ type: "varchar", nullable: true })
   attractionBokunId: string;
-  
-  @Field((type) => String)
+
+  @Field((type) => String, { nullable: true })
   @Column({ type: "text", nullable: true })
   attractionHyperlink: string;
 
@@ -49,8 +49,8 @@ export class Attraction {
   @Field(() => [ImageEntity])
   images: ImageEntity[];
 
-  @Field(()=> Tag)
-  @ManyToOne(() => Tag, (tag) => tag.attractions)
+  @Field(()=> Tag, {nullable: true})
+  @ManyToOne(() => Tag, (tag) => tag.attractions, { eager: true , nullable: true })
   tag: Tag;
 
   @ManyToOne(() => Destination, (destination) => destination.attractions, {})

@@ -22,31 +22,26 @@ __decorate([
 ], CreateDestinationInput.prototype, "destinationName", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
-    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateDestinationInput.prototype, "continent", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
-    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateDestinationInput.prototype, "country", void 0);
 __decorate([
     (0, graphql_1.Field)(),
-    (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateDestinationInput.prototype, "bannerImage", void 0);
 __decorate([
     (0, graphql_1.Field)(),
-    (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateDestinationInput.prototype, "bannerHeading", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
-    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateDestinationInput.prototype, "description", void 0);
@@ -57,15 +52,13 @@ __decorate([
 ], CreateDestinationInput.prototype, "isPopular", void 0);
 __decorate([
     (0, graphql_1.Field)(() => [String], { nullable: true }),
-    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.IsString)({ each: true }),
     __metadata("design:type", Array)
 ], CreateDestinationInput.prototype, "imageUrls", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsUUID)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateDestinationInput.prototype, "tagId", void 0);
 CreateDestinationInput = __decorate([

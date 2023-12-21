@@ -21,7 +21,6 @@ __decorate([
 ], CreateTourInput.prototype, "tourTitle", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String),
-    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateTourInput.prototype, "price", void 0);
 __decorate([
@@ -31,7 +30,6 @@ __decorate([
 ], CreateTourInput.prototype, "location", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String),
-    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateTourInput.prototype, "currency", void 0);
 __decorate([

@@ -24,12 +24,12 @@ __decorate([
 ], Tour.prototype, "id", void 0);
 __decorate([
     (0, graphql_1.Field)((type) => String),
-    (0, typeorm_1.Column)({ type: "varchar", nullable: false }),
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
     __metadata("design:type", String)
 ], Tour.prototype, "tourTitle", void 0);
 __decorate([
-    (0, graphql_1.Field)((type) => String),
-    (0, typeorm_1.Column)({ type: "varchar", nullable: false }),
+    (0, graphql_1.Field)((type) => String, { nullable: true }),
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
     __metadata("design:type", String)
 ], Tour.prototype, "price", void 0);
 __decorate([
@@ -38,8 +38,8 @@ __decorate([
     __metadata("design:type", String)
 ], Tour.prototype, "currency", void 0);
 __decorate([
-    (0, graphql_1.Field)((type) => String),
-    (0, typeorm_1.Column)({ type: "varchar", nullable: false }),
+    (0, graphql_1.Field)((type) => String, { nullable: true }),
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
     __metadata("design:type", String)
 ], Tour.prototype, "location", void 0);
 __decorate([
@@ -61,8 +61,8 @@ __decorate([
     __metadata("design:type", Array)
 ], Tour.prototype, "images", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => tag_entity_1.Tag),
-    (0, typeorm_1.ManyToOne)(() => tag_entity_1.Tag, (tag) => tag.tours, { eager: true }),
+    (0, graphql_1.Field)(() => tag_entity_1.Tag, { nullable: true }),
+    (0, typeorm_1.ManyToOne)(() => tag_entity_1.Tag, (tag) => tag.tours, { eager: true, nullable: true }),
     __metadata("design:type", tag_entity_1.Tag)
 ], Tour.prototype, "tag", void 0);
 __decorate([

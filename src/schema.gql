@@ -25,13 +25,13 @@ type AuthenticatedPayload {
 type Tour {
   id: ID!
   tourTitle: String!
-  price: String!
+  price: String
   currency: String
-  location: String!
+  location: String
   tourHyperlink: String
   tourBokunId: String
   images: [ImageEntity!]!
-  tag: Tag!
+  tag: Tag
   destination: Destination!
 }
 
@@ -55,7 +55,7 @@ type Destination {
   description: String!
   isPopular: Boolean!
   images: [ImageEntity!]!
-  tag: Tag!
+  tag: Tag
   tours: [Tour!]!
   attractions: [Attraction!]!
   things: [Thing!]!
@@ -69,13 +69,13 @@ type ImageEntity {
 type Attraction {
   id: ID!
   attractionTitle: String!
-  price: String!
-  currency: String!
+  price: String
+  currency: String
   location: String!
   attractionBokunId: String
-  attractionHyperlink: String!
+  attractionHyperlink: String
   images: [ImageEntity!]!
-  tag: Tag!
+  tag: Tag
   destination: Destination!
 }
 

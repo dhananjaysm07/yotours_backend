@@ -18,19 +18,19 @@ export class Tour {
   id: string;
 
   @Field((type) => String)
-  @Column({ type: "varchar", nullable: false })
+  @Column({ type: "varchar", nullable: true })
   tourTitle: string;
 
-  @Field((type) => String)
-  @Column({ type: "varchar", nullable: false })
+  @Field((type) => String, { nullable: true })
+  @Column({ type: "varchar", nullable: true })
   price: string;
   //add currency field
   @Field((type) => String, { nullable: true })
   @Column({ type: "varchar", nullable: true })
   currency: string;
 
-  @Field((type) => String)
-  @Column({ type: "varchar", nullable: false })
+  @Field((type) => String, { nullable: true })
+  @Column({ type: "varchar", nullable: true })
   location: string;
   
   @Field((type) => String, { nullable: true })
@@ -48,8 +48,8 @@ export class Tour {
   @Field(() => [ImageEntity])
   images: ImageEntity[];
 
-  @Field(() => Tag)
-  @ManyToOne(() => Tag, (tag) => tag.tours, { eager: true })
+  @Field(() => Tag, { nullable: true })
+  @ManyToOne(() => Tag, (tag) => tag.tours, { eager: true , nullable: true })
   tag: Tag;
 
   @ManyToOne(() => Destination, (destination) => destination.tours, {})

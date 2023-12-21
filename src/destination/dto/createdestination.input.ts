@@ -10,42 +10,35 @@ export class CreateDestinationInput {
   destinationName: string;
 
   @Field({ nullable: true })
-  @IsOptional()
   @IsString()
-  continent?: string;
+  continent: string;
 
   @Field({ nullable: true })
-  @IsOptional()
   @IsString()
-  country?: string;
+  country: string;
   
   @Field()
-  @IsNotEmpty()
   @IsString()
   bannerImage: string;
 
   @Field()
-  @IsNotEmpty()
   @IsString()
   bannerHeading: string;
 
   @Field({ nullable: true })
-  @IsOptional()
   @IsString()
-  description?: string;
+  description: string;
 
   @Field({ defaultValue: false })
   @IsBoolean()
   isPopular: boolean;
 
   @Field(() => [String], { nullable: true })
-  @IsOptional()
   @IsArray()
   @IsString({ each: true })
-  imageUrls?: string[];
+  imageUrls: string[];
 
   @Field({ nullable: true })
-  @IsOptional()
-  @IsUUID()
-  tagId?: string;
+  @IsString()
+  tagId: string;
 }

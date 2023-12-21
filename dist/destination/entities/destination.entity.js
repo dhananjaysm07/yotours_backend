@@ -41,12 +41,12 @@ __decorate([
 ], Destination.prototype, "country", void 0);
 __decorate([
     (0, graphql_1.Field)((type) => String),
-    (0, typeorm_1.Column)({ type: "text", nullable: false }),
+    (0, typeorm_1.Column)({ type: "text", nullable: true }),
     __metadata("design:type", String)
 ], Destination.prototype, "bannerImage", void 0);
 __decorate([
     (0, graphql_1.Field)((type) => String),
-    (0, typeorm_1.Column)({ type: "varchar", nullable: false }),
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
     __metadata("design:type", String)
 ], Destination.prototype, "bannerHeading", void 0);
 __decorate([
@@ -63,13 +63,14 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => image_entity_1.ImageEntity, (image) => image.destination, {
         eager: true,
         cascade: true,
+        nullable: true
     }),
     (0, graphql_1.Field)(() => [image_entity_1.ImageEntity]),
     __metadata("design:type", Array)
 ], Destination.prototype, "images", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => tag_entity_1.Tag),
-    (0, typeorm_1.ManyToOne)(() => tag_entity_1.Tag, (tag) => tag.destinations, { eager: true }),
+    (0, graphql_1.Field)(() => tag_entity_1.Tag, { nullable: true }),
+    (0, typeorm_1.ManyToOne)(() => tag_entity_1.Tag, (tag) => tag.destinations, { eager: true, nullable: true }),
     __metadata("design:type", tag_entity_1.Tag)
 ], Destination.prototype, "tag", void 0);
 __decorate([
