@@ -401,7 +401,7 @@ input CreateAttractionInput {
   price: String!
   currency: String!
   location: String!
-  attractionHyperlink: String!
+  attractionHyperlink: String
   imageUrls: [String!]
   destinationId: ID!
   tagId: ID

@@ -35,7 +35,7 @@ __decorate([
     __metadata("design:type", String)
 ], CreateAttractionInput.prototype, "location", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => String),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateAttractionInput.prototype, "attractionHyperlink", void 0);

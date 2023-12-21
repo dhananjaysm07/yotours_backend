@@ -1,7 +1,13 @@
 // src/tour/dto/create-tour.input.ts
 
-import { Field, InputType, Float, ID } from '@nestjs/graphql';
-import { IsArray, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
+import { Field, InputType, Float, ID } from "@nestjs/graphql";
+import {
+  IsArray,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from "class-validator";
 
 @InputType()
 export class CreateAttractionInput {
@@ -18,12 +24,12 @@ export class CreateAttractionInput {
   @Field(() => String)
   @IsString()
   currency: string;
-  
+
   @Field(() => String)
   @IsString()
   location: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @IsString()
   attractionHyperlink: string;
 
@@ -43,5 +49,4 @@ export class CreateAttractionInput {
   @Field(() => String)
   @IsString()
   attractionBokunId: string;
-
 }
