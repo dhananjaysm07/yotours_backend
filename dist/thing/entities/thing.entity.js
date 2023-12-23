@@ -33,7 +33,7 @@ __decorate([
     __metadata("design:type", String)
 ], Thing.prototype, "thingDescription", void 0);
 __decorate([
-    (0, graphql_1.Field)((type) => String),
+    (0, graphql_1.Field)((type) => String, { nullable: true }),
     (0, typeorm_1.Column)({ type: "text", nullable: true }),
     __metadata("design:type", String)
 ], Thing.prototype, "thingHyperlink", void 0);

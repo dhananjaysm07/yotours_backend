@@ -39,7 +39,7 @@ type Thing {
   id: ID!
   thingTitle: String!
   thingDescription: String!
-  thingHyperlink: String!
+  thingHyperlink: String
   images: [ImageEntity!]!
   tag: Tag
   destination: Destination!
@@ -228,6 +228,7 @@ type Mutation {
   deactivateTag(tagId: String!): Tag!
   createTour(createTourInput: CreateTourInput!): Tour!
   updateTour(updateTourInput: UpdateTourInput!): Tour!
+  deleteTour(tourId: String!): Tour!
   createAttraction(createAttractionInput: CreateAttractionInput!): Attraction!
   updateAttraction(updateAttractionInput: UpdateAttractionInput!): Attraction!
   createContent(createContentInput: CreateContentInput!): Content!

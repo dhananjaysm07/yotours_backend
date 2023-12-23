@@ -27,11 +27,11 @@ export class TourResolver {
     return this.tourService.findOne(id);
   }
 
-  // @Mutation()
-  // async deleteTour(
-  //   @Args("tourId")
-  //   tourId: string
-  // ): Promise<void> {
-  //   return this.tourService.deleteTour(tourId);
-  // }
+  @Mutation(() => Tour)
+  async deleteTour(
+    @Args("tourId")
+    tourId: string
+  ): Promise<void> {
+    return this.tourService.deleteTour(tourId);
+  }
 }

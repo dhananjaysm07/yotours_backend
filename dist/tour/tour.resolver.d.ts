@@ -9,4 +9,5 @@ export declare class TourResolver {
     updateTour(updateTourInput: UpdateTourInput): Promise<Tour>;
     getTours(): Promise<Tour[]>;
     findOne(id: string): Promise<Tour>;
+    deleteTour(tourId: string): Promise<void>;
 }

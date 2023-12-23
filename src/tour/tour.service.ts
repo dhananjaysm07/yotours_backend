@@ -165,6 +165,8 @@ export class TourService {
       console.log("Query runner released");
     }
   }
+
+
   async deleteTour(tourId: string): Promise<void> {
     const queryRunner = this.dataSource.createQueryRunner();
 

@@ -25,7 +25,7 @@ export class Thing {
   @Column({ type: "varchar", nullable: false })
   thingDescription: string;
 
-  @Field((type) => String)
+  @Field((type) => String, { nullable: true })
   @Column({ type: "text", nullable: true })
   thingHyperlink: string;
 
