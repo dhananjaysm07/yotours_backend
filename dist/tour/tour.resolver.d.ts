@@ -9,7 +9,11 @@ export declare class TourResolver {
     updateTour(updateTourInput: UpdateTourInput): Promise<Tour>;
     getTours(): Promise<Tour[]>;
     findOne(id: string): Promise<Tour>;
+<<<<<<< HEAD
     deleteTour(id: string): Promise<{
         id: string;
     }>;
+=======
+    deleteTour(tourId: string): Promise<void>;
+>>>>>>> ca3fba801ca43c074152333bf974066930a7f626
 }
