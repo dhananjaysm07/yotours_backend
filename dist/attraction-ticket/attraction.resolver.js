@@ -34,6 +34,9 @@ let AttractionResolver = class AttractionResolver {
     async updateAttraction(updateAttractionInput) {
         return this.attractionService.updateAttraction(updateAttractionInput);
     }
+    deleteAttraction(id) {
+        return this.attractionService.deleteAttraction(id);
+    }
 };
 __decorate([
     (0, graphql_1.Mutation)(() => attraction_entity_1.Attraction),
@@ -62,6 +65,13 @@ __decorate([
     __metadata("design:paramtypes", [update_attraction_input_1.UpdateAttractionInput]),
     __metadata("design:returntype", Promise)
 ], AttractionResolver.prototype, "updateAttraction", null);
+__decorate([
+    (0, graphql_1.Mutation)(() => attraction_entity_1.Attraction),
+    __param(0, (0, graphql_1.Args)("id")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], AttractionResolver.prototype, "deleteAttraction", null);
 AttractionResolver = __decorate([
     (0, graphql_1.Resolver)(() => attraction_entity_1.Attraction),
     __metadata("design:paramtypes", [attraction_service_1.AttractionService])

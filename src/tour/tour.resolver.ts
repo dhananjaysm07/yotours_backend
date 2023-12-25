@@ -3,7 +3,10 @@ import { CreateTourInput } from "./dto/create-tour.input";
 import { Tour } from "./entities/tour.entity";
 import { TourService } from "./tour.service";
 import { UpdateTourInput } from "./dto/update-tour.input";
-
+type deleteReturnType = {
+  id: string;
+  message: string;
+};
 @Resolver(() => Tour)
 export class TourResolver {
   constructor(private readonly tourService: TourService) {}
@@ -25,6 +28,11 @@ export class TourResolver {
   @Query(() => Tour)
   findOne(@Args("id") id: string) {
     return this.tourService.findOne(id);
+  }
+
+  @Mutation(() => Tour)
+  deleteTour(@Args("id") id: string) {
+    return this.tourService.deleteTour(id);
   }
 
   // @Mutation()

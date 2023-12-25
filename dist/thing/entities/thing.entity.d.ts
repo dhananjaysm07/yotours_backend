@@ -9,4 +9,5 @@ export declare class Thing {
     images: ImageEntity[];
     tag: Tag;
     destination: Destination;
+    active: boolean;
 }

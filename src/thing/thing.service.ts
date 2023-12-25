@@ -14,9 +14,7 @@ export class ThingService {
     private thingRepository: Repository<Thing>
   ) {}
 
-  async createThing(
-    createThingInput: CreateThingInput
-  ): Promise<Thing> {
+  async createThing(createThingInput: CreateThingInput): Promise<Thing> {
     const queryRunner = this.dataSource.createQueryRunner();
 
     await queryRunner.connect();
@@ -25,10 +23,7 @@ export class ThingService {
     try {
       console.log("Transaction started");
 
-      const newThing = queryRunner.manager.create(
-        Thing,
-        createThingInput
-      );
+      const newThing = queryRunner.manager.create(Thing, createThingInput);
 
       // Handle tags if a tagId is provided
       if (createThingInput.tagId) {
@@ -56,10 +51,7 @@ export class ThingService {
         newThing.destination = destination;
       }
 
-      if (
-        createThingInput.imageUrls &&
-        createThingInput.imageUrls.length > 0
-      ) {
+      if (createThingInput.imageUrls && createThingInput.imageUrls.length > 0) {
         const imageEntities = createThingInput.imageUrls.map((url) => {
           return queryRunner.manager.create(ImageEntity, {
             imageUrl: url,
@@ -74,10 +66,7 @@ export class ThingService {
         newThing.images = savedImageEntities;
       }
 
-      const savedThing = await queryRunner.manager.save(
-        Thing,
-        newThing
-      );
+      const savedThing = await queryRunner.manager.save(Thing, newThing);
 
       console.log("Thing created");
 
@@ -98,10 +87,7 @@ export class ThingService {
     }
   }
 
-
-  async updateThing(
-    updateThingInput: UpdateThingInput
-  ): Promise<Thing> {
+  async updateThing(updateThingInput: UpdateThingInput): Promise<Thing> {
     const queryRunner = this.dataSource.createQueryRunner();
 
     await queryRunner.connect();
@@ -110,17 +96,11 @@ export class ThingService {
     try {
       console.log("Transaction started");
 
-      const thingToUpdate =await queryRunner.manager.findOneOrFail(
-        Thing,
-        {where:{id:updateThingInput.thingId}}
-      );
+      const thingToUpdate = await queryRunner.manager.findOneOrFail(Thing, {
+        where: { id: updateThingInput.thingId },
+      });
       // Update fields on the tour entity
-      queryRunner.manager.merge(
-        Thing,
-        thingToUpdate,
-        updateThingInput
-      );
-
+      queryRunner.manager.merge(Thing, thingToUpdate, updateThingInput);
 
       // Handle tags if a tagId is provided
       if (updateThingInput.tagId) {
@@ -148,10 +128,7 @@ export class ThingService {
         thingToUpdate.destination = destination;
       }
 
-      if (
-        updateThingInput.imageUrls &&
-        updateThingInput.imageUrls.length > 0
-      ) {
+      if (updateThingInput.imageUrls && updateThingInput.imageUrls.length > 0) {
         const newImageEntities = updateThingInput.imageUrls.map((url) => {
           return queryRunner.manager.create(ImageEntity, {
             imageUrl: url,
@@ -169,10 +146,7 @@ export class ThingService {
         thingToUpdate.images = savedImageEntities;
       }
 
-      const savedThing = await queryRunner.manager.save(
-        Thing,
-        thingToUpdate
-      );
+      const savedThing = await queryRunner.manager.save(Thing, thingToUpdate);
 
       console.log("Thing Updated");
 
@@ -193,7 +167,8 @@ export class ThingService {
     }
   }
 
-  async deleteThing(thingId: string): Promise<void> {
+  async deleteThing(id: string): Promise<{ id: string }> {
+    // console.log("function called", id);
     const queryRunner = this.dataSource.createQueryRunner();
 
     await queryRunner.connect();
@@ -201,12 +176,14 @@ export class ThingService {
 
     try {
       const thingToDelete = await queryRunner.manager.findOneOrFail(Thing, {
-        where: { id: thingId },
+        where: { id },
       });
-
-      await queryRunner.manager.remove(Thing, thingToDelete);
+      thingToDelete.active = false;
+      await queryRunner.manager.save(Thing, thingToDelete);
+      // await queryRunner.manager.remove(Tour, tourToDelete);
 
       await queryRunner.commitTransaction();
+      return { id: thingToDelete.id };
     } catch (error) {
       await queryRunner.rollbackTransaction();
       throw error;
@@ -217,16 +194,16 @@ export class ThingService {
 
   findAll(): Promise<Thing[]> {
     return this.thingRepository.find({
+      where: { active: true },
       relations: ["images", "destination", "tag"],
     });
   }
 
   findOne(id: string): Promise<Thing> {
     return this.thingRepository.findOne({
-      where: { id: id },
+      where: { id: id, active: true },
 
       relations: ["images", "destination", "tag"],
     });
   }
-
 }

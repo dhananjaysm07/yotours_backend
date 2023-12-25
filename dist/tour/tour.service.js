@@ -123,16 +123,19 @@ let TourService = class TourService {
             console.log("Query runner released");
         }
     }
-    async deleteTour(tourId) {
+    async deleteTour(id) {
+        console.log("function called", id);
         const queryRunner = this.dataSource.createQueryRunner();
         await queryRunner.connect();
         await queryRunner.startTransaction();
         try {
             const tourToDelete = await queryRunner.manager.findOneOrFail(tour_entity_1.Tour, {
-                where: { id: tourId },
+                where: { id },
             });
-            await queryRunner.manager.remove(tour_entity_1.Tour, tourToDelete);
+            tourToDelete.active = false;
+            await queryRunner.manager.save(tour_entity_1.Tour, tourToDelete);
             await queryRunner.commitTransaction();
+            return { id: tourToDelete.id };
         }
         catch (error) {
             await queryRunner.rollbackTransaction();
@@ -144,12 +147,13 @@ let TourService = class TourService {
     }
     findAll() {
         return this.tourRepository.find({
+            where: { active: true },
             relations: ["images", "destination", "tag"],
         });
     }
     findOne(id) {
         return this.tourRepository.findOne({
-            where: { id: id },
+            where: { id: id, active: true },
             relations: ["images", "destination", "tag"],
         });
     }

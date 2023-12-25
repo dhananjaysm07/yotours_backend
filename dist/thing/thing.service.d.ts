@@ -8,7 +8,9 @@ export declare class ThingService {
     constructor(dataSource: DataSource, thingRepository: Repository<Thing>);
     createThing(createThingInput: CreateThingInput): Promise<Thing>;
     updateThing(updateThingInput: UpdateThingInput): Promise<Thing>;
-    deleteThing(thingId: string): Promise<void>;
+    deleteThing(id: string): Promise<{
+        id: string;
+    }>;
     findAll(): Promise<Thing[]>;
     findOne(id: string): Promise<Thing>;
 }

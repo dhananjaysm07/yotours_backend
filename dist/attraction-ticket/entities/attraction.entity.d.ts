@@ -12,4 +12,5 @@ export declare class Attraction {
     images: ImageEntity[];
     tag: Tag;
     destination: Destination;
+    active: boolean;
 }

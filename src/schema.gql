@@ -30,6 +30,7 @@ type Tour {
   location: String
   tourHyperlink: String
   tourBokunId: String
+  active: Boolean!
   images: [ImageEntity!]!
   tag: Tag
   destination: Destination!
@@ -43,6 +44,7 @@ type Thing {
   images: [ImageEntity!]!
   tag: Tag
   destination: Destination!
+  active: Boolean!
 }
 
 type Destination {
@@ -77,6 +79,7 @@ type Attraction {
   images: [ImageEntity!]!
   tag: Tag
   destination: Destination!
+  active: Boolean!
 }
 
 type Tag {
@@ -228,12 +231,15 @@ type Mutation {
   deactivateTag(tagId: String!): Tag!
   createTour(createTourInput: CreateTourInput!): Tour!
   updateTour(updateTourInput: UpdateTourInput!): Tour!
+  deleteTour(id: String!): Tour!
   createAttraction(createAttractionInput: CreateAttractionInput!): Attraction!
   updateAttraction(updateAttractionInput: UpdateAttractionInput!): Attraction!
+  deleteAttraction(id: String!): Attraction!
   createContent(createContentInput: CreateContentInput!): Content!
   updateContent(updateContentInput: UpdateContentInput!): Content!
   createThing(createThingInput: CreateThingInput!): Thing!
   updateThing(updateThingInput: UpdateThingInput!): Thing!
+  deleteThing(id: String!): Thing!
 }
 
 input CreateUserInput {

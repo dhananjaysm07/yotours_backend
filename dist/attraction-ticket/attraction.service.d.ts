@@ -8,7 +8,9 @@ export declare class AttractionService {
     constructor(dataSource: DataSource, attractionRepository: Repository<Attraction>);
     createAttraction(createAttractionInput: CreateAttractionInput): Promise<Attraction>;
     updateAttraction(updateAttractionInput: UpdateAttractionInput): Promise<Attraction>;
-    deleteAttraction(attractionId: string): Promise<void>;
+    deleteAttraction(id: string): Promise<{
+        id: string;
+    }>;
     findAll(): Promise<Attraction[]>;
     findOne(id: string): Promise<Attraction>;
 }

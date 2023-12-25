@@ -53,6 +53,11 @@ __decorate([
     __metadata("design:type", String)
 ], Tour.prototype, "tourBokunId", void 0);
 __decorate([
+    (0, graphql_1.Field)((type) => Boolean),
+    (0, typeorm_1.Column)({ type: "boolean", default: true }),
+    __metadata("design:type", Boolean)
+], Tour.prototype, "active", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)(() => image_entity_1.ImageEntity, (image) => image.tour, {
         eager: true,
         cascade: true,

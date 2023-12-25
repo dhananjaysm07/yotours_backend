@@ -9,4 +9,7 @@ export declare class AttractionResolver {
     getAttractions(): Promise<Attraction[]>;
     getAttraction(id: string): Promise<Attraction>;
     updateAttraction(updateAttractionInput: UpdateAttractionInput): Promise<Attraction>;
+    deleteAttraction(id: string): Promise<{
+        id: string;
+    }>;
 }

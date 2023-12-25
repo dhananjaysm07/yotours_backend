@@ -33,6 +33,10 @@ export class AttractionResolver {
   ): Promise<Attraction> {
     return this.attractionService.updateAttraction(updateAttractionInput);
   }
+  @Mutation(() => Attraction)
+  deleteAttraction(@Args("id") id: string) {
+    return this.attractionService.deleteAttraction(id);
+  }
 
   // @Mutation()
   // async deleteAttraction(

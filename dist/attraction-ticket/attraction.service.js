@@ -125,16 +125,18 @@ let AttractionService = class AttractionService {
             console.log("Query runner released");
         }
     }
-    async deleteAttraction(attractionId) {
+    async deleteAttraction(id) {
         const queryRunner = this.dataSource.createQueryRunner();
         await queryRunner.connect();
         await queryRunner.startTransaction();
         try {
-            const attractionToDelete = await queryRunner.manager.findOneOrFail(attraction_entity_1.Attraction, {
-                where: { id: attractionId },
+            const tourToDelete = await queryRunner.manager.findOneOrFail(attraction_entity_1.Attraction, {
+                where: { id },
             });
-            await queryRunner.manager.remove(attraction_entity_1.Attraction, attractionToDelete);
+            tourToDelete.active = false;
+            await queryRunner.manager.save(attraction_entity_1.Attraction, tourToDelete);
             await queryRunner.commitTransaction();
+            return { id: tourToDelete.id };
         }
         catch (error) {
             await queryRunner.rollbackTransaction();
@@ -146,12 +148,13 @@ let AttractionService = class AttractionService {
     }
     findAll() {
         return this.attractionRepository.find({
+            where: { active: true },
             relations: ["images", "destination", "tag"],
         });
     }
     findOne(id) {
         return this.attractionRepository.findOne({
-            where: { id: id },
+            where: { id: id, active: true },
             relations: ["images", "destination", "tag"],
         });
     }

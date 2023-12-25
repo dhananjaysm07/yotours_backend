@@ -32,7 +32,7 @@ export class Tour {
   @Field((type) => String, { nullable: true })
   @Column({ type: "varchar", nullable: true })
   location: string;
-  
+
   @Field((type) => String, { nullable: true })
   @Column({ type: "text", nullable: true })
   tourHyperlink: string;
@@ -40,6 +40,10 @@ export class Tour {
   @Field((type) => String, { nullable: true })
   @Column({ type: "varchar", nullable: true })
   tourBokunId: string;
+
+  @Field((type) => Boolean)
+  @Column({ type: "boolean", default: true })
+  active: boolean;
 
   @OneToMany(() => ImageEntity, (image) => image.tour, {
     eager: true, // if you want to automatically load images with the tour
@@ -49,7 +53,7 @@ export class Tour {
   images: ImageEntity[];
 
   @Field(() => Tag, { nullable: true })
-  @ManyToOne(() => Tag, (tag) => tag.tours, { eager: true , nullable: true })
+  @ManyToOne(() => Tag, (tag) => tag.tours, { eager: true, nullable: true })
   tag: Tag;
 
   @ManyToOne(() => Destination, (destination) => destination.tours, {})

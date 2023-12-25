@@ -165,7 +165,8 @@ export class TourService {
       console.log("Query runner released");
     }
   }
-  async deleteTour(tourId: string): Promise<void> {
+  async deleteTour(id: string): Promise<{ id: string }> {
+    console.log("function called", id);
     const queryRunner = this.dataSource.createQueryRunner();
 
     await queryRunner.connect();
@@ -173,12 +174,14 @@ export class TourService {
 
     try {
       const tourToDelete = await queryRunner.manager.findOneOrFail(Tour, {
-        where: { id: tourId },
+        where: { id },
       });
-
-      await queryRunner.manager.remove(Tour, tourToDelete);
+      tourToDelete.active = false;
+      await queryRunner.manager.save(Tour, tourToDelete);
+      // await queryRunner.manager.remove(Tour, tourToDelete);
 
       await queryRunner.commitTransaction();
+      return { id: tourToDelete.id };
     } catch (error) {
       await queryRunner.rollbackTransaction();
       throw error;
@@ -189,13 +192,14 @@ export class TourService {
 
   findAll(): Promise<Tour[]> {
     return this.tourRepository.find({
+      where: { active: true },
       relations: ["images", "destination", "tag"],
     });
   }
 
   findOne(id: string): Promise<Tour> {
     return this.tourRepository.findOne({
-      where: { id: id },
+      where: { id: id, active: true },
 
       relations: ["images", "destination", "tag"],
     });

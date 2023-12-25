@@ -8,7 +8,9 @@ export declare class TourService {
     constructor(dataSource: DataSource, tourRepository: Repository<Tour>);
     createTour(createTourInput: CreateTourInput): Promise<Tour>;
     updateTour(updateTourInput: UpdateTourInput): Promise<Tour>;
-    deleteTour(tourId: string): Promise<void>;
+    deleteTour(id: string): Promise<{
+        id: string;
+    }>;
     findAll(): Promise<Tour[]>;
     findOne(id: string): Promise<Tour>;
 }

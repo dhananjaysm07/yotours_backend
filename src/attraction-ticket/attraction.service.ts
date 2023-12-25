@@ -108,9 +108,9 @@ export class AttractionService {
     try {
       console.log("Transaction started");
 
-      const attractionToUpdate =await queryRunner.manager.findOneOrFail(
+      const attractionToUpdate = await queryRunner.manager.findOneOrFail(
         Attraction,
-        {where:{id:updateAttractionInput.attractionId}}
+        { where: { id: updateAttractionInput.attractionId } }
       );
       // Update fields on the tour entity
       queryRunner.manager.merge(
@@ -118,7 +118,6 @@ export class AttractionService {
         attractionToUpdate,
         updateAttractionInput
       );
-
 
       // Handle tags if a tagId is provided
       if (updateAttractionInput.tagId) {
@@ -191,20 +190,23 @@ export class AttractionService {
     }
   }
 
-  async deleteAttraction(attractionId: string): Promise<void> {
+  async deleteAttraction(id: string): Promise<{ id: string }> {
+    // console.log("function called", id);
     const queryRunner = this.dataSource.createQueryRunner();
 
     await queryRunner.connect();
     await queryRunner.startTransaction();
 
     try {
-      const attractionToDelete = await queryRunner.manager.findOneOrFail(Attraction, {
-        where: { id: attractionId },
+      const tourToDelete = await queryRunner.manager.findOneOrFail(Attraction, {
+        where: { id },
       });
-
-      await queryRunner.manager.remove(Attraction, attractionToDelete);
+      tourToDelete.active = false;
+      await queryRunner.manager.save(Attraction, tourToDelete);
+      // await queryRunner.manager.remove(Tour, tourToDelete);
 
       await queryRunner.commitTransaction();
+      return { id: tourToDelete.id };
     } catch (error) {
       await queryRunner.rollbackTransaction();
       throw error;
@@ -215,16 +217,15 @@ export class AttractionService {
 
   findAll(): Promise<Attraction[]> {
     return this.attractionRepository.find({
+      where: { active: true },
       relations: ["images", "destination", "tag"],
     });
   }
 
   findOne(id: string): Promise<Attraction> {
     return this.attractionRepository.findOne({
-      where: { id: id },
-
+      where: { id: id, active: true },
       relations: ["images", "destination", "tag"],
     });
   }
-
 }

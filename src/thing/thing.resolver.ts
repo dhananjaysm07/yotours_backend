@@ -9,9 +9,7 @@ export class ThingResolver {
   constructor(private readonly thingService: ThingService) {}
 
   @Mutation(() => Thing)
-  createThing(
-    @Args("createThingInput") createThingInput: CreateThingInput
-  ) {
+  createThing(@Args("createThingInput") createThingInput: CreateThingInput) {
     return this.thingService.createThing(createThingInput);
   }
 
@@ -33,6 +31,10 @@ export class ThingResolver {
     return this.thingService.updateThing(updateThingInput);
   }
 
+  @Mutation(() => Thing)
+  deleteThing(@Args("id") id: string) {
+    return this.thingService.deleteThing(id);
+  }
   // @Mutation()
   // async deleteAttraction(
   //   @Args("attractionId")

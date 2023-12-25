@@ -9,6 +9,7 @@ export declare class Tour {
     location: string;
     tourHyperlink: string;
     tourBokunId: string;
+    active: boolean;
     images: ImageEntity[];
     tag: Tag;
     destination: Destination;

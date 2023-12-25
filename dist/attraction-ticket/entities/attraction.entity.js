@@ -62,7 +62,10 @@ __decorate([
 ], Attraction.prototype, "images", void 0);
 __decorate([
     (0, graphql_1.Field)(() => tag_entity_1.Tag, { nullable: true }),
-    (0, typeorm_1.ManyToOne)(() => tag_entity_1.Tag, (tag) => tag.attractions, { eager: true, nullable: true }),
+    (0, typeorm_1.ManyToOne)(() => tag_entity_1.Tag, (tag) => tag.attractions, {
+        eager: true,
+        nullable: true,
+    }),
     __metadata("design:type", tag_entity_1.Tag)
 ], Attraction.prototype, "tag", void 0);
 __decorate([
@@ -70,6 +73,11 @@ __decorate([
     (0, graphql_1.Field)(() => destination_entity_1.Destination),
     __metadata("design:type", destination_entity_1.Destination)
 ], Attraction.prototype, "destination", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => Boolean),
+    (0, typeorm_1.Column)({ type: "boolean", default: true }),
+    __metadata("design:type", Boolean)
+], Attraction.prototype, "active", void 0);
 Attraction = __decorate([
     (0, graphql_1.ObjectType)(),
     (0, typeorm_1.Entity)({ name: "Attraction" })

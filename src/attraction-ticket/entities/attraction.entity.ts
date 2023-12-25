@@ -29,7 +29,7 @@ export class Attraction {
   @Field((type) => String, { nullable: true })
   @Column({ type: "varchar", nullable: true })
   currency: string;
-  
+
   @Field((type) => String)
   @Column({ type: "varchar", nullable: true })
   location: string;
@@ -49,13 +49,18 @@ export class Attraction {
   @Field(() => [ImageEntity])
   images: ImageEntity[];
 
-  @Field(()=> Tag, {nullable: true})
-  @ManyToOne(() => Tag, (tag) => tag.attractions, { eager: true , nullable: true })
+  @Field(() => Tag, { nullable: true })
+  @ManyToOne(() => Tag, (tag) => tag.attractions, {
+    eager: true,
+    nullable: true,
+  })
   tag: Tag;
 
   @ManyToOne(() => Destination, (destination) => destination.attractions, {})
   @Field(() => Destination)
   destination: Destination;
 
-  
+  @Field((type) => Boolean)
+  @Column({ type: "boolean", default: true })
+  active: boolean;
 }

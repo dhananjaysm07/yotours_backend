@@ -48,8 +48,7 @@ let ThingService = class ThingService {
                 });
                 newThing.destination = destination;
             }
-            if (createThingInput.imageUrls &&
-                createThingInput.imageUrls.length > 0) {
+            if (createThingInput.imageUrls && createThingInput.imageUrls.length > 0) {
                 const imageEntities = createThingInput.imageUrls.map((url) => {
                     return queryRunner.manager.create(image_entity_1.ImageEntity, {
                         imageUrl: url,
@@ -80,7 +79,9 @@ let ThingService = class ThingService {
         await queryRunner.startTransaction();
         try {
             console.log("Transaction started");
-            const thingToUpdate = await queryRunner.manager.findOneOrFail(thing_entity_1.Thing, { where: { id: updateThingInput.thingId } });
+            const thingToUpdate = await queryRunner.manager.findOneOrFail(thing_entity_1.Thing, {
+                where: { id: updateThingInput.thingId },
+            });
             queryRunner.manager.merge(thing_entity_1.Thing, thingToUpdate, updateThingInput);
             if (updateThingInput.tagId) {
                 const tag = await queryRunner.manager.findOneOrFail(tag_entity_1.Tag, {
@@ -99,8 +100,7 @@ let ThingService = class ThingService {
                 });
                 thingToUpdate.destination = destination;
             }
-            if (updateThingInput.imageUrls &&
-                updateThingInput.imageUrls.length > 0) {
+            if (updateThingInput.imageUrls && updateThingInput.imageUrls.length > 0) {
                 const newImageEntities = updateThingInput.imageUrls.map((url) => {
                     return queryRunner.manager.create(image_entity_1.ImageEntity, {
                         imageUrl: url,
@@ -125,16 +125,18 @@ let ThingService = class ThingService {
             console.log("Query runner released");
         }
     }
-    async deleteThing(thingId) {
+    async deleteThing(id) {
         const queryRunner = this.dataSource.createQueryRunner();
         await queryRunner.connect();
         await queryRunner.startTransaction();
         try {
             const thingToDelete = await queryRunner.manager.findOneOrFail(thing_entity_1.Thing, {
-                where: { id: thingId },
+                where: { id },
             });
-            await queryRunner.manager.remove(thing_entity_1.Thing, thingToDelete);
+            thingToDelete.active = false;
+            await queryRunner.manager.save(thing_entity_1.Thing, thingToDelete);
             await queryRunner.commitTransaction();
+            return { id: thingToDelete.id };
         }
         catch (error) {
             await queryRunner.rollbackTransaction();
@@ -146,12 +148,13 @@ let ThingService = class ThingService {
     }
     findAll() {
         return this.thingRepository.find({
+            where: { active: true },
             relations: ["images", "destination", "tag"],
         });
     }
     findOne(id) {
         return this.thingRepository.findOne({
-            where: { id: id },
+            where: { id: id, active: true },
             relations: ["images", "destination", "tag"],
         });
     }

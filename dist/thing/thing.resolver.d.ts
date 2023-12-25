@@ -9,4 +9,7 @@ export declare class ThingResolver {
     getThings(): Promise<Thing[]>;
     getThing(id: string): Promise<Thing>;
     updateThing(updateThingInput: UpdateThingInput): Promise<Thing>;
+    deleteThing(id: string): Promise<{
+        id: string;
+    }>;
 }

@@ -34,6 +34,9 @@ let ThingResolver = class ThingResolver {
     async updateThing(updateThingInput) {
         return this.thingService.updateThing(updateThingInput);
     }
+    deleteThing(id) {
+        return this.thingService.deleteThing(id);
+    }
 };
 __decorate([
     (0, graphql_1.Mutation)(() => thing_entity_1.Thing),
@@ -62,6 +65,13 @@ __decorate([
     __metadata("design:paramtypes", [update_thing_input_1.UpdateThingInput]),
     __metadata("design:returntype", Promise)
 ], ThingResolver.prototype, "updateThing", null);
+__decorate([
+    (0, graphql_1.Mutation)(() => thing_entity_1.Thing),
+    __param(0, (0, graphql_1.Args)("id")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ThingResolver.prototype, "deleteThing", null);
 ThingResolver = __decorate([
     (0, graphql_1.Resolver)(() => thing_entity_1.Thing),
     __metadata("design:paramtypes", [thing_service_1.ThingService])

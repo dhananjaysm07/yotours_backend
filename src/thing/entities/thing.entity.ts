@@ -36,11 +36,15 @@ export class Thing {
   @Field(() => [ImageEntity])
   images: ImageEntity[];
 
-  @Field(()=> Tag, { nullable: true })
+  @Field(() => Tag, { nullable: true })
   @ManyToOne(() => Tag, (tag) => tag.things)
   tag: Tag;
 
   @ManyToOne(() => Destination, (destination) => destination.things, {})
   @Field(() => Destination)
   destination: Destination;
+
+  @Field((type) => Boolean)
+  @Column({ type: "boolean", default: true })
+  active: boolean;
 }
