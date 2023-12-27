@@ -5,6 +5,10 @@ export declare class CreateDestinationInput {
     bannerImage: string;
     bannerHeading: string;
     description: string;
+    fromDate: string;
+    toDate: string;
+    fromOccasion: string;
+    toOccasion: string;
     isPopular: boolean;
     imageUrls: string[];
     tagId: string;

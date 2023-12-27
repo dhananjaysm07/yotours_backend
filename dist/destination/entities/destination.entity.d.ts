@@ -12,6 +12,10 @@ export declare class Destination {
     bannerHeading: string;
     description: string;
     isPopular: boolean;
+    fromDate: string;
+    toDate: string;
+    fromOccasion: string;
+    toOccasion: string;
     images: ImageEntity[];
     tag: Tag;
     tours: Tour[];
