@@ -34,13 +34,8 @@ let TourResolver = class TourResolver {
     findOne(id) {
         return this.tourService.findOne(id);
     }
-<<<<<<< HEAD
     deleteTour(id) {
         return this.tourService.deleteTour(id);
-=======
-    async deleteTour(tourId) {
-        return this.tourService.deleteTour(tourId);
->>>>>>> ca3fba801ca43c074152333bf974066930a7f626
     }
 };
 __decorate([
@@ -72,17 +67,10 @@ __decorate([
 ], TourResolver.prototype, "findOne", null);
 __decorate([
     (0, graphql_1.Mutation)(() => tour_entity_1.Tour),
-<<<<<<< HEAD
     __param(0, (0, graphql_1.Args)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-=======
-    __param(0, (0, graphql_1.Args)("tourId")),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
->>>>>>> ca3fba801ca43c074152333bf974066930a7f626
 ], TourResolver.prototype, "deleteTour", null);
 TourResolver = __decorate([
     (0, graphql_1.Resolver)(() => tour_entity_1.Tour),

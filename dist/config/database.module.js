@@ -18,14 +18,18 @@ DatabaseModule = __decorate([
             typeorm_1.TypeOrmModule.forRootAsync({
                 imports: [config_1.ConfigModule],
                 useFactory: async (configService) => ({
-                    type: 'postgres',
-                    url: "postgres://issue_user:k0BgaH5w44to15qIhQWRu6SKVhEhlWZT@dpg-ckmdd8gu1l6c7383q9jg-a.oregon-postgres.render.com/issues_database",
+                    type: "postgres",
+                    host: configService.get("DB_HOST", "135.125.239.45"),
+                    port: configService.get("DB_PORT", 5432),
+                    username: configService.get("DB_USERNAME", "postgres"),
+                    password: configService.get("DB_PASSWORD", "mypassword"),
+                    database: configService.get("DB_DATABASE", "yotours"),
                     entities: ["dist/**/*.entity{.ts,.js}"],
                     synchronize: true,
-                    ssl: true
+                    ssl: false,
                 }),
-                inject: [config_1.ConfigService]
-            })
+                inject: [config_1.ConfigService],
+            }),
         ],
     })
 ], DatabaseModule);
