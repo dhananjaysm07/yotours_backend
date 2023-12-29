@@ -46,6 +46,26 @@ __decorate([
     __metadata("design:type", String)
 ], CreateDestinationInput.prototype, "description", void 0);
 __decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateDestinationInput.prototype, "fromDate", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateDestinationInput.prototype, "toDate", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateDestinationInput.prototype, "fromOccasion", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateDestinationInput.prototype, "toOccasion", void 0);
+__decorate([
     (0, graphql_1.Field)({ defaultValue: false }),
     (0, class_validator_1.IsBoolean)(),
     __metadata("design:type", Boolean)

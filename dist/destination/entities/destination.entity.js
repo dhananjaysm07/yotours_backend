@@ -60,6 +60,26 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Destination.prototype, "isPopular", void 0);
 __decorate([
+    (0, graphql_1.Field)((type) => String, { nullable: true }),
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    __metadata("design:type", String)
+], Destination.prototype, "fromDate", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => String, { nullable: true }),
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    __metadata("design:type", String)
+], Destination.prototype, "toDate", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => String, { nullable: true }),
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    __metadata("design:type", String)
+], Destination.prototype, "fromOccasion", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => String, { nullable: true }),
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    __metadata("design:type", String)
+], Destination.prototype, "toOccasion", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)(() => image_entity_1.ImageEntity, (image) => image.destination, {
         eager: true,
         cascade: true,

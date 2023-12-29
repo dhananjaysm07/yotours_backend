@@ -163,7 +163,7 @@ export class DestinationService {
   }
   async findAllDestinations(): Promise<Destination[]> {
     return this.destinationRepository.find({
-      relations: ["images", "tours", "attractions", "tag"],
+      relations: ["images", "tours", "attractions", "tag","things"],
     });
   }
 

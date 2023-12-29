@@ -29,6 +29,25 @@ export class CreateDestinationInput {
   @IsString()
   description: string;
 
+  @Field({ nullable: true })
+  @IsString()
+  fromDate: string;
+
+
+  @Field({ nullable: true })
+  @IsString()
+  toDate: string;
+
+
+  @Field({ nullable: true })
+  @IsString()
+  fromOccasion: string;
+
+
+  @Field({ nullable: true })
+  @IsString()
+  toOccasion: string;
+
   @Field({ defaultValue: false })
   @IsBoolean()
   isPopular: boolean;

@@ -112,7 +112,7 @@ let DestinationService = class DestinationService {
     }
     async findAllDestinations() {
         return this.destinationRepository.find({
-            relations: ["images", "tours", "attractions", "tag"],
+            relations: ["images", "tours", "attractions", "tag", "things"],
         });
     }
     async findOneDestination(id) {

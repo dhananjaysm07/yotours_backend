@@ -56,6 +56,10 @@ type Destination {
   bannerHeading: String!
   description: String!
   isPopular: Boolean!
+  fromDate: String
+  toDate: String
+  fromOccasion: String
+  toOccasion: String
   images: [ImageEntity!]!
   tag: Tag
   tours: [Tour!]!
@@ -231,11 +235,7 @@ type Mutation {
   deactivateTag(tagId: String!): Tag!
   createTour(createTourInput: CreateTourInput!): Tour!
   updateTour(updateTourInput: UpdateTourInput!): Tour!
-<<<<<<< HEAD
   deleteTour(id: String!): Tour!
-=======
-  deleteTour(tourId: String!): Tour!
->>>>>>> ca3fba801ca43c074152333bf974066930a7f626
   createAttraction(createAttractionInput: CreateAttractionInput!): Attraction!
   updateAttraction(updateAttractionInput: UpdateAttractionInput!): Attraction!
   deleteAttraction(id: String!): Attraction!
@@ -352,6 +352,10 @@ input CreateDestinationInput {
   bannerImage: String!
   bannerHeading: String!
   description: String
+  fromDate: String
+  toDate: String
+  fromOccasion: String
+  toOccasion: String
   isPopular: Boolean! = false
   imageUrls: [String!]
   tagId: String
@@ -364,6 +368,10 @@ input UpdateDestinationInput {
   bannerImage: String
   bannerHeading: String
   description: String
+  fromDate: String
+  toDate: String
+  fromOccasion: String
+  toOccasion: String
   isPopular: Boolean = false
   imageUrls: [String!]
   tagId: String

@@ -50,6 +50,23 @@ export class Destination {
   @Column({ type: "boolean", default: false })
   isPopular: boolean;
 
+  @Field((type) => String,{ nullable: true })
+  @Column({ type: "varchar", nullable: true })
+  fromDate: string;
+
+  @Field((type) => String,{ nullable: true })
+  @Column({ type: "varchar", nullable: true })
+  toDate: string;
+
+
+  @Field((type) => String,{ nullable: true })
+  @Column({ type: "varchar", nullable: true })
+  fromOccasion: string;
+
+  @Field((type) => String,{ nullable: true })
+  @Column({ type: "varchar", nullable: true })
+  toOccasion: string;
+
   //images
   @OneToMany(() => ImageEntity, (image) => image.destination, {
     eager: true, // if you want to automatically load images with the tour
