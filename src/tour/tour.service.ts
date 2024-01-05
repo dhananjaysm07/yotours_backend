@@ -1,18 +1,22 @@
 import { InjectRepository } from "@nestjs/typeorm";
-import { DataSource, Repository } from "typeorm";
+import { DataSource, Repository, SelectQueryBuilder } from "typeorm";
 import { Tour } from "./entities/tour.entity";
 import { Destination } from "src/destination/entities/destination.entity";
 import { CreateTourInput } from "./dto/create-tour.input";
 import { Tag } from "src/tag/entities/tag.entity";
 import { ImageEntity } from "src/image/entities/image.entity";
 import { UpdateTourInput } from "./dto/update-tour.input";
+import { GenericService } from "src/global/filterQueryClass";
+import { TourFilterInput } from "./dto/filter-tour-input";
 
-export class TourService {
+export class TourService extends GenericService<Tour> {
   constructor(
     private dataSource: DataSource,
     @InjectRepository(Tour)
     private tourRepository: Repository<Tour>
-  ) {}
+  ) {
+    super(tourRepository);
+  }
 
   async createTour(createTourInput: CreateTourInput): Promise<Tour> {
     const queryRunner = this.dataSource.createQueryRunner();
@@ -99,6 +103,49 @@ export class TourService {
     }
   }
 
+  protected applyFilters(
+    queryBuilder: SelectQueryBuilder<Tour>,
+    filter: TourFilterInput
+  ): void {
+    queryBuilder
+      .leftJoinAndSelect("entity.tag", "tag")
+      .leftJoinAndSelect("entity.destination", "destination")
+      .leftJoinAndSelect("entity.images", "ImageEntity");
+
+    if (filter) {
+      // Example: Applying location filter
+      if (filter.location) {
+        queryBuilder.andWhere("entity.location = :location", {
+          location: filter.location,
+        });
+      }
+
+      // Example: Applying price range filter
+      if (filter.priceMin && filter.priceMax) {
+        queryBuilder.andWhere("entity.price BETWEEN :priceMin AND :priceMax", {
+          priceMin: filter.priceMin,
+          priceMax: filter.priceMax,
+        });
+      }
+
+      if (filter.tagName && filter.tagName.length > 0) {
+        queryBuilder.andWhere("tag.name IN (:...tagNames)", {
+          tagNames: filter.tagName,
+        });
+      }
+
+      // Add more conditions based on your filter parameters
+    }
+
+    // Example: Applying date range filter
+    if (filter && filter.startDate && filter.endDate) {
+      queryBuilder.andWhere("entity.fromDate BETWEEN :fromDate AND :toDate", {
+        fromDate: filter.startDate,
+        toDate: filter.endDate,
+      });
+    }
+  }
+
   async updateTour(updateTourInput: UpdateTourInput): Promise<Tour> {
     const queryRunner = this.dataSource.createQueryRunner();
 
@@ -166,7 +213,7 @@ export class TourService {
     }
   }
   async deleteTour(id: string): Promise<{ id: string }> {
-    console.log("function called", id);
+    // console.log("function called", id);
     const queryRunner = this.dataSource.createQueryRunner();
 
     await queryRunner.connect();
@@ -191,6 +238,7 @@ export class TourService {
   }
 
   findAll(): Promise<Tour[]> {
+    // console.log("find all function");
     return this.tourRepository.find({
       where: { active: true },
       relations: ["images", "destination", "tag"],

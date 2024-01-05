@@ -182,6 +182,11 @@ type PackageGeneral {
   locationDetails: LocationDetails!
 }
 
+type GetFilteredToursResponse {
+  tours: [Tour!]!
+  totalCount: Int!
+}
+
 type Content {
   id: ID!
   heroHeading: String!
@@ -207,12 +212,22 @@ type Query {
   getAllTags: [Tag!]!
   getTagById(id: String!): Tag!
   getTours: [Tour!]!
+  getFilteredTours(page: Int!, loadCount: Int!, filter: TourFilterInput!): GetFilteredToursResponse!
   findOne(id: String!): Tour!
   getAttractions: [Attraction!]!
   getAttraction(id: String!): Attraction!
   getContent: Content!
   getThings: [Thing!]!
   getThing(id: String!): Thing!
+}
+
+input TourFilterInput {
+  location: String
+  priceMin: Int
+  priceMax: Int
+  startDate: String
+  endDate: String
+  tagName: [String!]
 }
 
 type Mutation {

@@ -1,12 +1,15 @@
-import { DataSource, Repository } from "typeorm";
+import { DataSource, Repository, SelectQueryBuilder } from "typeorm";
 import { Tour } from "./entities/tour.entity";
 import { CreateTourInput } from "./dto/create-tour.input";
 import { UpdateTourInput } from "./dto/update-tour.input";
-export declare class TourService {
+import { GenericService } from "src/global/filterQueryClass";
+import { TourFilterInput } from "./dto/filter-tour-input";
+export declare class TourService extends GenericService<Tour> {
     private dataSource;
     private tourRepository;
     constructor(dataSource: DataSource, tourRepository: Repository<Tour>);
     createTour(createTourInput: CreateTourInput): Promise<Tour>;
+    protected applyFilters(queryBuilder: SelectQueryBuilder<Tour>, filter: TourFilterInput): void;
     updateTour(updateTourInput: UpdateTourInput): Promise<Tour>;
     deleteTour(id: string): Promise<{
         id: string;

@@ -18,6 +18,7 @@ const create_tour_input_1 = require("./dto/create-tour.input");
 const tour_entity_1 = require("./entities/tour.entity");
 const tour_service_1 = require("./tour.service");
 const update_tour_input_1 = require("./dto/update-tour.input");
+const filter_tour_input_1 = require("./dto/filter-tour-input");
 let TourResolver = class TourResolver {
     constructor(tourService) {
         this.tourService = tourService;
@@ -30,6 +31,10 @@ let TourResolver = class TourResolver {
     }
     async getTours() {
         return this.tourService.findAll();
+    }
+    async getFilteredTours(page, loadCount, filter) {
+        const { data, count } = await this.tourService.getAllFiltered(filter, page, loadCount);
+        return { tours: data, totalCount: count };
     }
     findOne(id) {
         return this.tourService.findOne(id);
@@ -58,6 +63,15 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], TourResolver.prototype, "getTours", null);
+__decorate([
+    (0, graphql_1.Query)(() => filter_tour_input_1.GetFilteredToursResponse),
+    __param(0, (0, graphql_1.Args)("page", { type: () => graphql_1.Int })),
+    __param(1, (0, graphql_1.Args)("loadCount", { type: () => graphql_1.Int })),
+    __param(2, (0, graphql_1.Args)("filter")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number, filter_tour_input_1.TourFilterInput]),
+    __metadata("design:returntype", Promise)
+], TourResolver.prototype, "getFilteredTours", null);
 __decorate([
     (0, graphql_1.Query)(() => tour_entity_1.Tour),
     __param(0, (0, graphql_1.Args)("id")),

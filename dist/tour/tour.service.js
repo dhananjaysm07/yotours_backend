@@ -19,8 +19,10 @@ const tour_entity_1 = require("./entities/tour.entity");
 const destination_entity_1 = require("../destination/entities/destination.entity");
 const tag_entity_1 = require("../tag/entities/tag.entity");
 const image_entity_1 = require("../image/entities/image.entity");
-let TourService = class TourService {
+const filterQueryClass_1 = require("../global/filterQueryClass");
+let TourService = class TourService extends filterQueryClass_1.GenericService {
     constructor(dataSource, tourRepository) {
+        super(tourRepository);
         this.dataSource = dataSource;
         this.tourRepository = tourRepository;
     }
@@ -71,6 +73,36 @@ let TourService = class TourService {
         finally {
             await queryRunner.release();
             console.log("Query runner released");
+        }
+    }
+    applyFilters(queryBuilder, filter) {
+        queryBuilder
+            .leftJoinAndSelect("entity.tag", "tag")
+            .leftJoinAndSelect("entity.destination", "destination")
+            .leftJoinAndSelect("entity.images", "ImageEntity");
+        if (filter) {
+            if (filter.location) {
+                queryBuilder.andWhere("entity.location = :location", {
+                    location: filter.location,
+                });
+            }
+            if (filter.priceMin && filter.priceMax) {
+                queryBuilder.andWhere("entity.price BETWEEN :priceMin AND :priceMax", {
+                    priceMin: filter.priceMin,
+                    priceMax: filter.priceMax,
+                });
+            }
+            if (filter.tagName && filter.tagName.length > 0) {
+                queryBuilder.andWhere("tag.name IN (:...tagNames)", {
+                    tagNames: filter.tagName,
+                });
+            }
+        }
+        if (filter && filter.startDate && filter.endDate) {
+            queryBuilder.andWhere("entity.fromDate BETWEEN :fromDate AND :toDate", {
+                fromDate: filter.startDate,
+                toDate: filter.endDate,
+            });
         }
     }
     async updateTour(updateTourInput) {
@@ -124,7 +156,6 @@ let TourService = class TourService {
         }
     }
     async deleteTour(id) {
-        console.log("function called", id);
         const queryRunner = this.dataSource.createQueryRunner();
         await queryRunner.connect();
         await queryRunner.startTransaction();
