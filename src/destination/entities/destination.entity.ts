@@ -50,20 +50,19 @@ export class Destination {
   @Column({ type: "boolean", default: false })
   isPopular: boolean;
 
-  @Field((type) => String,{ nullable: true })
+  @Field((type) => String, { nullable: true })
   @Column({ type: "varchar", nullable: true })
   fromDate: string;
 
-  @Field((type) => String,{ nullable: true })
+  @Field((type) => String, { nullable: true })
   @Column({ type: "varchar", nullable: true })
   toDate: string;
 
-
-  @Field((type) => String,{ nullable: true })
+  @Field((type) => String, { nullable: true })
   @Column({ type: "varchar", nullable: true })
   fromOccasion: string;
 
-  @Field((type) => String,{ nullable: true })
+  @Field((type) => String, { nullable: true })
   @Column({ type: "varchar", nullable: true })
   toOccasion: string;
 
@@ -71,13 +70,16 @@ export class Destination {
   @OneToMany(() => ImageEntity, (image) => image.destination, {
     eager: true, // if you want to automatically load images with the tour
     cascade: true, // if you want to automatically save images when saving a tour
-  nullable: true
+    nullable: true,
   })
   @Field(() => [ImageEntity])
   images: ImageEntity[];
 
   @Field(() => Tag, { nullable: true })
-  @ManyToOne(() => Tag, (tag) => tag.destinations, { eager: true , nullable: true })
+  @ManyToOne(() => Tag, (tag) => tag.destinations, {
+    eager: true,
+    nullable: true,
+  })
   tag: Tag;
 
   @Field(() => [Tour])
@@ -89,6 +91,10 @@ export class Destination {
     eager: true,
   })
   attractions: Attraction[];
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  introduction: string;
 
   @Field(() => [Thing])
   @OneToMany(() => Thing, (thing) => thing.destination, { eager: true })

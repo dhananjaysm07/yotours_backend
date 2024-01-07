@@ -81,6 +81,11 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateDestinationInput.prototype, "tagId", void 0);
+__decorate([
+    (0, graphql_1.Field)({ defaultValue: "" }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateDestinationInput.prototype, "introduction", void 0);
 CreateDestinationInput = __decorate([
     (0, graphql_1.InputType)()
 ], CreateDestinationInput);

@@ -1,6 +1,14 @@
 import { InputType, Field } from "@nestjs/graphql";
-import { IsString, IsNotEmpty, IsArray, ValidateNested, IsOptional, IsUUID, IsBoolean } from 'class-validator';
-import { Type } from 'class-transformer';
+import {
+  IsString,
+  IsNotEmpty,
+  IsArray,
+  ValidateNested,
+  IsOptional,
+  IsUUID,
+  IsBoolean,
+} from "class-validator";
+import { Type } from "class-transformer";
 
 @InputType()
 export class CreateDestinationInput {
@@ -16,7 +24,7 @@ export class CreateDestinationInput {
   @Field({ nullable: true })
   @IsString()
   country: string;
-  
+
   @Field()
   @IsString()
   bannerImage: string;
@@ -33,16 +41,13 @@ export class CreateDestinationInput {
   @IsString()
   fromDate: string;
 
-
   @Field({ nullable: true })
   @IsString()
   toDate: string;
 
-
   @Field({ nullable: true })
   @IsString()
   fromOccasion: string;
-
 
   @Field({ nullable: true })
   @IsString()
@@ -60,4 +65,8 @@ export class CreateDestinationInput {
   @Field({ nullable: true })
   @IsString()
   tagId: string;
+
+  @Field({ defaultValue: "" })
+  @IsString()
+  introduction: string;
 }

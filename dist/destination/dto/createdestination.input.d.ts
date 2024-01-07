@@ -12,4 +12,5 @@ export declare class CreateDestinationInput {
     isPopular: boolean;
     imageUrls: string[];
     tagId: string;
+    introduction: string;
 }

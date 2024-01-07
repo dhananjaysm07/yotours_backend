@@ -83,14 +83,17 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => image_entity_1.ImageEntity, (image) => image.destination, {
         eager: true,
         cascade: true,
-        nullable: true
+        nullable: true,
     }),
     (0, graphql_1.Field)(() => [image_entity_1.ImageEntity]),
     __metadata("design:type", Array)
 ], Destination.prototype, "images", void 0);
 __decorate([
     (0, graphql_1.Field)(() => tag_entity_1.Tag, { nullable: true }),
-    (0, typeorm_1.ManyToOne)(() => tag_entity_1.Tag, (tag) => tag.destinations, { eager: true, nullable: true }),
+    (0, typeorm_1.ManyToOne)(() => tag_entity_1.Tag, (tag) => tag.destinations, {
+        eager: true,
+        nullable: true,
+    }),
     __metadata("design:type", tag_entity_1.Tag)
 ], Destination.prototype, "tag", void 0);
 __decorate([
@@ -105,6 +108,11 @@ __decorate([
     }),
     __metadata("design:type", Array)
 ], Destination.prototype, "attractions", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], Destination.prototype, "introduction", void 0);
 __decorate([
     (0, graphql_1.Field)(() => [thing_entity_1.Thing]),
     (0, typeorm_1.OneToMany)(() => thing_entity_1.Thing, (thing) => thing.destination, { eager: true }),

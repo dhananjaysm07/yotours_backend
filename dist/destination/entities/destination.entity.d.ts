@@ -20,5 +20,6 @@ export declare class Destination {
     tag: Tag;
     tours: Tour[];
     attractions: Attraction[];
+    introduction: string;
     things: Thing[];
 }
