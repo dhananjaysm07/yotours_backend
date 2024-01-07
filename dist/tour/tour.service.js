@@ -80,6 +80,7 @@ let TourService = class TourService extends filterQueryClass_1.GenericService {
             .leftJoinAndSelect("entity.tag", "tag")
             .leftJoinAndSelect("entity.destination", "destination")
             .leftJoinAndSelect("entity.images", "ImageEntity");
+        queryBuilder.andWhere("entity.active = :active", { active: true });
         if (filter) {
             if (filter.location) {
                 queryBuilder.andWhere("entity.location = :location", {
@@ -95,6 +96,11 @@ let TourService = class TourService extends filterQueryClass_1.GenericService {
             if (filter.tagName && filter.tagName.length > 0) {
                 queryBuilder.andWhere("tag.name IN (:...tagNames)", {
                     tagNames: filter.tagName,
+                });
+            }
+            if (filter.continent && filter.continent.length > 0) {
+                queryBuilder.andWhere("destination.continent IN (:...continent)", {
+                    continent: filter.continent,
                 });
             }
         }

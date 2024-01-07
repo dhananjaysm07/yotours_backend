@@ -1,13 +1,16 @@
-import { DataSource, QueryRunner, Repository } from "typeorm";
+import { DataSource, QueryRunner, Repository, SelectQueryBuilder } from "typeorm";
 import { Destination } from "./entities/destination.entity";
 import { CreateDestinationInput } from "./dto/createdestination.input";
 import { UpdateDestinationInput } from "./dto/updatedestination.input";
-export declare class DestinationService {
+import { GenericService } from "src/global/filterQueryClass";
+import { TourFilterInput } from "src/tour/dto/filter-tour-input";
+export declare class DestinationService extends GenericService<Destination> {
     private dataSource;
     private destinationRepository;
     constructor(dataSource: DataSource, destinationRepository: Repository<Destination>);
     createDestination(createDestinationInput: CreateDestinationInput): Promise<Destination>;
     updateDestination(updateDestinationInput: UpdateDestinationInput): Promise<Destination>;
+    protected applyFilters(queryBuilder: SelectQueryBuilder<Destination>, filter: TourFilterInput): void;
     findAllDestinations(): Promise<Destination[]>;
     findOneDestination(id: string): Promise<Destination | null>;
     deleteDestination(destinationId: string): Promise<boolean>;

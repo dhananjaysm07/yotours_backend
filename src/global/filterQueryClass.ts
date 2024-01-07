@@ -26,12 +26,12 @@ export abstract class GenericService<T> {
     this.applyFilters(queryBuilder, filter);
 
     // Apply common conditions
-    queryBuilder.andWhere("entity.active = :active", { active: true });
+    // queryBuilder.andWhere("entity.active = :active", { active: true });
     const count = await queryBuilder.getCount();
     // Apply pagination
     queryBuilder.skip(skip).take(take);
     const data = await queryBuilder.getMany();
-
+    // console.log("dataaa----------------------------", data);
     return { data, count };
   }
 

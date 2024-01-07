@@ -1,10 +1,12 @@
-import { Resolver, Mutation, Args, Query, ID } from "@nestjs/graphql";
+import { Resolver, Mutation, Args, Query, ID, Int } from "@nestjs/graphql";
 import { UseGuards } from "@nestjs/common";
 import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard";
 import { Destination } from "../destination/entities/destination.entity";
 import { DestinationService } from "./destination.service";
 import { CreateDestinationInput } from "./dto/createdestination.input";
 import { UpdateDestinationInput } from "./dto/updatedestination.input";
+import { GetFilteredDestinationResponse } from "./dto/filter-destination-input";
+import { TourFilterInput } from "src/tour/dto/filter-tour-input";
 
 @Resolver(() => Destination)
 export class DestinationResolver {
@@ -35,6 +37,20 @@ export class DestinationResolver {
   ): Promise<Destination | null> {
     // Assuming you have a method findOne in your service
     return this.destinationService.findOneDestination(id);
+  }
+
+  @Query(() => GetFilteredDestinationResponse)
+  async getFilteredDestination(
+    @Args("page", { type: () => Int }) page: number,
+    @Args("loadCount", { type: () => Int }) loadCount: number,
+    @Args("filter") filter: TourFilterInput
+  ): Promise<GetFilteredDestinationResponse> {
+    const { data, count } = await this.destinationService.getAllFiltered(
+      filter,
+      page,
+      loadCount
+    );
+    return { destinations: data, totalCount: count };
   }
 
   @Mutation(() => Boolean)

@@ -20,6 +20,8 @@ const destination_entity_1 = require("../destination/entities/destination.entity
 const destination_service_1 = require("./destination.service");
 const createdestination_input_1 = require("./dto/createdestination.input");
 const updatedestination_input_1 = require("./dto/updatedestination.input");
+const filter_destination_input_1 = require("./dto/filter-destination-input");
+const filter_tour_input_1 = require("../tour/dto/filter-tour-input");
 let DestinationResolver = class DestinationResolver {
     constructor(destinationService) {
         this.destinationService = destinationService;
@@ -35,6 +37,10 @@ let DestinationResolver = class DestinationResolver {
     }
     async getDestination(id) {
         return this.destinationService.findOneDestination(id);
+    }
+    async getFilteredDestination(page, loadCount, filter) {
+        const { data, count } = await this.destinationService.getAllFiltered(filter, page, loadCount);
+        return { destinations: data, totalCount: count };
     }
     async deleteDestination(destinationId) {
         return await this.destinationService.deleteDestination(destinationId);
@@ -67,6 +73,15 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], DestinationResolver.prototype, "getDestination", null);
+__decorate([
+    (0, graphql_1.Query)(() => filter_destination_input_1.GetFilteredDestinationResponse),
+    __param(0, (0, graphql_1.Args)("page", { type: () => graphql_1.Int })),
+    __param(1, (0, graphql_1.Args)("loadCount", { type: () => graphql_1.Int })),
+    __param(2, (0, graphql_1.Args)("filter")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number, filter_tour_input_1.TourFilterInput]),
+    __metadata("design:returntype", Promise)
+], DestinationResolver.prototype, "getFilteredDestination", null);
 __decorate([
     (0, graphql_1.Mutation)(() => Boolean),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),

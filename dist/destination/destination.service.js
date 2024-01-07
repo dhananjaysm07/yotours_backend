@@ -18,8 +18,10 @@ const typeorm_2 = require("typeorm");
 const destination_entity_1 = require("./entities/destination.entity");
 const image_entity_1 = require("../image/entities/image.entity");
 const tag_entity_1 = require("../tag/entities/tag.entity");
-let DestinationService = class DestinationService {
+const filterQueryClass_1 = require("../global/filterQueryClass");
+let DestinationService = class DestinationService extends filterQueryClass_1.GenericService {
     constructor(dataSource, destinationRepository) {
+        super(destinationRepository);
         this.dataSource = dataSource;
         this.destinationRepository = destinationRepository;
     }
@@ -108,6 +110,43 @@ let DestinationService = class DestinationService {
         finally {
             await queryRunner.release();
             console.log("Query runner released");
+        }
+    }
+    applyFilters(queryBuilder, filter) {
+        queryBuilder
+            .leftJoinAndSelect("entity.tag", "tag")
+            .leftJoinAndSelect("entity.images", "ImageEntity")
+            .leftJoinAndSelect("entity.attractions", "attraction")
+            .leftJoinAndSelect("entity.tours", "tour")
+            .leftJoinAndSelect("entity.things", "thing");
+        if (filter) {
+            if (filter.location) {
+                queryBuilder.andWhere("entity.country = :location", {
+                    location: filter.location,
+                });
+            }
+            if (filter.priceMin && filter.priceMax) {
+                queryBuilder.andWhere("entity.price BETWEEN :priceMin AND :priceMax", {
+                    priceMin: filter.priceMin,
+                    priceMax: filter.priceMax,
+                });
+            }
+            if (filter.tagName && filter.tagName.length > 0) {
+                queryBuilder.andWhere("tag.name IN (:...tagNames)", {
+                    tagNames: filter.tagName,
+                });
+            }
+            if (filter.continent && filter.continent.length > 0) {
+                queryBuilder.andWhere("entity.continent IN (:...continent)", {
+                    continent: filter.continent,
+                });
+            }
+        }
+        if (filter && filter.startDate && filter.endDate) {
+            queryBuilder.andWhere("entity.fromDate BETWEEN :fromDate AND :toDate", {
+                fromDate: filter.startDate,
+                toDate: filter.endDate,
+            });
         }
     }
     async findAllDestinations() {

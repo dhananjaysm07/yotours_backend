@@ -20,6 +20,9 @@ export class TourFilterInput {
 
   @Field(() => [String], { nullable: true })
   tagName?: string[];
+
+  @Field(() => [String], { nullable: true })
+  continent?: string[];
 }
 
 @ObjectType()

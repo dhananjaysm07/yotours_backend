@@ -1,16 +1,27 @@
 import { InjectRepository } from "@nestjs/typeorm";
-import { DataSource, In, QueryRunner, Repository } from "typeorm";
+import {
+  DataSource,
+  In,
+  QueryRunner,
+  Repository,
+  SelectQueryBuilder,
+} from "typeorm";
 import { Destination } from "./entities/destination.entity";
 import { CreateDestinationInput } from "./dto/createdestination.input";
 import { UpdateDestinationInput } from "./dto/updatedestination.input";
 import { ImageEntity } from "src/image/entities/image.entity";
 import { Tag } from "src/tag/entities/tag.entity";
-export class DestinationService {
+// import { TourFilterInput } from "src/tour/dto/filter-tour-input";
+import { GenericService } from "src/global/filterQueryClass";
+import { TourFilterInput } from "src/tour/dto/filter-tour-input";
+export class DestinationService extends GenericService<Destination> {
   constructor(
     private dataSource: DataSource,
     @InjectRepository(Destination)
     private destinationRepository: Repository<Destination>
-  ) {}
+  ) {
+    super(destinationRepository);
+  }
 
   async createDestination(
     createDestinationInput: CreateDestinationInput
@@ -36,7 +47,7 @@ export class DestinationService {
           },
         });
 
-        newDestination.tag = tag; 
+        newDestination.tag = tag;
       }
 
       if (
@@ -119,7 +130,7 @@ export class DestinationService {
           },
         });
 
-        destinationToUpdate.tag = tag; 
+        destinationToUpdate.tag = tag;
       }
 
       if (
@@ -161,9 +172,60 @@ export class DestinationService {
       console.log("Query runner released");
     }
   }
+  protected applyFilters(
+    queryBuilder: SelectQueryBuilder<Destination>,
+    filter: TourFilterInput
+  ): void {
+    queryBuilder
+      .leftJoinAndSelect("entity.tag", "tag")
+      // .leftJoinAndSelect("entity.destination", "destination")
+      .leftJoinAndSelect("entity.images", "ImageEntity")
+      .leftJoinAndSelect("entity.attractions", "attraction")
+      .leftJoinAndSelect("entity.tours", "tour")
+      .leftJoinAndSelect("entity.things", "thing");
+
+    if (filter) {
+      // Example: Applying location filter
+      if (filter.location) {
+        queryBuilder.andWhere("entity.country = :location", {
+          location: filter.location,
+        });
+      }
+
+      // Example: Applying price range filter
+      if (filter.priceMin && filter.priceMax) {
+        queryBuilder.andWhere("entity.price BETWEEN :priceMin AND :priceMax", {
+          priceMin: filter.priceMin,
+          priceMax: filter.priceMax,
+        });
+      }
+
+      if (filter.tagName && filter.tagName.length > 0) {
+        queryBuilder.andWhere("tag.name IN (:...tagNames)", {
+          tagNames: filter.tagName,
+        });
+      }
+
+      if (filter.continent && filter.continent.length > 0) {
+        queryBuilder.andWhere("entity.continent IN (:...continent)", {
+          continent: filter.continent,
+        });
+      }
+
+      // Add more conditions based on your filter parameters
+    }
+
+    // Example: Applying date range filter
+    if (filter && filter.startDate && filter.endDate) {
+      queryBuilder.andWhere("entity.fromDate BETWEEN :fromDate AND :toDate", {
+        fromDate: filter.startDate,
+        toDate: filter.endDate,
+      });
+    }
+  }
   async findAllDestinations(): Promise<Destination[]> {
     return this.destinationRepository.find({
-      relations: ["images", "tours", "attractions", "tag","things"],
+      relations: ["images", "tours", "attractions", "tag", "things"],
     });
   }
 
