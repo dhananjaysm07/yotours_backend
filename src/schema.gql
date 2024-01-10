@@ -193,6 +193,11 @@ type GetFilteredToursResponse {
   totalCount: Int!
 }
 
+type GetFilteredAttractionResponse {
+  attractions: [Attraction!]!
+  totalCount: Int!
+}
+
 type Content {
   id: ID!
   heroHeading: String!
@@ -225,6 +230,7 @@ type Query {
   findOne(id: String!): Tour!
   getAttractions: [Attraction!]!
   getAttraction(id: String!): Attraction!
+  getFilteredAttractions(page: Int!, loadCount: Int!, filter: TourFilterInput!): GetFilteredAttractionResponse!
   getContent: Content!
   getThings: [Thing!]!
   getThing(id: String!): Thing!

@@ -18,6 +18,8 @@ const attraction_entity_1 = require("./entities/attraction.entity");
 const attraction_service_1 = require("./attraction.service");
 const create_attraction_input_1 = require("./dto/create-attraction.input");
 const update_attraction_input_1 = require("./dto/update-attraction.input");
+const attraction_filter_1 = require("./entities/attraction-filter");
+const filter_tour_input_1 = require("../tour/dto/filter-tour-input");
 let AttractionResolver = class AttractionResolver {
     constructor(attractionService) {
         this.attractionService = attractionService;
@@ -30,6 +32,10 @@ let AttractionResolver = class AttractionResolver {
     }
     getAttraction(id) {
         return this.attractionService.findOne(id);
+    }
+    async getFilteredAttractions(page, loadCount, filter) {
+        const { data, count } = await this.attractionService.getAllFiltered(filter, page, loadCount);
+        return { attractions: data, totalCount: count };
     }
     async updateAttraction(updateAttractionInput) {
         return this.attractionService.updateAttraction(updateAttractionInput);
@@ -58,6 +64,15 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], AttractionResolver.prototype, "getAttraction", null);
+__decorate([
+    (0, graphql_1.Query)(() => attraction_filter_1.GetFilteredAttractionResponse),
+    __param(0, (0, graphql_1.Args)("page", { type: () => graphql_1.Int })),
+    __param(1, (0, graphql_1.Args)("loadCount", { type: () => graphql_1.Int })),
+    __param(2, (0, graphql_1.Args)("filter")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number, filter_tour_input_1.TourFilterInput]),
+    __metadata("design:returntype", Promise)
+], AttractionResolver.prototype, "getFilteredAttractions", null);
 __decorate([
     (0, graphql_1.Mutation)(() => attraction_entity_1.Attraction),
     __param(0, (0, graphql_1.Args)("updateAttractionInput")),

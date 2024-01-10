@@ -1,18 +1,22 @@
 import { InjectRepository } from "@nestjs/typeorm";
-import { DataSource, Repository } from "typeorm";
+import { DataSource, Repository, SelectQueryBuilder } from "typeorm";
 import { Attraction } from "./entities/attraction.entity";
 import { ImageEntity } from "src/image/entities/image.entity";
 import { Destination } from "src/destination/entities/destination.entity";
 import { Tag } from "src/tag/entities/tag.entity";
 import { CreateAttractionInput } from "./dto/create-attraction.input";
 import { UpdateAttractionInput } from "./dto/update-attraction.input";
+import { GenericService } from "src/global/filterQueryClass";
+import { TourFilterInput } from "src/tour/dto/filter-tour-input";
 
-export class AttractionService {
+export class AttractionService extends GenericService<Attraction> {
   constructor(
     private dataSource: DataSource,
     @InjectRepository(Attraction)
     private attractionRepository: Repository<Attraction>
-  ) {}
+  ) {
+    super(attractionRepository);
+  }
 
   async createAttraction(
     createAttractionInput: CreateAttractionInput
@@ -95,6 +99,54 @@ export class AttractionService {
       // Release the query runner regardless of the transaction outcome
       await queryRunner.release();
       console.log("Query runner released");
+    }
+  }
+  protected applyFilters(
+    queryBuilder: SelectQueryBuilder<Attraction>,
+    filter: TourFilterInput
+  ): void {
+    queryBuilder
+      .leftJoinAndSelect("entity.tag", "tag")
+      .leftJoinAndSelect("entity.destination", "destination")
+      .leftJoinAndSelect("entity.images", "ImageEntity");
+    queryBuilder.andWhere("entity.active = :active", { active: true });
+    if (filter) {
+      // Example: Applying location filter
+      if (filter.location) {
+        queryBuilder.andWhere("entity.location = :location", {
+          location: filter.location,
+        });
+      }
+
+      // Example: Applying price range filter
+      if (filter.priceMin && filter.priceMax) {
+        queryBuilder.andWhere("entity.price BETWEEN :priceMin AND :priceMax", {
+          priceMin: filter.priceMin,
+          priceMax: filter.priceMax,
+        });
+      }
+
+      if (filter.tagName && filter.tagName.length > 0) {
+        queryBuilder.andWhere("tag.name IN (:...tagNames)", {
+          tagNames: filter.tagName,
+        });
+      }
+
+      if (filter.continent && filter.continent.length > 0) {
+        queryBuilder.andWhere("destination.continent IN (:...continent)", {
+          continent: filter.continent,
+        });
+      }
+
+      // Add more conditions based on your filter parameters
+    }
+
+    // Example: Applying date range filter
+    if (filter && filter.startDate && filter.endDate) {
+      queryBuilder.andWhere("entity.fromDate BETWEEN :fromDate AND :toDate", {
+        fromDate: filter.startDate,
+        toDate: filter.endDate,
+      });
     }
   }
   async updateAttraction(
