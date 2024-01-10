@@ -20,7 +20,7 @@ DestinationModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([destination_entity_1.Destination]), tag_module_1.TagModule, image_module_1.ImageModule],
         providers: [destination_service_1.DestinationService, destination_resolver_1.DestinationResolver],
-        exports: [destination_service_1.DestinationService]
+        exports: [destination_service_1.DestinationService],
     })
 ], DestinationModule);
 exports.DestinationModule = DestinationModule;

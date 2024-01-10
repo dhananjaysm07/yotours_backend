@@ -7,8 +7,8 @@ import { TagModule } from "src/tag/tag.module";
 import { ImageModule } from "src/image/image.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Destination]),TagModule,ImageModule],
+  imports: [TypeOrmModule.forFeature([Destination]), TagModule, ImageModule],
   providers: [DestinationService, DestinationResolver],
-  exports:[DestinationService]
+  exports: [DestinationService],
 })
 export class DestinationModule {}
