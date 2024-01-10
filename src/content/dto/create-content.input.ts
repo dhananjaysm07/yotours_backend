@@ -3,40 +3,49 @@ import { IsString } from "class-validator";
 
 @InputType()
 export class CreateContentInput {
-  @Field()
+  @Field({nullable:true})
   @IsString()
   heroHeading: string;
 
-  @Field()
+  @Field({nullable:true})
   @IsString()
   heroSubheading: string;
 
-  @Field()
+  @Field({nullable:true})
   @IsString()
   heroImage: string;
 
-  @Field(() => [String])
+  @Field(() => [String],{nullable:true})
   @IsString({ each: true })
   footerLinks: string[];
 
-  @Field()
+  @Field({nullable:true})
   @IsString()
   footerLogo: string;
 
-  @Field(() => [String])
+  @Field(() => [String],{nullable:true})
   @IsString({ each: true })
   socialLinks: string[];
 
-  @Field()
+  @Field({nullable:true})
   @IsString()
   tnc: string;
 
-  @Field()
+  @Field({nullable:true})
   @IsString()
   privacy: string;
 
-  @Field()
+  @Field({nullable:true})
   @IsString()
   bokunChannelId: string;
+
+
+  @Field({nullable:true})
+  @IsString()
+  leftDiscountImage: string;
+
+  @Field({nullable:true})
+  @IsString()
+  rightDiscountImage: string;
   
 }

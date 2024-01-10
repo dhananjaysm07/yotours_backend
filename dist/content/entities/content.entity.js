@@ -25,45 +25,55 @@ __decorate([
     __metadata("design:type", String)
 ], Content.prototype, "heroHeading", void 0);
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Content.prototype, "heroSubheading", void 0);
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Content.prototype, "heroImage", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => [String]),
+    (0, graphql_1.Field)(() => [String], { nullable: true }),
     (0, typeorm_1.Column)("simple-array"),
     __metadata("design:type", Array)
 ], Content.prototype, "footerLinks", void 0);
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Content.prototype, "footerLogo", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => [String]),
+    (0, graphql_1.Field)(() => [String], { nullable: true }),
     (0, typeorm_1.Column)("simple-array"),
     __metadata("design:type", Array)
 ], Content.prototype, "socialLinks", void 0);
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Content.prototype, "tnc", void 0);
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Content.prototype, "privacy", void 0);
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Content.prototype, "bokunChannelId", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], Content.prototype, "leftDiscountImage", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], Content.prototype, "rightDiscountImage", void 0);
 Content = __decorate([
     (0, graphql_1.ObjectType)(),
     (0, typeorm_1.Entity)({ name: "Content" })

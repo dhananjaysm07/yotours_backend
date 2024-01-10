@@ -41,5 +41,12 @@ export class UpdateContentInput {
 
   @Field()
   @IsString()
-  bokunChannelId: string;
+  bokunChannelId?: string;
+
+  @Field()
+  @IsString()
+  leftDiscountImage?: string;
+  @Field()
+  @IsString()
+  rightDiscountImage?: string;
 }

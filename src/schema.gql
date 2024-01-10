@@ -196,14 +196,16 @@ type GetFilteredToursResponse {
 type Content {
   id: ID!
   heroHeading: String!
-  heroSubheading: String!
-  heroImage: String!
-  footerLinks: [String!]!
-  footerLogo: String!
-  socialLinks: [String!]!
-  tnc: String!
-  privacy: String!
-  bokunChannelId: String!
+  heroSubheading: String
+  heroImage: String
+  footerLinks: [String!]
+  footerLogo: String
+  socialLinks: [String!]
+  tnc: String
+  privacy: String
+  bokunChannelId: String
+  leftDiscountImage: String
+  rightDiscountImage: String
 }
 
 type Query {
@@ -465,15 +467,17 @@ input UpdateAttractionInput {
 }
 
 input CreateContentInput {
-  heroHeading: String!
-  heroSubheading: String!
-  heroImage: String!
-  footerLinks: [String!]!
-  footerLogo: String!
-  socialLinks: [String!]!
-  tnc: String!
-  privacy: String!
-  bokunChannelId: String!
+  heroHeading: String
+  heroSubheading: String
+  heroImage: String
+  footerLinks: [String!]
+  footerLogo: String
+  socialLinks: [String!]
+  tnc: String
+  privacy: String
+  bokunChannelId: String
+  leftDiscountImage: String
+  rightDiscountImage: String
 }
 
 input UpdateContentInput {
@@ -487,6 +491,8 @@ input UpdateContentInput {
   tnc: String!
   privacy: String!
   bokunChannelId: String!
+  leftDiscountImage: String!
+  rightDiscountImage: String!
 }
 
 input CreateThingInput {

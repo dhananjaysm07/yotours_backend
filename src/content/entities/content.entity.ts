@@ -12,35 +12,45 @@ export class Content {
   @Column()
   heroHeading: string;
 
-  @Field()
+  @Field({nullable:true})
   @Column()
   heroSubheading: string;
 
-  @Field()
+  @Field({nullable:true})
   @Column()
   heroImage: string;
 
-  @Field(() => [String])
+  @Field(() => [String],{nullable:true})
   @Column("simple-array")
   footerLinks: string[];
 
-  @Field()
+  @Field({nullable:true})
   @Column()
   footerLogo: string;
 
-  @Field(() => [String])
+  @Field(() => [String],{nullable:true})
   @Column("simple-array")
   socialLinks: string[];
 
-  @Field()
+  @Field({nullable:true})
   @Column({ nullable: true })
   tnc: string;
 
-  @Field()
+  @Field({nullable:true})
   @Column({ nullable: true })
   privacy: string;
   
-  @Field()
+  @Field({nullable:true})
   @Column({ nullable: true })
   bokunChannelId: string;
+
+  @Field({nullable:true})
+  @Column({ nullable: true })
+  leftDiscountImage: string;
+
+  @Field({nullable:true})
+  @Column({ nullable: true })
+  rightDiscountImage: string;
+
+
 }

@@ -8,5 +8,7 @@ export declare class UpdateContentInput {
     socialLinks?: string[];
     tnc?: string;
     privacy?: string;
-    bokunChannelId: string;
+    bokunChannelId?: string;
+    leftDiscountImage?: string;
+    rightDiscountImage?: string;
 }

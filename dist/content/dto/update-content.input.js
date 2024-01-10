@@ -64,6 +64,16 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], UpdateContentInput.prototype, "bokunChannelId", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UpdateContentInput.prototype, "leftDiscountImage", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UpdateContentInput.prototype, "rightDiscountImage", void 0);
 UpdateContentInput = __decorate([
     (0, graphql_1.InputType)()
 ], UpdateContentInput);

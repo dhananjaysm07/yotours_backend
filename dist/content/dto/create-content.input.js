@@ -15,50 +15,60 @@ const class_validator_1 = require("class-validator");
 let CreateContentInput = class CreateContentInput {
 };
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)({ nullable: true }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateContentInput.prototype, "heroHeading", void 0);
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)({ nullable: true }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateContentInput.prototype, "heroSubheading", void 0);
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)({ nullable: true }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateContentInput.prototype, "heroImage", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => [String]),
+    (0, graphql_1.Field)(() => [String], { nullable: true }),
     (0, class_validator_1.IsString)({ each: true }),
     __metadata("design:type", Array)
 ], CreateContentInput.prototype, "footerLinks", void 0);
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)({ nullable: true }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateContentInput.prototype, "footerLogo", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => [String]),
+    (0, graphql_1.Field)(() => [String], { nullable: true }),
     (0, class_validator_1.IsString)({ each: true }),
     __metadata("design:type", Array)
 ], CreateContentInput.prototype, "socialLinks", void 0);
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)({ nullable: true }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateContentInput.prototype, "tnc", void 0);
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)({ nullable: true }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateContentInput.prototype, "privacy", void 0);
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)({ nullable: true }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateContentInput.prototype, "bokunChannelId", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateContentInput.prototype, "leftDiscountImage", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateContentInput.prototype, "rightDiscountImage", void 0);
 CreateContentInput = __decorate([
     (0, graphql_1.InputType)()
 ], CreateContentInput);

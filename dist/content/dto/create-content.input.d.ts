@@ -8,4 +8,6 @@ export declare class CreateContentInput {
     tnc: string;
     privacy: string;
     bokunChannelId: string;
+    leftDiscountImage: string;
+    rightDiscountImage: string;
 }

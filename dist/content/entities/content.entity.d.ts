@@ -9,4 +9,6 @@ export declare class Content {
     tnc: string;
     privacy: string;
     bokunChannelId: string;
+    leftDiscountImage: string;
+    rightDiscountImage: string;
 }
