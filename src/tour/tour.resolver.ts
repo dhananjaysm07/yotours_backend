@@ -7,6 +7,7 @@ import {
   TourFilterInput,
   GetFilteredToursResponse,
 } from "./dto/filter-tour-input";
+import { CountryAndContinent } from "src/destination/dto/country-continent.dto";
 type deleteReturnType = {
   id: string;
   message: string;
@@ -61,11 +62,8 @@ export class TourResolver {
     return this.tourService.deleteTour(id);
   }
 
-  // @Mutation()
-  // async deleteTour(
-  //   @Args("tourId")
-  //   tourId: string
-  // ): Promise<void> {
-  //   return this.tourService.deleteTour(tourId);
-  // }
+  @Query(() => [CountryAndContinent])
+  async getCountriesAndContinentsForTours(): Promise<CountryAndContinent[]> {
+    return this.tourService.getUniqueCountriesAndContinents();
+  }
 }

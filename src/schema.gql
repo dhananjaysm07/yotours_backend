@@ -193,6 +193,22 @@ type GetFilteredToursResponse {
   totalCount: Int!
 }
 
+type CountryDto {
+  country: String!
+}
+
+type ContinentDto {
+  continent: String!
+}
+
+type CountryAndContinent {
+  country: String!
+  continent: String!
+  destinationCount: Int
+  tourCount: Int
+  attractionCount: Int
+}
+
 type GetFilteredAttractionResponse {
   attractions: [Attraction!]!
   totalCount: Int!
@@ -208,6 +224,8 @@ type Content {
   socialLinks: [String!]
   tnc: String
   privacy: String
+  about: String
+  agent: String
   bokunChannelId: String
   leftDiscountImage: String
   rightDiscountImage: String
@@ -223,14 +241,19 @@ type Query {
   getDestinations: [Destination!]!
   getDestination(id: String!): Destination
   getFilteredDestination(page: Int!, loadCount: Int!, filter: TourFilterInput!): GetFilteredDestinationResponse!
+  getCountries: [CountryDto!]!
+  getContinents: [ContinentDto!]!
+  getCountriesAndContinents: [CountryAndContinent!]!
   getAllTags: [Tag!]!
   getTagById(id: String!): Tag!
   getTours: [Tour!]!
   getFilteredTours(page: Int!, loadCount: Int!, filter: TourFilterInput!): GetFilteredToursResponse!
   findOne(id: String!): Tour!
+  getCountriesAndContinentsForTours: [CountryAndContinent!]!
   getAttractions: [Attraction!]!
   getAttraction(id: String!): Attraction!
   getFilteredAttractions(page: Int!, loadCount: Int!, filter: TourFilterInput!): GetFilteredAttractionResponse!
+  getCountriesAndContinentsForAttractions: [CountryAndContinent!]!
   getContent: Content!
   getThings: [Thing!]!
   getThing(id: String!): Thing!
@@ -244,6 +267,7 @@ input TourFilterInput {
   endDate: String
   tagName: [String!]
   continent: [String!]
+  country: [String!]
 }
 
 type Mutation {
@@ -481,6 +505,8 @@ input CreateContentInput {
   socialLinks: [String!]
   tnc: String
   privacy: String
+  about: String
+  agent: String
   bokunChannelId: String
   leftDiscountImage: String
   rightDiscountImage: String
@@ -496,6 +522,8 @@ input UpdateContentInput {
   socialLinks: [String!]
   tnc: String!
   privacy: String!
+  about: String!
+  agent: String!
   bokunChannelId: String!
   leftDiscountImage: String!
   rightDiscountImage: String!

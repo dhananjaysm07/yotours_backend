@@ -12,3 +12,21 @@ export class GetFilteredDestinationResponse {
   @Field(() => Int)
   totalCount: number;
 }
+
+
+@InputType()
+export class DestinationFilterInput {
+ @Field({ nullable: true })
+  startDate?: string;
+
+  @Field({ nullable: true })
+  endDate?: string;
+
+  @Field(() => [String], { nullable: true })
+  tagName?: string[];
+
+  @Field(() => [String], { nullable: true })
+  continent?: string[];
+
+  
+}

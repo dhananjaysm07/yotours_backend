@@ -20,6 +20,7 @@ const create_attraction_input_1 = require("./dto/create-attraction.input");
 const update_attraction_input_1 = require("./dto/update-attraction.input");
 const attraction_filter_1 = require("./entities/attraction-filter");
 const filter_tour_input_1 = require("../tour/dto/filter-tour-input");
+const country_continent_dto_1 = require("../destination/dto/country-continent.dto");
 let AttractionResolver = class AttractionResolver {
     constructor(attractionService) {
         this.attractionService = attractionService;
@@ -42,6 +43,9 @@ let AttractionResolver = class AttractionResolver {
     }
     deleteAttraction(id) {
         return this.attractionService.deleteAttraction(id);
+    }
+    async getCountriesAndContinentsForAttractions() {
+        return this.attractionService.getUniqueCountriesAndContinents();
     }
 };
 __decorate([
@@ -87,6 +91,12 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], AttractionResolver.prototype, "deleteAttraction", null);
+__decorate([
+    (0, graphql_1.Query)(() => [country_continent_dto_1.CountryAndContinent]),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AttractionResolver.prototype, "getCountriesAndContinentsForAttractions", null);
 AttractionResolver = __decorate([
     (0, graphql_1.Resolver)(() => attraction_entity_1.Attraction),
     __metadata("design:paramtypes", [attraction_service_1.AttractionService])

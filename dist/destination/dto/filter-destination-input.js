@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetFilteredDestinationResponse = void 0;
+exports.DestinationFilterInput = exports.GetFilteredDestinationResponse = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const destination_entity_1 = require("../entities/destination.entity");
 let GetFilteredDestinationResponse = class GetFilteredDestinationResponse {
@@ -26,4 +26,26 @@ GetFilteredDestinationResponse = __decorate([
     (0, graphql_1.ObjectType)()
 ], GetFilteredDestinationResponse);
 exports.GetFilteredDestinationResponse = GetFilteredDestinationResponse;
+let DestinationFilterInput = class DestinationFilterInput {
+};
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], DestinationFilterInput.prototype, "startDate", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], DestinationFilterInput.prototype, "endDate", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => [String], { nullable: true }),
+    __metadata("design:type", Array)
+], DestinationFilterInput.prototype, "tagName", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => [String], { nullable: true }),
+    __metadata("design:type", Array)
+], DestinationFilterInput.prototype, "continent", void 0);
+DestinationFilterInput = __decorate([
+    (0, graphql_1.InputType)()
+], DestinationFilterInput);
+exports.DestinationFilterInput = DestinationFilterInput;
 //# sourceMappingURL=filter-destination-input.js.map

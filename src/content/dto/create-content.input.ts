@@ -37,6 +37,14 @@ export class CreateContentInput {
 
   @Field({nullable:true})
   @IsString()
+  about: string;
+
+  @Field({nullable:true})
+  @IsString()
+  agent: string;
+
+  @Field({nullable:true})
+  @IsString()
   bokunChannelId: string;
 
 

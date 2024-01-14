@@ -20,11 +20,6 @@ DatabaseModule = __decorate([
                 useFactory: async (configService) => ({
                     type: "postgres",
                     url: "postgres://issue_user:k0BgaH5w44to15qIhQWRu6SKVhEhlWZT@dpg-ckmdd8gu1l6c7383q9jg-a.oregon-postgres.render.com/issues_database",
-                    host: configService.get("DB_HOST", "dpg-ckffbhunpffc73f603ig-a"),
-                    port: configService.get("DB_PORT", 5432),
-                    username: configService.get("DB_USERNAME", "jira_clone_user"),
-                    password: configService.get("DB_PASSWORD", "FraeZh9zOgJvt1fRLpU08it9tsKJAvNo"),
-                    database: configService.get("DB_DATABASE", "jira_clone"),
                     entities: ["dist/**/*.entity{.ts,.js}"],
                     synchronize: true,
                     ssl: true,

@@ -139,6 +139,11 @@ export class TourService extends GenericService<Tour> {
           continent: filter.continent,
         });
       }
+      if (filter.country && filter.country.length > 0) {
+        queryBuilder.andWhere("destination.country IN (:...country)", {
+          country: filter.country,
+        });
+      }
 
       // Add more conditions based on your filter parameters
     }
@@ -257,5 +262,25 @@ export class TourService extends GenericService<Tour> {
 
       relations: ["images", "destination", "tag"],
     });
+  }
+
+  async getUniqueCountriesAndContinents(): Promise<
+    { country: string; continent: string; tourCount: number }[]
+  > {
+    const tours = await this.tourRepository
+      .createQueryBuilder("tour")
+      .leftJoinAndSelect("tour.destination", "destination")
+      .select("destination.country", "country")
+      .addSelect("destination.continent", "continent")
+      .addSelect('COUNT(DISTINCT tour.id)', 'tourCount')
+      .where("tour.active = :isActive", { isActive: true })
+      .groupBy("destination.country, destination.continent")
+      .getRawMany();
+
+    return tours.map((item) => ({
+      country: item.country,
+      continent: item.continent,
+      tourCount: parseInt(item.tourCount),
+    }));
   }
 }

@@ -7,6 +7,8 @@ export declare class CreateContentInput {
     socialLinks: string[];
     tnc: string;
     privacy: string;
+    about: string;
+    agent: string;
     bokunChannelId: string;
     leftDiscountImage: string;
     rightDiscountImage: string;

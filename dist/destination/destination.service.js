@@ -125,6 +125,11 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
                     location: filter.location,
                 });
             }
+            if (filter.country && filter.country.length > 0) {
+                queryBuilder.andWhere("entity.country IN (:...country)", {
+                    country: filter.country,
+                });
+            }
             if (filter.priceMin && filter.priceMax) {
                 queryBuilder.andWhere("entity.price BETWEEN :priceMin AND :priceMax", {
                     priceMin: filter.priceMin,
@@ -172,6 +177,39 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
     }
     async findDestinationsByIds(queryRunner, ids) {
         return queryRunner.manager.findBy(destination_entity_1.Destination, { id: (0, typeorm_2.In)(ids) });
+    }
+    async getCountries() {
+        const countries = await this.destinationRepository
+            .createQueryBuilder("destination")
+            .select("DISTINCT destination.country", "country")
+            .getRawMany();
+        return countries.map((c) => ({ country: c.country }));
+    }
+    async getContinents() {
+        const continents = await this.destinationRepository
+            .createQueryBuilder("destination")
+            .select("DISTINCT destination.continent", "continent")
+            .getRawMany();
+        return continents.map((c) => ({ continent: c.continent }));
+    }
+    async getCountriesAndContinents() {
+        try {
+            const result = await this.destinationRepository
+                .createQueryBuilder("destination")
+                .select("destination.country", "country")
+                .addSelect("destination.continent", "continent")
+                .addSelect("COUNT(destination.id)", "destinationCount")
+                .groupBy("destination.country, destination.continent")
+                .getRawMany();
+            return result.map((c) => ({
+                country: c.country,
+                continent: c.continent,
+                destinationCount: parseInt(c.destinationCount),
+            }));
+        }
+        catch (error) {
+            throw new Error("Failed to fetch countries and continents");
+        }
     }
 };
 DestinationService = __decorate([

@@ -22,6 +22,7 @@ const createdestination_input_1 = require("./dto/createdestination.input");
 const updatedestination_input_1 = require("./dto/updatedestination.input");
 const filter_destination_input_1 = require("./dto/filter-destination-input");
 const filter_tour_input_1 = require("../tour/dto/filter-tour-input");
+const country_continent_dto_1 = require("./dto/country-continent.dto");
 let DestinationResolver = class DestinationResolver {
     constructor(destinationService) {
         this.destinationService = destinationService;
@@ -44,6 +45,15 @@ let DestinationResolver = class DestinationResolver {
     }
     async deleteDestination(destinationId) {
         return await this.destinationService.deleteDestination(destinationId);
+    }
+    async getCountries() {
+        return this.destinationService.getCountries();
+    }
+    async getContinents() {
+        return this.destinationService.getContinents();
+    }
+    async getCountriesAndContinents() {
+        return this.destinationService.getCountriesAndContinents();
     }
 };
 __decorate([
@@ -90,6 +100,24 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], DestinationResolver.prototype, "deleteDestination", null);
+__decorate([
+    (0, graphql_1.Query)((returns) => [country_continent_dto_1.CountryDto]),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], DestinationResolver.prototype, "getCountries", null);
+__decorate([
+    (0, graphql_1.Query)((returns) => [country_continent_dto_1.ContinentDto]),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], DestinationResolver.prototype, "getContinents", null);
+__decorate([
+    (0, graphql_1.Query)((returns) => [country_continent_dto_1.CountryAndContinent]),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], DestinationResolver.prototype, "getCountriesAndContinents", null);
 DestinationResolver = __decorate([
     (0, graphql_1.Resolver)(() => destination_entity_1.Destination),
     __metadata("design:paramtypes", [destination_service_1.DestinationService])

@@ -4,6 +4,7 @@ import { CreateAttractionInput } from "./dto/create-attraction.input";
 import { UpdateAttractionInput } from "./dto/update-attraction.input";
 import { GetFilteredAttractionResponse } from "./entities/attraction-filter";
 import { TourFilterInput } from "src/tour/dto/filter-tour-input";
+import { CountryAndContinent } from "src/destination/dto/country-continent.dto";
 export declare class AttractionResolver {
     private readonly attractionService;
     constructor(attractionService: AttractionService);
@@ -15,4 +16,5 @@ export declare class AttractionResolver {
     deleteAttraction(id: string): Promise<{
         id: string;
     }>;
+    getCountriesAndContinentsForAttractions(): Promise<CountryAndContinent[]>;
 }

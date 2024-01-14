@@ -38,6 +38,12 @@ export class UpdateContentInput {
   @Field()
   @IsString()
   privacy?: string;
+  @Field()
+  @IsString()
+  about?: string;
+  @Field()
+  @IsString()
+  agent?: string;
 
   @Field()
   @IsString()

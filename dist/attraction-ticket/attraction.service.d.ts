@@ -16,4 +16,9 @@ export declare class AttractionService extends GenericService<Attraction> {
     }>;
     findAll(): Promise<Attraction[]>;
     findOne(id: string): Promise<Attraction>;
+    getUniqueCountriesAndContinents(): Promise<{
+        country: string;
+        continent: string;
+        attractionCount: number;
+    }[]>;
 }

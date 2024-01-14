@@ -103,6 +103,11 @@ let TourService = class TourService extends filterQueryClass_1.GenericService {
                     continent: filter.continent,
                 });
             }
+            if (filter.country && filter.country.length > 0) {
+                queryBuilder.andWhere("destination.country IN (:...country)", {
+                    country: filter.country,
+                });
+            }
         }
         if (filter && filter.startDate && filter.endDate) {
             queryBuilder.andWhere("entity.fromDate BETWEEN :fromDate AND :toDate", {
@@ -193,6 +198,22 @@ let TourService = class TourService extends filterQueryClass_1.GenericService {
             where: { id: id, active: true },
             relations: ["images", "destination", "tag"],
         });
+    }
+    async getUniqueCountriesAndContinents() {
+        const tours = await this.tourRepository
+            .createQueryBuilder("tour")
+            .leftJoinAndSelect("tour.destination", "destination")
+            .select("destination.country", "country")
+            .addSelect("destination.continent", "continent")
+            .addSelect('COUNT(DISTINCT tour.id)', 'tourCount')
+            .where("tour.active = :isActive", { isActive: true })
+            .groupBy("destination.country, destination.continent")
+            .getRawMany();
+        return tours.map((item) => ({
+            country: item.country,
+            continent: item.continent,
+            tourCount: parseInt(item.tourCount),
+        }));
     }
 };
 TourService = __decorate([

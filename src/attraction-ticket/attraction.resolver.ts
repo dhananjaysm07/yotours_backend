@@ -6,6 +6,7 @@ import { UpdateAttractionDestinationInput } from "./entities/update-att-destinat
 import { UpdateAttractionInput } from "./dto/update-attraction.input";
 import { GetFilteredAttractionResponse } from "./entities/attraction-filter";
 import { TourFilterInput } from "src/tour/dto/filter-tour-input";
+import { CountryAndContinent } from "src/destination/dto/country-continent.dto";
 
 @Resolver(() => Attraction)
 export class AttractionResolver {
@@ -54,11 +55,10 @@ export class AttractionResolver {
     return this.attractionService.deleteAttraction(id);
   }
 
-  // @Mutation()
-  // async deleteAttraction(
-  //   @Args("attractionId")
-  //   attractionId: string
-  // ): Promise<void> {
-  //   return this.attractionService.deleteAttraction(attractionId);
-  // }
+  @Query(() => [CountryAndContinent])
+  async getCountriesAndContinentsForAttractions(): Promise<CountryAndContinent[]> {
+    return this.attractionService.getUniqueCountriesAndContinents();
+  }
+
+  
 }

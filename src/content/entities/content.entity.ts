@@ -39,6 +39,14 @@ export class Content {
   @Field({nullable:true})
   @Column({ nullable: true })
   privacy: string;
+
+  @Field({nullable:true})
+  @Column({ nullable: true })
+  about: string;
+
+  @Field({nullable:true})
+  @Column({ nullable: true })
+  agent: string;
   
   @Field({nullable:true})
   @Column({ nullable: true })
