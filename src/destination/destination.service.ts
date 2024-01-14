@@ -14,6 +14,11 @@ import { Tag } from "src/tag/entities/tag.entity";
 // import { TourFilterInput } from "src/tour/dto/filter-tour-input";
 import { GenericService } from "src/global/filterQueryClass";
 import { TourFilterInput } from "src/tour/dto/filter-tour-input";
+import {
+  ContinentDto,
+  CountryAndContinent,
+  CountryDto,
+} from "./dto/country-continent.dto";
 export class DestinationService extends GenericService<Destination> {
   constructor(
     private dataSource: DataSource,
@@ -192,6 +197,12 @@ export class DestinationService extends GenericService<Destination> {
         });
       }
 
+      if (filter.country && filter.country.length > 0) {
+        queryBuilder.andWhere("entity.country IN (:...country)", {
+          country: filter.country,
+        });
+      }
+
       // Example: Applying price range filter
       if (filter.priceMin && filter.priceMax) {
         queryBuilder.andWhere("entity.price BETWEEN :priceMin AND :priceMax", {
@@ -255,5 +266,44 @@ export class DestinationService extends GenericService<Destination> {
     ids: string[]
   ): Promise<Destination[]> {
     return queryRunner.manager.findBy(Destination, { id: In(ids) });
+  }
+
+  async getCountries(): Promise<CountryDto[]> {
+    const countries = await this.destinationRepository
+      .createQueryBuilder("destination")
+      .select("DISTINCT destination.country", "country")
+      .getRawMany();
+
+    return countries.map((c) => ({ country: c.country }));
+  }
+
+  async getContinents(): Promise<ContinentDto[]> {
+    const continents = await this.destinationRepository
+      .createQueryBuilder("destination")
+      .select("DISTINCT destination.continent", "continent")
+      .getRawMany();
+
+    return continents.map((c) => ({ continent: c.continent }));
+  }
+
+  async getCountriesAndContinents(): Promise<CountryAndContinent[]> {
+    try {
+      const result = await this.destinationRepository
+        .createQueryBuilder("destination")
+        .select("destination.country", "country")
+        .addSelect("destination.continent", "continent")
+        .addSelect("COUNT(destination.id)", "destinationCount")
+        .groupBy("destination.country, destination.continent")
+        .getRawMany();
+
+      return result.map((c) => ({
+        country: c.country,
+        continent: c.continent,
+        destinationCount: parseInt(c.destinationCount),
+      }));
+    } catch (error) {
+      // Handle errors (e.g., log them, throw custom GraphQL error, etc.)
+      throw new Error("Failed to fetch countries and continents");
+    }
   }
 }

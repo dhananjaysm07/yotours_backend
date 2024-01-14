@@ -7,6 +7,7 @@ export declare class TourFilterInput {
     endDate?: string;
     tagName?: string[];
     continent?: string[];
+    country?: string[];
 }
 export declare class GetFilteredToursResponse {
     tours: Tour[];

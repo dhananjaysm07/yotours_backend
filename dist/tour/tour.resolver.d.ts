@@ -3,6 +3,7 @@ import { Tour } from "./entities/tour.entity";
 import { TourService } from "./tour.service";
 import { UpdateTourInput } from "./dto/update-tour.input";
 import { TourFilterInput, GetFilteredToursResponse } from "./dto/filter-tour-input";
+import { CountryAndContinent } from "src/destination/dto/country-continent.dto";
 export declare class TourResolver {
     private readonly tourService;
     constructor(tourService: TourService);
@@ -14,4 +15,5 @@ export declare class TourResolver {
     deleteTour(id: string): Promise<{
         id: string;
     }>;
+    getCountriesAndContinentsForTours(): Promise<CountryAndContinent[]>;
 }

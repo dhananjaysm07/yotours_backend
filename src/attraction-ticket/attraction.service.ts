@@ -138,6 +138,12 @@ export class AttractionService extends GenericService<Attraction> {
         });
       }
 
+      if (filter.country && filter.country.length > 0) {
+        queryBuilder.andWhere("destination.country IN (:...country)", {
+          country: filter.country,
+        });
+      }
+
       // Add more conditions based on your filter parameters
     }
 
@@ -279,5 +285,25 @@ export class AttractionService extends GenericService<Attraction> {
       where: { id: id, active: true },
       relations: ["images", "destination", "tag"],
     });
+  }
+
+  async getUniqueCountriesAndContinents(): Promise<
+    { country: string; continent: string; attractionCount: number }[]
+  > {
+    const attractions = await this.attractionRepository
+      .createQueryBuilder("attraction")
+      .leftJoinAndSelect("attraction.destination", "destination")
+      .select("destination.country", "country")
+      .addSelect("destination.continent", "continent")
+      .addSelect("COUNT(DISTINCT attraction.id)", "attractionCount")
+      .where("attraction.active = :isActive", { isActive: true })
+      .groupBy("destination.country, destination.continent")
+      .getRawMany();
+
+    return attractions.map((item) => ({
+      country: item.country,
+      continent: item.continent,
+      attractionCount: parseInt(item.attractionCount),
+    }));
   }
 }

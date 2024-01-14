@@ -58,6 +58,16 @@ __decorate([
     (0, graphql_1.Field)({ nullable: true }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
+], CreateContentInput.prototype, "about", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateContentInput.prototype, "agent", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
 ], CreateContentInput.prototype, "bokunChannelId", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),

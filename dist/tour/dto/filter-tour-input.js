@@ -42,6 +42,10 @@ __decorate([
     (0, graphql_1.Field)(() => [String], { nullable: true }),
     __metadata("design:type", Array)
 ], TourFilterInput.prototype, "continent", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => [String], { nullable: true }),
+    __metadata("design:type", Array)
+], TourFilterInput.prototype, "country", void 0);
 TourFilterInput = __decorate([
     (0, graphql_1.InputType)()
 ], TourFilterInput);
