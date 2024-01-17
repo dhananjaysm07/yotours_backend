@@ -1,20 +1,62 @@
+// import { ValidationPipe } from "@nestjs/common";
+// import { NestFactory } from "@nestjs/core";
+// import { AppModule } from "./app.module";
+// import * as dotenv from "dotenv";
+// dotenv.config();
+// console.log("server running on", process.env.PORT, process.env.POSTGRES_URL);
+// async function bootstrap() {
+//   const app = await NestFactory.create(AppModule);
+//   app.useGlobalPipes(new ValidationPipe());
+//   app.enableCors({
+//     // origin: ["http://localhost:5173", "http://localhost:3001"], // Specify the frontend origin
+//     origin: "*",
+//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed HTTP methods
+//     credentials: true, // This allows session cookies to be sent back and forth
+//   });
+//   await app.listen(process.env.PORT, "0.0.0.0", () => {
+//     console.log(`Server is running on port ${process.env.PORT}`);
+//   });
+// }
+// bootstrap();
+
 import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
+import { ExpressAdapter } from "@nestjs/platform-express";
 import { AppModule } from "./app.module";
 import * as dotenv from "dotenv";
+import * as fs from "fs";
+import * as https from "https";
+import * as express from "express";
+
 dotenv.config();
 console.log("server running on", process.env.PORT, process.env.POSTGRES_URL);
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.useGlobalPipes(new ValidationPipe());
+
   app.enableCors({
-    // origin: ["http://localhost:5173", "http://localhost:3001"], // Specify the frontend origin
     origin: "*",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed HTTP methods
-    credentials: true, // This allows session cookies to be sent back and forth
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
   });
-  await app.listen(process.env.PORT, "0.0.0.0", () => {
-    console.log(`Server is running on port ${process.env.PORT}`);
+
+  const httpsOptions = {
+    key: fs.readFileSync("/etc/apache2/ssl/backend/private.key"), // Path to your private key
+    cert: fs.readFileSync("/etc/apache2/ssl/backend/certificate.crt"), // Path to your certificate
+  };
+
+  const expressApp = express();
+  expressApp.use(app.getHttpAdapter().getInstance());
+
+  const server = https.createServer(httpsOptions, expressApp);
+
+  const port = process.env.PORT || 3000;
+
+  server.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
   });
 }
+
 bootstrap();
