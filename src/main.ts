@@ -43,8 +43,9 @@ async function bootstrap() {
   });
 
   const httpsOptions = {
-    key: fs.readFileSync("/etc/apache2/ssl/backend/private.key"), // Path to your private key
-    cert: fs.readFileSync("/etc/apache2/ssl/backend/certificate.crt"), // Path to your certificate
+    key: fs.readFileSync("/etc/apache2/ssl/key.txt"), // Path to your private key
+    cert: fs.readFileSync("/etc/apache2/ssl/9660acb64e35aee4.crt"), // Path to your certificate
+    ca: fs.readFileSync("/etc/apache2/ssl/gd_bundle-g2-g1.crt"),
   };
 
   const expressApp = express();
