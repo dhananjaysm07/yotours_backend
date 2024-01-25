@@ -222,6 +222,7 @@ export class DestinationService extends GenericService<Destination> {
           continent: filter.continent,
         });
       }
+      queryBuilder.orderBy("entity.priority");
 
       // Add more conditions based on your filter parameters
     }
@@ -237,6 +238,10 @@ export class DestinationService extends GenericService<Destination> {
   async findAllDestinations(): Promise<Destination[]> {
     return this.destinationRepository.find({
       relations: ["images", "tours", "attractions", "tag", "things"],
+      order: {
+        destinationName: "ASC",
+        priority: "DESC", // or 'DESC' for descending order
+      },
     });
   }
 

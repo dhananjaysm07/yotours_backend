@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Field, ID, ObjectType, Int } from "@nestjs/graphql";
 import {
   Column,
   Entity,
@@ -12,6 +12,7 @@ import { ImageEntity } from "src/image/entities/image.entity";
 import { Tag } from "src/tag/entities/tag.entity";
 import { Attraction } from "src/attraction-ticket/entities/attraction.entity";
 import { Thing } from "src/thing/entities/thing.entity";
+import { Min, Max } from "class-validator";
 
 @ObjectType()
 @Entity({ name: "Destination" })
@@ -74,6 +75,12 @@ export class Destination {
   })
   @Field(() => [ImageEntity])
   images: ImageEntity[];
+
+  @Field((type) => Int, { nullable: true })
+  @Min(1)
+  @Max(100)
+  @Column({ type: "int", nullable: true })
+  priority: number;
 
   @Field(() => Tag, { nullable: true })
   @ManyToOne(() => Tag, (tag) => tag.destinations, {

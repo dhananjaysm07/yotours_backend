@@ -13,4 +13,5 @@ export declare class CreateDestinationInput {
     imageUrls: string[];
     tagId: string;
     introduction: string;
+    priority: number;
 }

@@ -146,6 +146,7 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
                     continent: filter.continent,
                 });
             }
+            queryBuilder.orderBy("entity.priority");
         }
         if (filter && filter.startDate && filter.endDate) {
             queryBuilder.andWhere("entity.fromDate BETWEEN :fromDate AND :toDate", {
@@ -157,6 +158,9 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
     async findAllDestinations() {
         return this.destinationRepository.find({
             relations: ["images", "tours", "attractions", "tag", "things"],
+            order: {
+                priority: "DESC",
+            },
         });
     }
     async findOneDestination(id) {

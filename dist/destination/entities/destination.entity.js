@@ -17,6 +17,7 @@ const image_entity_1 = require("../../image/entities/image.entity");
 const tag_entity_1 = require("../../tag/entities/tag.entity");
 const attraction_entity_1 = require("../../attraction-ticket/entities/attraction.entity");
 const thing_entity_1 = require("../../thing/entities/thing.entity");
+const class_validator_1 = require("class-validator");
 let Destination = class Destination {
 };
 __decorate([
@@ -88,6 +89,13 @@ __decorate([
     (0, graphql_1.Field)(() => [image_entity_1.ImageEntity]),
     __metadata("design:type", Array)
 ], Destination.prototype, "images", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => graphql_1.Int, { nullable: true }),
+    (0, class_validator_1.Min)(1),
+    (0, class_validator_1.Max)(100),
+    (0, typeorm_1.Column)({ type: "int", nullable: true }),
+    __metadata("design:type", Number)
+], Destination.prototype, "priority", void 0);
 __decorate([
     (0, graphql_1.Field)(() => tag_entity_1.Tag, { nullable: true }),
     (0, typeorm_1.ManyToOne)(() => tag_entity_1.Tag, (tag) => tag.destinations, {

@@ -253,6 +253,9 @@ export class TourService extends GenericService<Tour> {
     return this.tourRepository.find({
       where: { active: true },
       relations: ["images", "destination", "tag"],
+      order: {
+        tourTitle: "ASC", // or 'DESC' for descending order
+      },
     });
   }
 
@@ -272,7 +275,7 @@ export class TourService extends GenericService<Tour> {
       .leftJoinAndSelect("tour.destination", "destination")
       .select("destination.country", "country")
       .addSelect("destination.continent", "continent")
-      .addSelect('COUNT(DISTINCT tour.id)', 'tourCount')
+      .addSelect("COUNT(DISTINCT tour.id)", "tourCount")
       .where("tour.active = :isActive", { isActive: true })
       .groupBy("destination.country, destination.continent")
       .getRawMany();

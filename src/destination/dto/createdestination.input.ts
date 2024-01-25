@@ -1,4 +1,4 @@
-import { InputType, Field } from "@nestjs/graphql";
+import { InputType, Field, Int } from "@nestjs/graphql";
 import {
   IsString,
   IsNotEmpty,
@@ -7,6 +7,7 @@ import {
   IsOptional,
   IsUUID,
   IsBoolean,
+  IsInt,
 } from "class-validator";
 import { Type } from "class-transformer";
 
@@ -69,4 +70,8 @@ export class CreateDestinationInput {
   @Field({ defaultValue: "" })
   @IsString()
   introduction: string;
+
+  @Field(() => Int, { nullable: true, defaultValue: 1 }) // Add this line
+  @IsInt()
+  priority: number;
 }

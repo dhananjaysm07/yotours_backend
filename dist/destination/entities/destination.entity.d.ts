@@ -17,6 +17,7 @@ export declare class Destination {
     fromOccasion: string;
     toOccasion: string;
     images: ImageEntity[];
+    priority: number;
     tag: Tag;
     tours: Tour[];
     attractions: Attraction[];

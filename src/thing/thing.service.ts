@@ -196,6 +196,9 @@ export class ThingService {
     return this.thingRepository.find({
       where: { active: true },
       relations: ["images", "destination", "tag"],
+      order: {
+        thingTitle: "ASC", // or 'DESC' for descending order
+      },
     });
   }
 
