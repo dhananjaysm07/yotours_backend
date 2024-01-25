@@ -160,6 +160,7 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
             relations: ["images", "tours", "attractions", "tag", "things"],
             order: {
                 priority: "DESC",
+                destinationName: "ASC",
             },
         });
     }

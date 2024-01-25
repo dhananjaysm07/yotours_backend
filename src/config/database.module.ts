@@ -12,7 +12,8 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         type: "postgres",
-        // url: "postgres://issue_user:k0BgaH5w44to15qIhQWRu6SKVhEhlWZT@dpg-ckmdd8gu1l6c7383q9jg-a.oregon-postgres.render.com/issues_database",
+        // url: "postgres://gotrip_postgres_database_user:6myYJPYRAHDyBuUZcIDDfoHMg4ihK4cA@dpg-cmotdqen7f5s73da69eg-a.oregon-postgres.render.com/gotrip_postgres_database",
+        // url: "postgres://gotrip_postgres_database_user:6myYJPYRAHDyBuUZcIDDfoHMg4ihK4cA@dpg-cmotdqen7f5s73da69eg-a/gotrip_postgres_database",
         // host: configService.get<string>(
         //   "DB_HOST",
         //   "dpg-ckffbhunpffc73f603ig-a"

@@ -93,7 +93,7 @@ __decorate([
     (0, graphql_1.Field)((type) => graphql_1.Int, { nullable: true }),
     (0, class_validator_1.Min)(1),
     (0, class_validator_1.Max)(100),
-    (0, typeorm_1.Column)({ type: "int", nullable: true }),
+    (0, typeorm_1.Column)({ type: "int", nullable: true, default: 1 }),
     __metadata("design:type", Number)
 ], Destination.prototype, "priority", void 0);
 __decorate([

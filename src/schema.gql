@@ -61,6 +61,7 @@ type Destination {
   fromOccasion: String
   toOccasion: String
   images: [ImageEntity!]!
+  priority: Int
   tag: Tag
   tours: [Tour!]!
   attractions: [Attraction!]!
@@ -415,6 +416,7 @@ input CreateDestinationInput {
   imageUrls: [String!]
   tagId: String
   introduction: String! = ""
+  priority: Int = 1
 }
 
 input UpdateDestinationInput {
@@ -432,6 +434,7 @@ input UpdateDestinationInput {
   imageUrls: [String!]
   tagId: String
   introduction: String = ""
+  priority: Int = 1
   destinationId: ID!
 }
 

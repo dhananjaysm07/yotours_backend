@@ -150,6 +150,9 @@ let ThingService = class ThingService {
         return this.thingRepository.find({
             where: { active: true },
             relations: ["images", "destination", "tag"],
+            order: {
+                thingTitle: "ASC",
+            },
         });
     }
     findOne(id) {
