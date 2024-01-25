@@ -239,8 +239,9 @@ export class DestinationService extends GenericService<Destination> {
     return this.destinationRepository.find({
       relations: ["images", "tours", "attractions", "tag", "things"],
       order: {
+        priority: "DESC",
         destinationName: "ASC",
-        priority: "DESC", // or 'DESC' for descending order
+        // or 'DESC' for descending order
       },
     });
   }
