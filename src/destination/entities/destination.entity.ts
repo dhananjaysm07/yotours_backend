@@ -79,7 +79,7 @@ export class Destination {
   @Field((type) => Int, { nullable: true })
   @Min(1)
   @Max(100)
-  @Column({ type: "int", nullable: true })
+  @Column({ type: "int", nullable: true, default: 1 })
   priority: number;
 
   @Field(() => Tag, { nullable: true })
