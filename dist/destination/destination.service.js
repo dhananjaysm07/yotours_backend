@@ -146,7 +146,7 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
                     continent: filter.continent,
                 });
             }
-            queryBuilder.orderBy("entity.priority");
+            queryBuilder.orderBy("entity.priority", "DESC");
         }
         if (filter && filter.startDate && filter.endDate) {
             queryBuilder.andWhere("entity.fromDate BETWEEN :fromDate AND :toDate", {
