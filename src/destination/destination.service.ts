@@ -222,7 +222,7 @@ export class DestinationService extends GenericService<Destination> {
           continent: filter.continent,
         });
       }
-      queryBuilder.orderBy("entity.priority");
+      queryBuilder.orderBy("entity.priority desc");
 
       // Add more conditions based on your filter parameters
     }
