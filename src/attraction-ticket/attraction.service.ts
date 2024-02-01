@@ -109,7 +109,9 @@ export class AttractionService extends GenericService<Attraction> {
       .leftJoinAndSelect("entity.tag", "tag")
       .leftJoinAndSelect("entity.destination", "destination")
       .leftJoinAndSelect("entity.images", "ImageEntity");
-    queryBuilder.andWhere("entity.active = :active", { active: true });
+    queryBuilder.andWhere("entity.active IN (:...activeValues)", {
+      activeValues: filter.activeValues || [true],
+    });
     if (filter) {
       // Example: Applying location filter
       if (filter.location) {
@@ -273,6 +275,31 @@ export class AttractionService extends GenericService<Attraction> {
     }
   }
 
+  async activateAttraction(id: string): Promise<{ id: string }> {
+    // console.log("function called", id);
+    const queryRunner = this.dataSource.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      const tourToDelete = await queryRunner.manager.findOneOrFail(Attraction, {
+        where: { id },
+      });
+      tourToDelete.active = true;
+      await queryRunner.manager.save(Attraction, tourToDelete);
+      // await queryRunner.manager.remove(Tour, tourToDelete);
+
+      await queryRunner.commitTransaction();
+      return { id: tourToDelete.id };
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
   findAll(): Promise<Attraction[]> {
     return this.attractionRepository.find({
       where: { active: true },
@@ -282,7 +309,7 @@ export class AttractionService extends GenericService<Attraction> {
 
   findOne(id: string): Promise<Attraction> {
     return this.attractionRepository.findOne({
-      where: { id: id, active: true },
+      where: { id: id },
       relations: ["images", "destination", "tag"],
     });
   }

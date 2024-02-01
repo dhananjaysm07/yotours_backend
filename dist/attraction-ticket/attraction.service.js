@@ -81,7 +81,9 @@ let AttractionService = class AttractionService extends filterQueryClass_1.Gener
             .leftJoinAndSelect("entity.tag", "tag")
             .leftJoinAndSelect("entity.destination", "destination")
             .leftJoinAndSelect("entity.images", "ImageEntity");
-        queryBuilder.andWhere("entity.active = :active", { active: true });
+        queryBuilder.andWhere("entity.active IN (:...activeValues)", {
+            activeValues: filter.activeValues || [true],
+        });
         if (filter) {
             if (filter.location) {
                 queryBuilder.andWhere("entity.location = :location", {
@@ -189,6 +191,27 @@ let AttractionService = class AttractionService extends filterQueryClass_1.Gener
             await queryRunner.release();
         }
     }
+    async activateAttraction(id) {
+        const queryRunner = this.dataSource.createQueryRunner();
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+        try {
+            const tourToDelete = await queryRunner.manager.findOneOrFail(attraction_entity_1.Attraction, {
+                where: { id },
+            });
+            tourToDelete.active = true;
+            await queryRunner.manager.save(attraction_entity_1.Attraction, tourToDelete);
+            await queryRunner.commitTransaction();
+            return { id: tourToDelete.id };
+        }
+        catch (error) {
+            await queryRunner.rollbackTransaction();
+            throw error;
+        }
+        finally {
+            await queryRunner.release();
+        }
+    }
     findAll() {
         return this.attractionRepository.find({
             where: { active: true },
@@ -197,7 +220,7 @@ let AttractionService = class AttractionService extends filterQueryClass_1.Gener
     }
     findOne(id) {
         return this.attractionRepository.findOne({
-            where: { id: id, active: true },
+            where: { id: id },
             relations: ["images", "destination", "tag"],
         });
     }

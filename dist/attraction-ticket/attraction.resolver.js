@@ -44,6 +44,9 @@ let AttractionResolver = class AttractionResolver {
     deleteAttraction(id) {
         return this.attractionService.deleteAttraction(id);
     }
+    activateAttraction(id) {
+        return this.attractionService.activateAttraction(id);
+    }
     async getCountriesAndContinentsForAttractions() {
         return this.attractionService.getUniqueCountriesAndContinents();
     }
@@ -91,6 +94,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], AttractionResolver.prototype, "deleteAttraction", null);
+__decorate([
+    (0, graphql_1.Mutation)(() => attraction_entity_1.Attraction),
+    __param(0, (0, graphql_1.Args)("id")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], AttractionResolver.prototype, "activateAttraction", null);
 __decorate([
     (0, graphql_1.Query)(() => [country_continent_dto_1.CountryAndContinent]),
     __metadata("design:type", Function),

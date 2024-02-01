@@ -18,10 +18,11 @@ const typeorm_1 = require("@nestjs/typeorm");
 const bcrypt_1 = require("bcrypt");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("./entities/user.entity");
-const role_enum_1 = require("./enums/role.enum");
+const role_entity_1 = require("../role/entities/role.entity");
 let UserService = class UserService {
-    constructor(userRepo) {
+    constructor(userRepo, roleRepo) {
         this.userRepo = userRepo;
+        this.roleRepo = roleRepo;
     }
     async findAll() {
         return await this.userRepo.find();
@@ -42,7 +43,7 @@ let UserService = class UserService {
         return user;
     }
     async create(createUserInput) {
-        let { firstName, lastName, email, password, username } = createUserInput;
+        let { firstName, lastName, email, password, username, roleIds } = createUserInput;
         const userInDb = await this.findOne({ email });
         const usernameInDb = await this.findOne({ username });
         if (userInDb) {
@@ -51,10 +52,12 @@ let UserService = class UserService {
         if (usernameInDb) {
             throw new common_1.BadRequestException("this is username alredy exist");
         }
-        const userCount = await this.userRepo.count();
-        let roles = [role_enum_1.Role.User];
-        if (userCount == 0) {
-            roles.push(role_enum_1.Role.Admin);
+        const roles = await this.roleRepo
+            .createQueryBuilder("role")
+            .where("role.id IN (:...roleIds)", { roleIds })
+            .getMany();
+        if (!roles || roles.length !== roleIds.length) {
+            throw new common_1.BadRequestException("Invalid role id provided");
         }
         const user = new user_entity_1.User();
         user.email = email;
@@ -86,7 +89,9 @@ let UserService = class UserService {
 UserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(1, (0, typeorm_1.InjectRepository)(role_entity_1.Role)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository])
 ], UserService);
 exports.UserService = UserService;
 //# sourceMappingURL=user.service.js.map

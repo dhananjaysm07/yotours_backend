@@ -55,10 +55,15 @@ export class AttractionResolver {
     return this.attractionService.deleteAttraction(id);
   }
 
-  @Query(() => [CountryAndContinent])
-  async getCountriesAndContinentsForAttractions(): Promise<CountryAndContinent[]> {
-    return this.attractionService.getUniqueCountriesAndContinents();
+  @Mutation(() => Attraction)
+  activateAttraction(@Args("id") id: string) {
+    return this.attractionService.activateAttraction(id);
   }
 
-  
+  @Query(() => [CountryAndContinent])
+  async getCountriesAndContinentsForAttractions(): Promise<
+    CountryAndContinent[]
+  > {
+    return this.attractionService.getUniqueCountriesAndContinents();
+  }
 }

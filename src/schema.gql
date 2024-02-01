@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Role {
+  role: String!
+  permissions: [String!]!
+}
+
 type User {
   id: ID!
   username: String!
@@ -9,7 +14,7 @@ type User {
   email: String!
   firstName: String!
   lastName: String!
-  roles: [String!]!
+  roles: [Role!]!
 }
 
 type StatusResult {
@@ -232,9 +237,15 @@ type Content {
   rightDiscountImage: String
 }
 
+type GetFilteredThingResponse {
+  things: [Thing!]!
+  totalCount: Int!
+}
+
 type Query {
   findAllUser: [User!]!
   findUserById(id: String!): User!
+  getAllPermissions: [String!]!
   getPackageGeneral(id: String!): PackageGeneral!
   getPackageGeneralWithItineraries(id: String!): PackageGeneral!
   getPackageGeneralWithLocationDetails(id: String!): PackageGeneral!
@@ -257,7 +268,9 @@ type Query {
   getCountriesAndContinentsForAttractions: [CountryAndContinent!]!
   getContent: Content!
   getThings: [Thing!]!
+  getThingsForCMS: [Thing!]!
   getThing(id: String!): Thing!
+  getFilteredThings(page: Int!, loadCount: Int!, filter: TourFilterInput!): GetFilteredThingResponse!
 }
 
 input TourFilterInput {
@@ -269,12 +282,15 @@ input TourFilterInput {
   tagName: [String!]
   continent: [String!]
   country: [String!]
+  activeValues: [Boolean!]
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): StatusResult!
   removeUser(id: String!): StatusResult!
+  createRole(createRoleInput: CreateRoleDto!): Role!
+  editRole(id: String!, editRoleInput: EditRoleDto!): Role!
   register(registerInput: RegisterInput!): AuthenticatedPayload!
   login(loginInput: LoginInput!): AuthenticatedPayload!
   createPackageGeneral(createPackageGeneralInput: CreatePackageGeneralInput!): PackageGeneral!
@@ -292,14 +308,17 @@ type Mutation {
   createTour(createTourInput: CreateTourInput!): Tour!
   updateTour(updateTourInput: UpdateTourInput!): Tour!
   deleteTour(id: String!): Tour!
+  activateTour(id: String!): Tour!
   createAttraction(createAttractionInput: CreateAttractionInput!): Attraction!
   updateAttraction(updateAttractionInput: UpdateAttractionInput!): Attraction!
   deleteAttraction(id: String!): Attraction!
+  activateAttraction(id: String!): Attraction!
   createContent(createContentInput: CreateContentInput!): Content!
   updateContent(updateContentInput: UpdateContentInput!): Content!
   createThing(createThingInput: CreateThingInput!): Thing!
   updateThing(updateThingInput: UpdateThingInput!): Thing!
   deleteThing(id: String!): Thing!
+  activateThing(id: String!): Thing!
 }
 
 input CreateUserInput {
@@ -308,6 +327,7 @@ input CreateUserInput {
   email: String!
   firstName: String!
   lastName: String!
+  roleIds: [String!]
 }
 
 input UpdateUserInput {
@@ -316,12 +336,24 @@ input UpdateUserInput {
   lastName: String!
 }
 
+input CreateRoleDto {
+  role: String!
+  permissions: [String!]!
+}
+
+input EditRoleDto {
+  role: String
+  permissions: [String!]
+  roleID: ID!
+}
+
 input RegisterInput {
   username: String!
   password: String!
   email: String!
   firstName: String!
   lastName: String!
+  roleIds: [String!]
 }
 
 input LoginInput {

@@ -1,4 +1,4 @@
-import { Role } from "../enums/role.enum";
+import { Role } from "src/role/entities/role.entity";
 export declare class User {
     id: string;
     username: string;

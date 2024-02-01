@@ -12,8 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const typeorm_1 = require("typeorm");
-const role_enum_1 = require("../enums/role.enum");
 const bcrypt = require("bcrypt");
+const role_entity_1 = require("../../role/entities/role.entity");
 let User = class User {
     async hashPassword() {
         if (this.password) {
@@ -23,17 +23,17 @@ let User = class User {
 };
 __decorate([
     (0, graphql_1.Field)((type) => graphql_1.ID),
-    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
+    (0, typeorm_1.PrimaryGeneratedColumn)("uuid"),
     __metadata("design:type", String)
 ], User.prototype, "id", void 0);
 __decorate([
     (0, graphql_1.Field)(),
-    (0, typeorm_1.Column)({ type: 'varchar', unique: true }),
+    (0, typeorm_1.Column)({ type: "varchar", unique: true }),
     __metadata("design:type", String)
 ], User.prototype, "username", void 0);
 __decorate([
     (0, graphql_1.Field)(),
-    (0, typeorm_1.Column)({ type: 'varchar', nullable: false }),
+    (0, typeorm_1.Column)({ type: "varchar", nullable: false }),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
@@ -45,27 +45,28 @@ __decorate([
 ], User.prototype, "hashPassword", null);
 __decorate([
     (0, graphql_1.Field)(),
-    (0, typeorm_1.Column)({ type: 'varchar', unique: true, nullable: false }),
+    (0, typeorm_1.Column)({ type: "varchar", unique: true, nullable: false }),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
 __decorate([
     (0, graphql_1.Field)(),
-    (0, typeorm_1.Column)({ type: 'varchar' }),
+    (0, typeorm_1.Column)({ type: "varchar" }),
     __metadata("design:type", String)
 ], User.prototype, "firstName", void 0);
 __decorate([
     (0, graphql_1.Field)(),
-    (0, typeorm_1.Column)({ type: 'varchar' }),
+    (0, typeorm_1.Column)({ type: "varchar" }),
     __metadata("design:type", String)
 ], User.prototype, "lastName", void 0);
 __decorate([
-    (0, graphql_1.Field)((type) => [String]),
-    (0, typeorm_1.Column)({ type: 'enum', array: true, enum: role_enum_1.Role, nullable: false, default: [] }),
+    (0, graphql_1.Field)((type) => [role_entity_1.Role]),
+    (0, typeorm_1.ManyToMany)(() => role_entity_1.Role, { eager: true }),
+    (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
 ], User.prototype, "roles", void 0);
 User = __decorate([
     (0, graphql_1.ObjectType)(),
-    (0, typeorm_1.Entity)({ name: 'User' })
+    (0, typeorm_1.Entity)({ name: "User" })
 ], User);
 exports.User = User;
 //# sourceMappingURL=user.entity.js.map

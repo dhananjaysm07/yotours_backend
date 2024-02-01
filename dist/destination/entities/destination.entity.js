@@ -27,7 +27,7 @@ __decorate([
 ], Destination.prototype, "id", void 0);
 __decorate([
     (0, graphql_1.Field)((type) => String),
-    (0, typeorm_1.Column)({ type: "varchar", nullable: false, unique: true }),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Destination.prototype, "destinationName", void 0);
 __decorate([

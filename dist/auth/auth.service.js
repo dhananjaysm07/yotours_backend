@@ -31,14 +31,14 @@ let AuthService = class AuthService {
         }
     }
     async register(registerInput) {
-        const { firstName, lastName, email, username, password, } = registerInput;
+        const { firstName, lastName, email, username, password, roleIds } = registerInput;
         const user = await this.userService.findOne({ email });
         const userByUsername = await this.userService.findOne({ username });
         if (user) {
-            throw new common_1.BadRequestException('this email alredy joined');
+            throw new common_1.BadRequestException("this email alredy joined");
         }
         if (userByUsername) {
-            throw new common_1.BadRequestException('this username alredy joined');
+            throw new common_1.BadRequestException("this username alredy joined");
         }
         const newUser = await this.userService.create({
             firstName,
@@ -46,18 +46,20 @@ let AuthService = class AuthService {
             email,
             username,
             password,
+            roleIds,
         });
         const payload = {
-            roles: newUser.roles,
             sub: newUser.id,
             username: newUser.username,
         };
-        return { access_token: await this._signToken(payload), role: newUser.roles };
+        return {
+            access_token: await this._signToken(payload),
+            role: newUser.roles,
+        };
     }
     async login(loginInput) {
         const user = await this.userService.findByLogin(loginInput);
         const payload = {
-            roles: user.roles,
             sub: user.id,
             username: user.username,
         };
@@ -66,7 +68,7 @@ let AuthService = class AuthService {
     async validateUser({ sub }) {
         const user = await this.userService.findOne({ id: sub });
         if (!user) {
-            throw new common_1.UnauthorizedException('Invalid token');
+            throw new common_1.UnauthorizedException("Invalid token");
         }
         return user;
     }

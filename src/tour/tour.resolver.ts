@@ -62,6 +62,11 @@ export class TourResolver {
     return this.tourService.deleteTour(id);
   }
 
+  @Mutation(() => Tour)
+  activateTour(@Args("id") id: string) {
+    return this.tourService.activateTour(id);
+  }
+
   @Query(() => [CountryAndContinent])
   async getCountriesAndContinentsForTours(): Promise<CountryAndContinent[]> {
     return this.tourService.getUniqueCountriesAndContinents();

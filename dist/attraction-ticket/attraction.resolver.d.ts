@@ -16,5 +16,8 @@ export declare class AttractionResolver {
     deleteAttraction(id: string): Promise<{
         id: string;
     }>;
+    activateAttraction(id: string): Promise<{
+        id: string;
+    }>;
     getCountriesAndContinentsForAttractions(): Promise<CountryAndContinent[]>;
 }

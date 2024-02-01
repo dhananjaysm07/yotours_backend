@@ -19,9 +19,9 @@ let RoleGuard = class RoleGuard {
     }
     canActivate(context) {
         const ctx = graphql_1.GqlExecutionContext.create(context);
-        const requiredRoles = this.reflector.getAllAndOverride('roles', [
+        const requiredRoles = this.reflector.getAllAndOverride("roles", [
             ctx.getHandler(),
-            ctx.getClass()
+            ctx.getClass(),
         ]);
         if (!requiredRoles) {
             return true;

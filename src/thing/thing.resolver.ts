@@ -1,8 +1,10 @@
-import { Resolver, Mutation, Args, Query } from "@nestjs/graphql";
+import { Resolver, Mutation, Args, Query, Int } from "@nestjs/graphql";
 import { Thing } from "./entities/thing.entity";
 import { ThingService } from "./thing.service";
 import { CreateThingInput } from "./dto/create-thing.input";
 import { UpdateThingInput } from "./dto/update-thing.input";
+import { TourFilterInput } from "src/tour/dto/filter-tour-input";
+import { GetFilteredThingResponse } from "./dto/filter-thing-input";
 
 @Resolver(() => Thing)
 export class ThingResolver {
@@ -16,6 +18,11 @@ export class ThingResolver {
   @Query(() => [Thing])
   async getThings(): Promise<Thing[]> {
     return this.thingService.findAll();
+  }
+
+  @Query(() => [Thing])
+  async getThingsForCMS(): Promise<Thing[]> {
+    return this.thingService.findAllForCMS();
   }
 
   @Query(() => Thing)
@@ -34,6 +41,25 @@ export class ThingResolver {
   @Mutation(() => Thing)
   deleteThing(@Args("id") id: string) {
     return this.thingService.deleteThing(id);
+  }
+
+  @Mutation(() => Thing)
+  activateThing(@Args("id") id: string) {
+    return this.thingService.activateThing(id);
+  }
+
+  @Query(() => GetFilteredThingResponse)
+  async getFilteredThings(
+    @Args("page", { type: () => Int }) page: number,
+    @Args("loadCount", { type: () => Int }) loadCount: number,
+    @Args("filter") filter: TourFilterInput
+  ): Promise<GetFilteredThingResponse> {
+    const { data, count } = await this.thingService.getAllFiltered(
+      filter,
+      page,
+      loadCount
+    );
+    return { things: data, totalCount: count };
   }
   // @Mutation()
   // async deleteAttraction(

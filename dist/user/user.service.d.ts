@@ -4,10 +4,12 @@ import { FindOptionsWhere, Repository } from "typeorm";
 import { CreateUserInput } from "./dto/create-user.input";
 import { UpdateUserInput } from "./dto/update-user.input";
 import { User } from "./entities/user.entity";
+import { Role } from "src/role/entities/role.entity";
 type Where = FindOptionsWhere<User>;
 export declare class UserService {
     private readonly userRepo;
-    constructor(userRepo: Repository<User>);
+    private readonly roleRepo;
+    constructor(userRepo: Repository<User>, roleRepo: Repository<Role>);
     findAll(): Promise<User[]>;
     findOne(where: Where): Promise<User>;
     findByLogin(loginInput: LoginInput): Promise<User>;

@@ -4,4 +4,5 @@ export declare class RegisterInput {
     email: string;
     firstName: string;
     lastName: string;
+    roleIds: string[];
 }

@@ -14,6 +14,9 @@ export declare class TourService extends GenericService<Tour> {
     deleteTour(id: string): Promise<{
         id: string;
     }>;
+    activateTour(id: string): Promise<{
+        id: string;
+    }>;
     findAll(): Promise<Tour[]>;
     findOne(id: string): Promise<Tour>;
     getUniqueCountriesAndContinents(): Promise<{

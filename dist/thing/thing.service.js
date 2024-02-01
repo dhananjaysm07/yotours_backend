@@ -19,8 +19,10 @@ const image_entity_1 = require("../image/entities/image.entity");
 const destination_entity_1 = require("../destination/entities/destination.entity");
 const tag_entity_1 = require("../tag/entities/tag.entity");
 const thing_entity_1 = require("./entities/thing.entity");
-let ThingService = class ThingService {
+const filterQueryClass_1 = require("../global/filterQueryClass");
+let ThingService = class ThingService extends filterQueryClass_1.GenericService {
     constructor(dataSource, thingRepository) {
+        super(thingRepository);
         this.dataSource = dataSource;
         this.thingRepository = thingRepository;
     }
@@ -125,6 +127,19 @@ let ThingService = class ThingService {
             console.log("Query runner released");
         }
     }
+    applyFilters(queryBuilder, filter) {
+        queryBuilder
+            .leftJoinAndSelect("entity.tag", "tag")
+            .leftJoinAndSelect("entity.images", "ImageEntity")
+            .leftJoinAndSelect("entity.destination", "destination");
+        if (filter) {
+            if (filter.tagName && filter.tagName.length > 0) {
+                queryBuilder.andWhere("tag.name IN (:...tagNames)", {
+                    tagNames: filter.tagName,
+                });
+            }
+        }
+    }
     async deleteThing(id) {
         const queryRunner = this.dataSource.createQueryRunner();
         await queryRunner.connect();
@@ -146,6 +161,35 @@ let ThingService = class ThingService {
             await queryRunner.release();
         }
     }
+    async activateThing(id) {
+        const queryRunner = this.dataSource.createQueryRunner();
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+        try {
+            const thingToDelete = await queryRunner.manager.findOneOrFail(thing_entity_1.Thing, {
+                where: { id },
+            });
+            thingToDelete.active = true;
+            await queryRunner.manager.save(thing_entity_1.Thing, thingToDelete);
+            await queryRunner.commitTransaction();
+            return { id: thingToDelete.id };
+        }
+        catch (error) {
+            await queryRunner.rollbackTransaction();
+            throw error;
+        }
+        finally {
+            await queryRunner.release();
+        }
+    }
+    findAllForCMS() {
+        return this.thingRepository.find({
+            relations: ["images", "destination", "tag"],
+            order: {
+                thingTitle: "ASC",
+            },
+        });
+    }
     findAll() {
         return this.thingRepository.find({
             where: { active: true },
@@ -157,7 +201,7 @@ let ThingService = class ThingService {
     }
     findOne(id) {
         return this.thingRepository.findOne({
-            where: { id: id, active: true },
+            where: { id: id },
             relations: ["images", "destination", "tag"],
         });
     }

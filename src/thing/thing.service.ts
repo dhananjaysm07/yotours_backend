@@ -1,18 +1,22 @@
 import { InjectRepository } from "@nestjs/typeorm";
-import { DataSource, Repository } from "typeorm";
+import { DataSource, Repository, SelectQueryBuilder } from "typeorm";
 import { ImageEntity } from "src/image/entities/image.entity";
 import { Destination } from "src/destination/entities/destination.entity";
 import { Tag } from "src/tag/entities/tag.entity";
 import { Thing } from "./entities/thing.entity";
 import { CreateThingInput } from "./dto/create-thing.input";
 import { UpdateThingInput } from "./dto/update-thing.input";
+import { TourFilterInput } from "src/tour/dto/filter-tour-input";
+import { GenericService } from "src/global/filterQueryClass";
 
-export class ThingService {
+export class ThingService extends GenericService<Thing> {
   constructor(
     private dataSource: DataSource,
     @InjectRepository(Thing)
     private thingRepository: Repository<Thing>
-  ) {}
+  ) {
+    super(thingRepository);
+  }
 
   async createThing(createThingInput: CreateThingInput): Promise<Thing> {
     const queryRunner = this.dataSource.createQueryRunner();
@@ -167,6 +171,63 @@ export class ThingService {
     }
   }
 
+  protected applyFilters(
+    queryBuilder: SelectQueryBuilder<Thing>,
+    filter: TourFilterInput
+  ): void {
+    queryBuilder
+      .leftJoinAndSelect("entity.tag", "tag")
+      // .leftJoinAndSelect("entity.destination", "destination")
+      .leftJoinAndSelect("entity.images", "ImageEntity")
+      .leftJoinAndSelect("entity.destination", "destination");
+
+    if (filter) {
+      // Example: Applying location filter
+      // if (filter.location) {
+      //   queryBuilder.andWhere("entity.country = :location", {
+      //     location: filter.location,
+      //   });
+      // }
+
+      // if (filter.country && filter.country.length > 0) {
+      //   queryBuilder.andWhere("entity.country IN (:...country)", {
+      //     country: filter.country,
+      //   });
+      // }
+
+      // // Example: Applying price range filter
+      // if (filter.priceMin && filter.priceMax) {
+      //   queryBuilder.andWhere("entity.price BETWEEN :priceMin AND :priceMax", {
+      //     priceMin: filter.priceMin,
+      //     priceMax: filter.priceMax,
+      //   });
+      // }
+
+      if (filter.tagName && filter.tagName.length > 0) {
+        queryBuilder.andWhere("tag.name IN (:...tagNames)", {
+          tagNames: filter.tagName,
+        });
+      }
+
+      // if (filter.continent && filter.continent.length > 0) {
+      //   queryBuilder.andWhere("entity.continent IN (:...continent)", {
+      //     continent: filter.continent,
+      //   });
+      // }
+      // queryBuilder.orderBy("entity.priority", "DESC");
+
+      // Add more conditions based on your filter parameters
+    }
+
+    // Example: Applying date range filter
+    // if (filter && filter.startDate && filter.endDate) {
+    //   queryBuilder.andWhere("entity.fromDate BETWEEN :fromDate AND :toDate", {
+    //     fromDate: filter.startDate,
+    //     toDate: filter.endDate,
+    //   });
+    // }
+  }
+
   async deleteThing(id: string): Promise<{ id: string }> {
     // console.log("function called", id);
     const queryRunner = this.dataSource.createQueryRunner();
@@ -192,6 +253,40 @@ export class ThingService {
     }
   }
 
+  async activateThing(id: string): Promise<{ id: string }> {
+    // console.log("function called", id);
+    const queryRunner = this.dataSource.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      const thingToDelete = await queryRunner.manager.findOneOrFail(Thing, {
+        where: { id },
+      });
+      thingToDelete.active = true;
+      await queryRunner.manager.save(Thing, thingToDelete);
+      // await queryRunner.manager.remove(Tour, tourToDelete);
+
+      await queryRunner.commitTransaction();
+      return { id: thingToDelete.id };
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  findAllForCMS(): Promise<Thing[]> {
+    return this.thingRepository.find({
+      relations: ["images", "destination", "tag"],
+      order: {
+        thingTitle: "ASC", // or 'DESC' for descending order
+      },
+    });
+  }
+
   findAll(): Promise<Thing[]> {
     return this.thingRepository.find({
       where: { active: true },
@@ -204,8 +299,7 @@ export class ThingService {
 
   findOne(id: string): Promise<Thing> {
     return this.thingRepository.findOne({
-      where: { id: id, active: true },
-
+      where: { id: id },
       relations: ["images", "destination", "tag"],
     });
   }

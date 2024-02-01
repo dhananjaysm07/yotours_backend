@@ -15,5 +15,8 @@ export declare class TourResolver {
     deleteTour(id: string): Promise<{
         id: string;
     }>;
+    activateTour(id: string): Promise<{
+        id: string;
+    }>;
     getCountriesAndContinentsForTours(): Promise<CountryAndContinent[]>;
 }

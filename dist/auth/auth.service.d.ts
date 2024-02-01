@@ -11,11 +11,11 @@ export declare class AuthService {
     private _comparePassword;
     register(registerInput: RegisterInput): Promise<{
         access_token: string;
-        role: import("../user/enums/role.enum").Role[];
+        role: import("../role/entities/role.entity").Role[];
     }>;
     login(loginInput: LoginInput): Promise<{
         access_token: string;
-        role: import("../user/enums/role.enum").Role[];
+        role: import("../role/entities/role.entity").Role[];
     }>;
     validateUser({ sub }: JwtPayload): Promise<import("../user/entities/user.entity").User>;
 }

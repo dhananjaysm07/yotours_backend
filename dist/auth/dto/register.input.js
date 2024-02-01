@@ -40,6 +40,13 @@ __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], RegisterInput.prototype, "lastName", void 0);
+__decorate([
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.ArrayNotEmpty)(),
+    (0, class_validator_1.ArrayUnique)(),
+    (0, graphql_1.Field)(() => [String], { nullable: true }),
+    __metadata("design:type", Array)
+], RegisterInput.prototype, "roleIds", void 0);
 RegisterInput = __decorate([
     (0, graphql_1.InputType)()
 ], RegisterInput);

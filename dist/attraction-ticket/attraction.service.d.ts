@@ -14,6 +14,9 @@ export declare class AttractionService extends GenericService<Attraction> {
     deleteAttraction(id: string): Promise<{
         id: string;
     }>;
+    activateAttraction(id: string): Promise<{
+        id: string;
+    }>;
     findAll(): Promise<Attraction[]>;
     findOne(id: string): Promise<Attraction>;
     getUniqueCountriesAndContinents(): Promise<{

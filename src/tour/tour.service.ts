@@ -8,6 +8,7 @@ import { ImageEntity } from "src/image/entities/image.entity";
 import { UpdateTourInput } from "./dto/update-tour.input";
 import { GenericService } from "src/global/filterQueryClass";
 import { TourFilterInput } from "./dto/filter-tour-input";
+import { Role } from "src/role/entities/role.entity";
 
 export class TourService extends GenericService<Tour> {
   constructor(
@@ -111,7 +112,10 @@ export class TourService extends GenericService<Tour> {
       .leftJoinAndSelect("entity.tag", "tag")
       .leftJoinAndSelect("entity.destination", "destination")
       .leftJoinAndSelect("entity.images", "ImageEntity");
-    queryBuilder.andWhere("entity.active = :active", { active: true });
+
+    queryBuilder.andWhere("entity.active IN (:...activeValues)", {
+      activeValues: filter.activeValues || [true],
+    });
     if (filter) {
       // Example: Applying location filter
       if (filter.location) {
@@ -247,6 +251,30 @@ export class TourService extends GenericService<Tour> {
       await queryRunner.release();
     }
   }
+  async activateTour(id: string): Promise<{ id: string }> {
+    // console.log("function called", id);
+    const queryRunner = this.dataSource.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      const tourToDelete = await queryRunner.manager.findOneOrFail(Tour, {
+        where: { id },
+      });
+      tourToDelete.active = true;
+      await queryRunner.manager.save(Tour, tourToDelete);
+      // await queryRunner.manager.remove(Tour, tourToDelete);
+
+      await queryRunner.commitTransaction();
+      return { id: tourToDelete.id };
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
 
   findAll(): Promise<Tour[]> {
     // console.log("find all function");
@@ -261,8 +289,7 @@ export class TourService extends GenericService<Tour> {
 
   findOne(id: string): Promise<Tour> {
     return this.tourRepository.findOne({
-      where: { id: id, active: true },
-
+      where: { id: id },
       relations: ["images", "destination", "tag"],
     });
   }

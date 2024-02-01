@@ -11,7 +11,8 @@ import { FindOptionsWhere, Repository } from "typeorm";
 import { CreateUserInput } from "./dto/create-user.input";
 import { UpdateUserInput } from "./dto/update-user.input";
 import { User } from "./entities/user.entity";
-import { Role } from "./enums/role.enum";
+import { Role } from "src/role/entities/role.entity";
+// import { Role } from "./enums/role.enum";
 
 type Where = FindOptionsWhere<User>;
 
@@ -19,7 +20,9 @@ type Where = FindOptionsWhere<User>;
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepo: Repository<User>
+    private readonly userRepo: Repository<User>,
+    @InjectRepository(Role)
+    private readonly roleRepo: Repository<Role>
   ) {}
 
   async findAll(): Promise<User[]> {
@@ -49,7 +52,8 @@ export class UserService {
   }
 
   async create(createUserInput: CreateUserInput): Promise<User> {
-    let { firstName, lastName, email, password, username } = createUserInput;
+    let { firstName, lastName, email, password, username, roleIds } =
+      createUserInput;
 
     const userInDb = await this.findOne({ email });
     const usernameInDb = await this.findOne({ username });
@@ -63,11 +67,13 @@ export class UserService {
     }
 
     // add admin role to first user registration
-    const userCount: number = await this.userRepo.count();
-    let roles: Role[] = [Role.User];
+    const roles: Role[] = await this.roleRepo
+      .createQueryBuilder("role")
+      .where("role.id IN (:...roleIds)", { roleIds })
+      .getMany();
 
-    if (userCount == 0) {
-      roles.push(Role.Admin);
+    if (!roles || roles.length !== roleIds.length) {
+      throw new BadRequestException("Invalid role id provided");
     }
 
     const user = new User();
@@ -77,7 +83,6 @@ export class UserService {
     user.firstName = firstName;
     user.lastName = lastName;
     user.roles = roles;
-
     return this.userRepo.save(user);
   }
 

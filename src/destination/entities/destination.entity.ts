@@ -22,7 +22,7 @@ export class Destination {
   id: string;
 
   @Field((type) => String)
-  @Column({ type: "varchar", nullable: false, unique: true })
+  @Column()
   destinationName: string;
 
   @Field((type) => String)

@@ -22,6 +22,7 @@ const tour_module_1 = require("./tour/tour.module");
 const attraction_module_1 = require("./attraction-ticket/attraction.module");
 const content_module_1 = require("./content/content.module");
 const thing_module_1 = require("./thing/thing.module");
+const role_module_1 = require("./role/role.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -44,6 +45,7 @@ AppModule = __decorate([
             attraction_module_1.AttractionModule,
             content_module_1.ContentModule,
             thing_module_1.ThingModule,
+            role_module_1.RoleModule,
         ],
         providers: [],
     })
