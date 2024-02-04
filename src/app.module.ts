@@ -13,7 +13,7 @@ import { TourModule } from "./tour/tour.module";
 import { AttractionModule } from "./attraction-ticket/attraction.module";
 import { ContentModule } from "./content/content.module";
 import { ThingModule } from "./thing/thing.module";
-import { RoleModule } from "./role/role.module";
+// import { RoleModule } from "./role/role.module";
 @Module({
   imports: [
     DatabaseModule,
@@ -33,7 +33,7 @@ import { RoleModule } from "./role/role.module";
     AttractionModule,
     ContentModule,
     ThingModule,
-    RoleModule,
+    // RoleModule,
   ],
   providers: [],
 })
