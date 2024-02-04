@@ -2,11 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Role {
-  role: String!
-  permissions: [String!]!
-}
-
 type User {
   id: ID!
   username: String!
@@ -14,13 +9,18 @@ type User {
   email: String!
   firstName: String!
   lastName: String!
-  roles: [Role!]!
+  roles: [String!]!
 }
 
 type StatusResult {
   message: String!
   success: Boolean!
   id: ID!
+}
+
+type Role {
+  role: String!
+  permissions: [String!]!
 }
 
 type AuthenticatedPayload {
@@ -246,6 +246,7 @@ type Query {
   findAllUser: [User!]!
   findUserById(id: String!): User!
   getAllPermissions: [String!]!
+  getRoles: [Role!]!
   getPackageGeneral(id: String!): PackageGeneral!
   getPackageGeneralWithItineraries(id: String!): PackageGeneral!
   getPackageGeneralWithLocationDetails(id: String!): PackageGeneral!

@@ -6,10 +6,10 @@ export declare class AuthResolver {
     constructor(authServise: AuthService);
     register(registerInput: RegisterInput): Promise<{
         access_token: string;
-        role: import("../role/entities/role.entity").Role[];
+        role: import("../user/enums/role.enum").Role[];
     }>;
     login(loginInput: LoginInput): Promise<{
         access_token: string;
-        role: import("../role/entities/role.entity").Role[];
+        role: import("../user/enums/role.enum").Role[];
     }>;
 }

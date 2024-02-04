@@ -12,8 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const typeorm_1 = require("typeorm");
+const role_enum_1 = require("../enums/role.enum");
 const bcrypt = require("bcrypt");
-const role_entity_1 = require("../../role/entities/role.entity");
 let User = class User {
     async hashPassword() {
         if (this.password) {
@@ -59,9 +59,14 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "lastName", void 0);
 __decorate([
-    (0, graphql_1.Field)((type) => [role_entity_1.Role]),
-    (0, typeorm_1.ManyToMany)(() => role_entity_1.Role, { eager: true }),
-    (0, typeorm_1.JoinTable)(),
+    (0, graphql_1.Field)((type) => [String]),
+    (0, typeorm_1.Column)({
+        type: "enum",
+        array: true,
+        enum: role_enum_1.Role,
+        nullable: false,
+        default: [],
+    }),
     __metadata("design:type", Array)
 ], User.prototype, "roles", void 0);
 User = __decorate([

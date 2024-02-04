@@ -52,20 +52,12 @@ let UserService = class UserService {
         if (usernameInDb) {
             throw new common_1.BadRequestException("this is username alredy exist");
         }
-        const roles = await this.roleRepo
-            .createQueryBuilder("role")
-            .where("role.id IN (:...roleIds)", { roleIds })
-            .getMany();
-        if (!roles || roles.length !== roleIds.length) {
-            throw new common_1.BadRequestException("Invalid role id provided");
-        }
         const user = new user_entity_1.User();
         user.email = email;
         user.username = username;
         user.password = password;
         user.firstName = firstName;
         user.lastName = lastName;
-        user.roles = roles;
         return this.userRepo.save(user);
     }
     async update(user, updateUserInput) {
