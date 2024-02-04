@@ -28,6 +28,7 @@ export class RoleService {
 
   getAllPermissions(): string[] {
     // Directly use the values from the enum
+    console.log("roles");
     const permissionValues: string[] = Object.values(PermissionValue);
     return permissionValues;
   }
