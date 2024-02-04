@@ -31,4 +31,8 @@ export class RoleService {
     const permissionValues: string[] = Object.values(PermissionValue);
     return permissionValues;
   }
+
+  async getRoles(): Promise<Role[]> {
+    return this.roleRepository.find({});
+  }
 }

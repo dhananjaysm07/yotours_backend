@@ -9,9 +9,9 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-// import { Role } from "../enums/role.enum";
+import { Role } from "../enums/role.enum";
 import * as bcrypt from "bcrypt";
-import { Role } from "src/role/entities/role.entity";
+// import { Role } from "src/role/entities/role.entity";
 
 @ObjectType()
 @Entity({ name: "User" })
@@ -49,17 +49,17 @@ export class User {
   @Column({ type: "varchar" })
   lastName: string;
 
-  @Field((type) => [Role])
-  @ManyToMany(() => Role, { eager: true }) // Many Users can have Many Roles
-  @JoinTable()
+  // @Field((type) => [Role])
+  // @ManyToMany(() => Role, { eager: true }) // Many Users can have Many Roles
+  // @JoinTable()
+  // roles: Role[];
+  @Field((type) => [String])
+  @Column({
+    type: "enum",
+    array: true,
+    enum: Role,
+    nullable: false,
+    default: [],
+  })
   roles: Role[];
-  //   @Field((type) => [String])
-  //   @Column({
-  //     type: "enum",
-  //     array: true,
-  //     enum: Role,
-  //     nullable: false,
-  //     default: [],
-  //   })
-  //   roles: Role[];
 }

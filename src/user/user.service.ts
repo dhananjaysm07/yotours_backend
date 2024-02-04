@@ -67,14 +67,14 @@ export class UserService {
     }
 
     // add admin role to first user registration
-    const roles: Role[] = await this.roleRepo
-      .createQueryBuilder("role")
-      .where("role.id IN (:...roleIds)", { roleIds })
-      .getMany();
+    // const roles: Role[] = await this.roleRepo
+    //   .createQueryBuilder("role")
+    //   .where("role.id IN (:...roleIds)", { roleIds })
+    //   .getMany();
 
-    if (!roles || roles.length !== roleIds.length) {
-      throw new BadRequestException("Invalid role id provided");
-    }
+    // if (!roles || roles.length !== roleIds.length) {
+    //   throw new BadRequestException("Invalid role id provided");
+    // }
 
     const user = new User();
     user.email = email;
@@ -82,7 +82,7 @@ export class UserService {
     user.password = password;
     user.firstName = firstName;
     user.lastName = lastName;
-    user.roles = roles;
+    // user.roles = roles;
     return this.userRepo.save(user);
   }
 

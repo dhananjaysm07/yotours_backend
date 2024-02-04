@@ -29,4 +29,9 @@ export class RoleResolver {
   getAllPermissions(): string[] {
     return this.roleService.getAllPermissions();
   }
+
+  @Query(() => [Role])
+  async getRoles(): Promise<Role[]> {
+    return this.roleService.getRoles();
+  }
 }
