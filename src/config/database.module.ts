@@ -27,10 +27,13 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
         // database: configService.get<string>("DB_DATABASE", "jira_clone"),
         ///////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////
-        host: configService.get<string>("DB_HOST", "135.125.239.45"), // Replace with your actual environment variable names
+        host: configService.get<string>("DB_HOST", "localhost"), // Replace with your actual environment variable names
         port: configService.get<number>("DB_PORT", 5432),
         username: configService.get<string>("DB_USERNAME", "postgres"),
-        password: configService.get<string>("DB_PASSWORD", "mypassword"),
+        password: configService.get<string>(
+          "DB_PASSWORD",
+          process.env.POSTGRES_PASSWORD_PRODUCTION
+        ),
         database: configService.get<string>("DB_DATABASE", "yotours"),
         entities: ["dist/**/*.entity{.ts,.js}"],
         synchronize: true,

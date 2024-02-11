@@ -1,6 +1,6 @@
 // src/tour/dto/create-tour.input.ts
 
-import { Field, InputType, Float, ID } from "@nestjs/graphql";
+import { Field, InputType, Float, ID, ObjectType } from "@nestjs/graphql";
 import {
   IsArray,
   IsNotEmpty,
