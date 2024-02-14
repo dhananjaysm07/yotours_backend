@@ -2,19 +2,19 @@ import { InputType, Field, ID, Int } from "@nestjs/graphql";
 import { IsString, IsOptional, IsUUID, IsArray, IsInt } from "class-validator";
 
 @InputType()
-export class CreateThingInput {
+export class CreateCarInput {
   @Field()
   @IsString()
-  thingTitle: string;
+  carTitle: string;
 
   @Field()
   @IsString()
-  thingDescription: string;
+  carDescription: string;
 
   @Field({ nullable: true })
   @IsOptional()
   @IsString()
-  thingHyperlink?: string;
+  carHyperlink?: string;
 
   // Assuming that images are created separately and then related by ID
   @Field(() => [String], { nullable: true })

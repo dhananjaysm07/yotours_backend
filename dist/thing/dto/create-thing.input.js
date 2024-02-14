@@ -46,6 +46,11 @@ __decorate([
     (0, class_validator_1.IsUUID)(),
     __metadata("design:type", String)
 ], CreateThingInput.prototype, "destinationId", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true, defaultValue: 1 }),
+    (0, class_validator_1.IsInt)(),
+    __metadata("design:type", Number)
+], CreateThingInput.prototype, "priority", void 0);
 CreateThingInput = __decorate([
     (0, graphql_1.InputType)()
 ], CreateThingInput);

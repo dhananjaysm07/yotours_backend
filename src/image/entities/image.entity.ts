@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 import { Attraction } from "src/attraction-ticket/entities/attraction.entity";
+import { Car } from "src/car/entities/car.entity";
 import { Destination } from "src/destination/entities/destination.entity";
 import { Thing } from "src/thing/entities/thing.entity";
 import { Tour } from "src/tour/entities/tour.entity";
@@ -21,9 +22,12 @@ export class ImageEntity {
   tour: Tour;
   @ManyToOne(() => Attraction, (attraction) => attraction.images)
   attraction: Attraction;
-  
+
   @ManyToOne(() => Thing, (thing) => thing.images)
   thing: Thing;
+
+  @ManyToOne(() => Car, (car) => car.images)
+  car: Car;
 
   // If an image belongs to one tour
   @ManyToOne(() => Destination, (destination) => destination.images)

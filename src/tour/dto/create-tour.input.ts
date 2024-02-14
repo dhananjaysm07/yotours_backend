@@ -1,8 +1,9 @@
 // src/tour/dto/create-tour.input.ts
 
-import { Field, InputType, Float, ID, ObjectType } from "@nestjs/graphql";
+import { Field, InputType, Float, ID, ObjectType, Int } from "@nestjs/graphql";
 import {
   IsArray,
+  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -46,4 +47,8 @@ export class CreateTourInput {
 
   @Field(() => ID, { nullable: true })
   tagId?: string;
+
+  @Field(() => Int, { nullable: true, defaultValue: 1 }) // Add this line
+  @IsInt()
+  priority: number;
 }

@@ -5,4 +5,5 @@ export declare class CreateThingInput {
     imageUrls?: string[];
     tagId?: string;
     destinationId: string;
+    priority: number;
 }

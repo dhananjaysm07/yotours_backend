@@ -15,6 +15,7 @@ const typeorm_1 = require("typeorm");
 const tag_entity_1 = require("../../tag/entities/tag.entity");
 const image_entity_1 = require("../../image/entities/image.entity");
 const destination_entity_1 = require("../../destination/entities/destination.entity");
+const class_validator_1 = require("class-validator");
 let Attraction = class Attraction {
 };
 __decorate([
@@ -78,6 +79,13 @@ __decorate([
     (0, typeorm_1.Column)({ type: "boolean", default: true }),
     __metadata("design:type", Boolean)
 ], Attraction.prototype, "active", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => graphql_1.Int, { nullable: true }),
+    (0, class_validator_1.Min)(1),
+    (0, class_validator_1.Max)(100),
+    (0, typeorm_1.Column)({ type: "int", nullable: true, default: 1 }),
+    __metadata("design:type", Number)
+], Attraction.prototype, "priority", void 0);
 Attraction = __decorate([
     (0, graphql_1.ObjectType)(),
     (0, typeorm_1.Entity)({ name: "Attraction" })

@@ -13,4 +13,5 @@ export declare class Tour {
     images: ImageEntity[];
     tag: Tag;
     destination: Destination;
+    priority: number;
 }

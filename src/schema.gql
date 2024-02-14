@@ -39,6 +39,7 @@ type Tour {
   images: [ImageEntity!]!
   tag: Tag
   destination: Destination!
+  priority: Int
 }
 
 type Thing {
@@ -50,6 +51,7 @@ type Thing {
   tag: Tag
   destination: Destination!
   active: Boolean!
+  priority: Int
 }
 
 type Destination {
@@ -91,6 +93,7 @@ type Attraction {
   tag: Tag
   destination: Destination!
   active: Boolean!
+  priority: Int
 }
 
 type Tag {
@@ -492,6 +495,7 @@ input CreateTourInput {
   imageUrls: [String!]
   destinationId: ID!
   tagId: ID
+  priority: Int = 1
 }
 
 input UpdateTourInput {
@@ -504,6 +508,7 @@ input UpdateTourInput {
   imageUrls: [String!]
   destinationId: ID
   tagId: ID
+  priority: Int = 1
   tourId: ID!
 }
 
@@ -517,6 +522,7 @@ input CreateAttractionInput {
   destinationId: ID!
   tagId: ID
   attractionBokunId: String!
+  priority: Int = 1
 }
 
 input UpdateAttractionInput {
@@ -529,6 +535,7 @@ input UpdateAttractionInput {
   destinationId: ID
   tagId: ID
   attractionBokunId: String
+  priority: Int = 1
   attractionId: ID!
 }
 
@@ -572,6 +579,7 @@ input CreateThingInput {
   imageUrls: [String!]
   tagId: ID
   destinationId: ID!
+  priority: Int = 1
 }
 
 input UpdateThingInput {
@@ -581,5 +589,6 @@ input UpdateThingInput {
   imageUrls: [String!]
   tagId: ID
   destinationId: ID
+  priority: Int = 1
   thingId: ID!
 }

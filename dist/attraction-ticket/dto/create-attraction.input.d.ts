@@ -8,4 +8,5 @@ export declare class CreateAttractionInput {
     destinationId: string;
     tagId?: string;
     attractionBokunId: string;
+    priority: number;
 }

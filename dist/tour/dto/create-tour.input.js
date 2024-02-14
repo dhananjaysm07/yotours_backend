@@ -58,6 +58,11 @@ __decorate([
     (0, graphql_1.Field)(() => graphql_1.ID, { nullable: true }),
     __metadata("design:type", String)
 ], CreateTourInput.prototype, "tagId", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true, defaultValue: 1 }),
+    (0, class_validator_1.IsInt)(),
+    __metadata("design:type", Number)
+], CreateTourInput.prototype, "priority", void 0);
 CreateTourInput = __decorate([
     (0, graphql_1.InputType)()
 ], CreateTourInput);

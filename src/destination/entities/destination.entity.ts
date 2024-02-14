@@ -13,6 +13,7 @@ import { Tag } from "src/tag/entities/tag.entity";
 import { Attraction } from "src/attraction-ticket/entities/attraction.entity";
 import { Thing } from "src/thing/entities/thing.entity";
 import { Min, Max } from "class-validator";
+import { Car } from "src/car/entities/car.entity";
 
 @ObjectType()
 @Entity({ name: "Destination" })
@@ -106,4 +107,8 @@ export class Destination {
   @Field(() => [Thing])
   @OneToMany(() => Thing, (thing) => thing.destination, { eager: true })
   things: Thing[];
+
+  @Field(() => [Car])
+  @OneToMany(() => Car, (car) => car.destination, { eager: true })
+  cars: Car[];
 }

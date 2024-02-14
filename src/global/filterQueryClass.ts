@@ -24,7 +24,7 @@ export abstract class GenericService<T> {
 
     // Extend this method to apply specific joins or conditions for each entity
     this.applyFilters(queryBuilder, filter);
-
+    queryBuilder.orderBy("entity.priority", "DESC");
     // Apply common conditions
     // queryBuilder.andWhere("entity.active = :active", { active: true });
     const count = await queryBuilder.getCount();

@@ -8,4 +8,5 @@ export declare class CreateTourInput {
     imageUrls?: string[];
     destinationId: string;
     tagId?: string;
+    priority: number;
 }

@@ -13,4 +13,5 @@ export declare class Attraction {
     tag: Tag;
     destination: Destination;
     active: boolean;
+    priority: number;
 }

@@ -10,4 +10,5 @@ export declare class Thing {
     tag: Tag;
     destination: Destination;
     active: boolean;
+    priority: number;
 }

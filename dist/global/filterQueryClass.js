@@ -11,6 +11,7 @@ class GenericService {
         const skip = (page - 1) * take;
         const queryBuilder = this.repository.createQueryBuilder("entity");
         this.applyFilters(queryBuilder, filter);
+        queryBuilder.orderBy("entity.priority", "DESC");
         const count = await queryBuilder.getCount();
         queryBuilder.skip(skip).take(take);
         const data = await queryBuilder.getMany();

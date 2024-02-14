@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Field, ID, Int, ObjectType } from "@nestjs/graphql";
 import {
   Column,
   Entity,
@@ -9,6 +9,7 @@ import {
 import { Tag } from "src/tag/entities/tag.entity";
 import { ImageEntity } from "src/image/entities/image.entity";
 import { Destination } from "src/destination/entities/destination.entity";
+import { Max, Min } from "class-validator";
 
 @ObjectType()
 @Entity({ name: "Attraction" })
@@ -63,4 +64,10 @@ export class Attraction {
   @Field((type) => Boolean)
   @Column({ type: "boolean", default: true })
   active: boolean;
+
+  @Field((type) => Int, { nullable: true })
+  @Min(1)
+  @Max(100)
+  @Column({ type: "int", nullable: true, default: 1 })
+  priority: number;
 }

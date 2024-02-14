@@ -12,25 +12,25 @@ import { Destination } from "src/destination/entities/destination.entity";
 import { Max, Min } from "class-validator";
 
 @ObjectType()
-@Entity({ name: "Thing" })
-export class Thing {
+@Entity({ name: "Car" })
+export class Car {
   @Field((type) => ID!)
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Field((type) => String)
   @Column({ type: "varchar", nullable: false })
-  thingTitle: string;
+  carTitle: string;
 
   @Field((type) => String)
   @Column({ type: "varchar", nullable: false })
-  thingDescription: string;
+  carDescription: string;
 
   @Field((type) => String, { nullable: true })
   @Column({ type: "text", nullable: true })
-  thingHyperlink: string;
+  carHyperlink: string;
 
-  @OneToMany(() => ImageEntity, (image) => image.thing, {
+  @OneToMany(() => ImageEntity, (image) => image.car, {
     eager: true, // if you want to automatically load images with the tour
     cascade: true, // if you want to automatically save images when saving a tour
   })
@@ -38,10 +38,10 @@ export class Thing {
   images: ImageEntity[];
 
   @Field(() => Tag, { nullable: true })
-  @ManyToOne(() => Tag, (tag) => tag.things)
+  @ManyToOne(() => Tag, (tag) => tag.cars)
   tag: Tag;
 
-  @ManyToOne(() => Destination, (destination) => destination.things, {})
+  @ManyToOne(() => Destination, (destination) => destination.cars, {})
   @Field(() => Destination)
   destination: Destination;
 
