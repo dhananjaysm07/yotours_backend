@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageEntity = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const attraction_entity_1 = require("../../attraction-ticket/entities/attraction.entity");
+const car_entity_1 = require("../../car/entities/car.entity");
 const destination_entity_1 = require("../../destination/entities/destination.entity");
 const thing_entity_1 = require("../../thing/entities/thing.entity");
 const tour_entity_1 = require("../../tour/entities/tour.entity");
@@ -40,6 +41,10 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => thing_entity_1.Thing, (thing) => thing.images),
     __metadata("design:type", thing_entity_1.Thing)
 ], ImageEntity.prototype, "thing", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => car_entity_1.Car, (car) => car.images),
+    __metadata("design:type", car_entity_1.Car)
+], ImageEntity.prototype, "car", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => destination_entity_1.Destination, (destination) => destination.images),
     __metadata("design:type", destination_entity_1.Destination)

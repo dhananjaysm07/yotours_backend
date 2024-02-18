@@ -74,6 +74,19 @@ type Destination {
   attractions: [Attraction!]!
   introduction: String
   things: [Thing!]!
+  cars: [Car!]!
+}
+
+type Car {
+  id: ID!
+  carTitle: String!
+  carDescription: String!
+  carHyperlink: String
+  images: [ImageEntity!]!
+  tag: Tag
+  destination: Destination!
+  active: Boolean!
+  priority: Int
 }
 
 type ImageEntity {
@@ -245,6 +258,11 @@ type GetFilteredThingResponse {
   totalCount: Int!
 }
 
+type GetFilteredCarResponse {
+  cars: [Car!]!
+  totalCount: Int!
+}
+
 type Query {
   findAllUser: [User!]!
   findUserById(id: String!): User!
@@ -275,6 +293,10 @@ type Query {
   getThingsForCMS: [Thing!]!
   getThing(id: String!): Thing!
   getFilteredThings(page: Int!, loadCount: Int!, filter: TourFilterInput!): GetFilteredThingResponse!
+  getCars: [Car!]!
+  getCarsForCMS: [Car!]!
+  getCar(id: String!): Car!
+  getFilteredCars(page: Int!, loadCount: Int!, filter: TourFilterInput!): GetFilteredCarResponse!
 }
 
 input TourFilterInput {
@@ -323,6 +345,10 @@ type Mutation {
   updateThing(updateThingInput: UpdateThingInput!): Thing!
   deleteThing(id: String!): Thing!
   activateThing(id: String!): Thing!
+  createCar(createCarInput: CreateCarInput!): Car!
+  updateCar(updateCarInput: UpdateCarInput!): Car!
+  deleteCar(id: String!): Car!
+  activateCar(id: String!): Car!
 }
 
 input CreateUserInput {
@@ -591,4 +617,25 @@ input UpdateThingInput {
   destinationId: ID
   priority: Int = 1
   thingId: ID!
+}
+
+input CreateCarInput {
+  carTitle: String!
+  carDescription: String!
+  carHyperlink: String
+  imageUrls: [String!]
+  tagId: ID
+  destinationId: ID!
+  priority: Int = 1
+}
+
+input UpdateCarInput {
+  carTitle: String
+  carDescription: String
+  carHyperlink: String
+  imageUrls: [String!]
+  tagId: ID
+  destinationId: ID
+  priority: Int = 1
+  carId: ID!
 }

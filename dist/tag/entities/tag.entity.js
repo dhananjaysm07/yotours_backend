@@ -46,6 +46,10 @@ __decorate([
     __metadata("design:type", Array)
 ], Tag.prototype, "things", void 0);
 __decorate([
+    (0, typeorm_1.OneToMany)(() => thing_entity_1.Thing, (thing) => thing.tag),
+    __metadata("design:type", Array)
+], Tag.prototype, "cars", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)(() => destination_entity_1.Destination, (destination) => destination.tag),
     __metadata("design:type", Array)
 ], Tag.prototype, "destinations", void 0);
