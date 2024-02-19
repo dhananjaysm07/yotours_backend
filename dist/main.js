@@ -4,10 +4,16 @@ const common_1 = require("@nestjs/common");
 const core_1 = require("@nestjs/core");
 const app_module_1 = require("./app.module");
 const dotenv = require("dotenv");
+const fs = require("fs");
 dotenv.config();
 console.log("server running on", process.env.PORT, process.env.POSTGRES_URL);
+const httpsOptions = {
+    key: fs.readFileSync("./ssl/key.txt"),
+    cert: fs.readFileSync("./ssl/9660acb64e35aee4.pem"),
+    ca: fs.readFileSync("./ssl/gd_bundle-g2-g1.crt"),
+};
 async function bootstrap() {
-    const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    const app = await core_1.NestFactory.create(app_module_1.AppModule, { httpsOptions });
     app.useGlobalPipes(new common_1.ValidationPipe());
     app.enableCors({
         origin: "*",
