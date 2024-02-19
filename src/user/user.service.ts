@@ -11,8 +11,8 @@ import { FindOptionsWhere, Repository } from "typeorm";
 import { CreateUserInput } from "./dto/create-user.input";
 import { UpdateUserInput } from "./dto/update-user.input";
 import { User } from "./entities/user.entity";
-import { Role } from "src/role/entities/role.entity";
-// import { Role } from "./enums/role.enum";
+// import { Role } from "src/role/entities/role.entity";
+import { Role } from "./enums/role.enum";
 
 type Where = FindOptionsWhere<User>;
 
@@ -20,9 +20,7 @@ type Where = FindOptionsWhere<User>;
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepo: Repository<User>,
-    @InjectRepository(Role)
-    private readonly roleRepo: Repository<Role>
+    private readonly userRepo: Repository<User> // @InjectRepository(Role) // private readonly roleRepo: Repository<Role>
   ) {}
 
   async findAll(): Promise<User[]> {

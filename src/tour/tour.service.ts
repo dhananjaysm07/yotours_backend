@@ -8,7 +8,7 @@ import { ImageEntity } from "src/image/entities/image.entity";
 import { UpdateTourInput } from "./dto/update-tour.input";
 import { GenericService } from "src/global/filterQueryClass";
 import { TourFilterInput } from "./dto/filter-tour-input";
-import { Role } from "src/role/entities/role.entity";
+// import { Role } from "src/role/entities/role.entity";
 
 export class TourService extends GenericService<Tour> {
   constructor(

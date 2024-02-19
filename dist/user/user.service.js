@@ -18,11 +18,9 @@ const typeorm_1 = require("@nestjs/typeorm");
 const bcrypt_1 = require("bcrypt");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("./entities/user.entity");
-const role_entity_1 = require("../role/entities/role.entity");
 let UserService = class UserService {
-    constructor(userRepo, roleRepo) {
+    constructor(userRepo) {
         this.userRepo = userRepo;
-        this.roleRepo = roleRepo;
     }
     async findAll() {
         return await this.userRepo.find();
@@ -81,9 +79,7 @@ let UserService = class UserService {
 UserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
-    __param(1, (0, typeorm_1.InjectRepository)(role_entity_1.Role)),
-    __metadata("design:paramtypes", [typeorm_2.Repository,
-        typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository])
 ], UserService);
 exports.UserService = UserService;
 //# sourceMappingURL=user.service.js.map

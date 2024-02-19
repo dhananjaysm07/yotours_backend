@@ -18,11 +18,6 @@ type StatusResult {
   id: ID!
 }
 
-type Role {
-  role: String!
-  permissions: [String!]!
-}
-
 type AuthenticatedPayload {
   access_token: String!
 }
@@ -266,8 +261,6 @@ type GetFilteredCarResponse {
 type Query {
   findAllUser: [User!]!
   findUserById(id: String!): User!
-  getAllPermissions: [String!]!
-  getRoles: [Role!]!
   getPackageGeneral(id: String!): PackageGeneral!
   getPackageGeneralWithItineraries(id: String!): PackageGeneral!
   getPackageGeneralWithLocationDetails(id: String!): PackageGeneral!
@@ -315,8 +308,6 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): StatusResult!
   removeUser(id: String!): StatusResult!
-  createRole(createRoleInput: CreateRoleDto!): Role!
-  editRole(id: String!, editRoleInput: EditRoleDto!): Role!
   register(registerInput: RegisterInput!): AuthenticatedPayload!
   login(loginInput: LoginInput!): AuthenticatedPayload!
   createPackageGeneral(createPackageGeneralInput: CreatePackageGeneralInput!): PackageGeneral!
@@ -364,17 +355,6 @@ input UpdateUserInput {
   password: String!
   firstName: String!
   lastName: String!
-}
-
-input CreateRoleDto {
-  role: String!
-  permissions: [String!]!
-}
-
-input EditRoleDto {
-  role: String
-  permissions: [String!]
-  roleID: ID!
 }
 
 input RegisterInput {
