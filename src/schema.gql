@@ -190,9 +190,11 @@ type PackageGeneral {
   id: ID!
   title: String!
   type: String!
-  dates: [DateDetails!]!
   summary: String!
   currentStep: Float!
+  inclusion: [String!]!
+  exclusion: [String!]!
+  dates: [DateDetails!]!
   destinations: [Destination!]!
   highlights: [Highlight!]!
   photos: [Photo!]!
@@ -372,13 +374,28 @@ input LoginInput {
 }
 
 input CreatePackageGeneralInput {
+  id: String
   title: String!
   type: String!
   summary: String!
   currentStep: Float!
+  inclusion: [String!]!
+  exclusion: [String!]!
+  dates: [DateDetailsInput!]!
   destinationIds: [ID!]!
   highlights: [HighlightInput!]!
   photos: [PhotoInput!]!
+}
+
+input DateDetailsInput {
+  bookingFromDate: String!
+  bookingToDate: String!
+  travelDates: [TravelDateInput!]!
+}
+
+input TravelDateInput {
+  fromDate: String!
+  toDate: String!
 }
 
 input HighlightInput {

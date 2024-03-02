@@ -36,14 +36,6 @@ __decorate([
     __metadata("design:type", String)
 ], PackageGeneral.prototype, "type", void 0);
 __decorate([
-    (0, graphql_1.Field)((type) => [datedetails_entity_1.DateDetails]),
-    (0, typeorm_1.OneToMany)(() => datedetails_entity_1.DateDetails, (date) => date.packageGeneral, {
-        cascade: true,
-        eager: true,
-    }),
-    __metadata("design:type", Array)
-], PackageGeneral.prototype, "dates", void 0);
-__decorate([
     (0, graphql_1.Field)((type) => String),
     (0, typeorm_1.Column)({ type: "text", nullable: false }),
     __metadata("design:type", String)
@@ -61,6 +53,24 @@ __decorate([
     (0, typeorm_1.Column)({ type: "int", default: 1 }),
     __metadata("design:type", Number)
 ], PackageGeneral.prototype, "currentStep", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => [String]),
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    __metadata("design:type", Array)
+], PackageGeneral.prototype, "inclusion", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => [String]),
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    __metadata("design:type", Array)
+], PackageGeneral.prototype, "exclusion", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => [datedetails_entity_1.DateDetails]),
+    (0, typeorm_1.OneToMany)(() => datedetails_entity_1.DateDetails, (date) => date.packageGeneral, {
+        cascade: true,
+        eager: true,
+    }),
+    __metadata("design:type", Array)
+], PackageGeneral.prototype, "dates", void 0);
 __decorate([
     (0, graphql_1.Field)((type) => [destination_entity_1.Destination]),
     (0, typeorm_1.ManyToMany)(() => destination_entity_1.Destination),

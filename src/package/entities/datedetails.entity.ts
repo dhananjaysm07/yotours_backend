@@ -7,10 +7,10 @@ import {
 } from "typeorm";
 import { TravelDate } from "./travel-date.entity";
 import { PackageGeneral } from "./general.entity";
-import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Field, ID, InputType, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()
-@Entity({name: "DateDetails" })
+@Entity({ name: "DateDetails" })
 export class DateDetails {
   @Field((type) => ID!)
   @PrimaryGeneratedColumn("uuid")
@@ -34,3 +34,5 @@ export class DateDetails {
   @ManyToOne(() => PackageGeneral, (packageGeneral) => packageGeneral.dates)
   packageGeneral: PackageGeneral;
 }
+
+//////////////////////////////////////////////////////////////////

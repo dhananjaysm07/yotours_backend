@@ -15,6 +15,8 @@ import { HotelDetails } from "./entities/hotel.entity";
 import { Sight } from "./entities/sight.entity";
 import { InterCity } from "./entities/intercity.entity";
 import { HotelArray } from "./entities/hotelarray.entity";
+import { DateDetails } from "./entities/datedetails.entity";
+import { TravelDate } from "./entities/travel-date.entity";
 @Injectable()
 export class PackageGeneralService {
   constructor(
@@ -29,6 +31,10 @@ export class PackageGeneralService {
     private photoRepository: Repository<Photo>,
     @InjectRepository(Itinerary)
     private itineraryRepository: Repository<Itinerary>,
+    @InjectRepository(DateDetails)
+    private dateRepository: Repository<DateDetails>,
+    @InjectRepository(TravelDate)
+    private travelRepository: Repository<TravelDate>,
     private destinationService: DestinationService
   ) {}
 
@@ -39,12 +45,22 @@ export class PackageGeneralService {
 
     await queryRunner.connect();
     await queryRunner.startTransaction();
-
+    console.log("create package function called");
     try {
-      const newPackageGeneral = this.packageGeneralRepository.create(
-        createPackageGeneralInput
-      );
+      let newPackageGeneral: PackageGeneral;
+      // console.log("id----", createPackageGeneralInput.id);
+      if (createPackageGeneralInput.id) {
+        newPackageGeneral = await queryRunner.manager.findOneOrFail(
+          PackageGeneral,
+          { where: { id: createPackageGeneralInput.id } }
+        );
+      }
+      if (!createPackageGeneralInput.id || newPackageGeneral)
+        newPackageGeneral = this.packageGeneralRepository.create(
+          createPackageGeneralInput
+        );
 
+      console.log("step-1");
       // Handle destinations
       if (createPackageGeneralInput.destinationIds.length > 0) {
         const destinations =
@@ -52,6 +68,7 @@ export class PackageGeneralService {
             queryRunner,
             createPackageGeneralInput.destinationIds
           );
+        console.log("is destination", destinations);
         if (
           !destinations ||
           destinations.length !==
@@ -61,6 +78,8 @@ export class PackageGeneralService {
         }
         newPackageGeneral.destinations = destinations;
       }
+
+      console.log("step-2");
 
       // Handle highlights
       if (
@@ -75,6 +94,31 @@ export class PackageGeneralService {
           highlights
         );
       }
+      console.log("step-3");
+
+      if (
+        createPackageGeneralInput.dates &&
+        createPackageGeneralInput.dates.length > 0
+      ) {
+        const dates = await Promise.all(
+          createPackageGeneralInput.dates.map(async (date) => {
+            const travelDates = date.travelDates.map((travelDate) => {
+              return this.travelRepository.create(travelDate);
+            });
+            const dateNew = this.dateRepository.create(date);
+            dateNew.travelDates = await queryRunner.manager.save(
+              TravelDate,
+              travelDates
+            );
+            return dateNew;
+          })
+        );
+        newPackageGeneral.dates = await queryRunner.manager.save(
+          DateDetails,
+          dates
+        );
+      }
+      console.log("step-4");
 
       // Handle photos
       if (
@@ -89,6 +133,7 @@ export class PackageGeneralService {
           photos
         );
       }
+      console.log("step-5");
 
       // Save package general entity
       const savedPackageGeneral = await queryRunner.manager.save(
@@ -96,9 +141,11 @@ export class PackageGeneralService {
         newPackageGeneral
       );
 
+      console.log("saved package general", savedPackageGeneral);
       await queryRunner.commitTransaction();
       return savedPackageGeneral;
     } catch (error) {
+      console.log("error", error);
       await queryRunner.rollbackTransaction();
       throw error;
     } finally {
@@ -169,6 +216,70 @@ export class PackageGeneralService {
   }
 
   //method to add itineraries
+  // async addItineraries(
+  //   id: string,
+  //   itineraryInputs: ItineraryInput[]
+  // ): Promise<string[]> {
+  //   const queryRunner = this.dataSource.createQueryRunner();
+  //   await queryRunner.connect();
+  //   await queryRunner.startTransaction();
+  //   const newItineraryIds: string[] = [];
+
+  //   try {
+  //     const packageGeneral = await queryRunner.manager.findOne(PackageGeneral, {
+  //       where: { id },
+  //     });
+  //     if (!packageGeneral) {
+  //       throw new Error("Package not found");
+  //     }
+
+  //     for (const itineraryInput of itineraryInputs) {
+  //       let itinerary = await queryRunner.manager.findOne(Itinerary, {
+  //         where: { id: itineraryInput.id },
+  //       });
+  //       if (!itinerary) {
+  //         itinerary = queryRunner.manager.create(Itinerary, {
+  //           ...itineraryInput,
+  //           packageGeneral: { id: packageGeneral.id },
+  //         });
+  //       } else {
+  //         Object.assign(itinerary, itineraryInput);
+  //       }
+
+  //       itinerary = await queryRunner.manager.save(Itinerary, itinerary);
+
+  //       newItineraryIds.push(itinerary.id);
+
+  //       if (itineraryInput.textArrays) {
+  //         for (const textArrayInput of itineraryInput.textArrays) {
+  //           let textArray = itinerary.textArrays.find(
+  //             (t) => t.section === textArrayInput.section
+  //           );
+  //           if (!textArray) {
+  //             textArray = queryRunner.manager.create(TextArray, {
+  //               ...textArrayInput,
+  //               itinerary: { id: itinerary.id },
+  //             });
+  //           } else {
+  //             Object.assign(textArray, textArrayInput);
+  //           }
+
+  //           textArray = await queryRunner.manager.save(TextArray, textArray);
+  //         }
+  //       }
+  //     }
+
+  //     await queryRunner.commitTransaction();
+  //     return newItineraryIds;
+  //   } catch (error) {
+  //     console.error("Error in addItineraries: ", error);
+  //     await queryRunner.rollbackTransaction();
+  //     throw error;
+  //   } finally {
+  //     await queryRunner.release();
+  //   }
+  // }
+
   async addItineraries(
     id: string,
     itineraryInputs: ItineraryInput[]
@@ -179,50 +290,50 @@ export class PackageGeneralService {
     const newItineraryIds: string[] = [];
 
     try {
-      const packageGeneral = await queryRunner.manager.findOne(PackageGeneral, {
-        where: { id },
-      });
-      if (!packageGeneral) {
-        throw new Error("Package not found");
-      }
+      // Find the PackageGeneral entity
+      const packageGeneral = await queryRunner.manager.findOneOrFail(
+        PackageGeneral,
+        { where: { id }, relations: ["itineraries"] }
+      );
+
+      // Delete old itineraries
+      await queryRunner.manager.remove(packageGeneral.itineraries);
 
       for (const itineraryInput of itineraryInputs) {
-        let itinerary = await queryRunner.manager.findOne(Itinerary, {
-          where: { id: itineraryInput.id },
+        // Create new itinerary
+        const itinerary = queryRunner.manager.create(Itinerary, {
+          ...itineraryInput,
+          packageGeneral,
         });
-        if (!itinerary) {
-          itinerary = queryRunner.manager.create(Itinerary, {
-            ...itineraryInput,
-            packageGeneral: { id: packageGeneral.id },
-          });
-        } else {
-          Object.assign(itinerary, itineraryInput);
-        }
-
-        itinerary = await queryRunner.manager.save(Itinerary, itinerary);
-
-        newItineraryIds.push(itinerary.id);
+        const savedItinerary = await queryRunner.manager.save(
+          Itinerary,
+          itinerary
+        );
+        newItineraryIds.push(savedItinerary.id);
 
         if (itineraryInput.textArrays) {
           for (const textArrayInput of itineraryInput.textArrays) {
-            let textArray = itinerary.textArrays.find(
-              (t) => t.section === textArrayInput.section
-            );
-            if (!textArray) {
-              textArray = queryRunner.manager.create(TextArray, {
-                ...textArrayInput,
-                itinerary: { id: itinerary.id },
-              });
-            } else {
-              Object.assign(textArray, textArrayInput);
-            }
-
+            let textArray = queryRunner.manager.create(TextArray, {
+              ...textArrayInput,
+              itinerary: savedItinerary,
+            });
             textArray = await queryRunner.manager.save(TextArray, textArray);
           }
         }
-
-        
       }
+
+      // Update PackageGeneral entity with the new itineraries
+      const newItineraries = await Promise.all(
+        newItineraryIds.map(async (id) => {
+          const itinerary = await queryRunner.manager.findOneOrFail(Itinerary, {
+            where: { id },
+          });
+          return itinerary;
+        })
+      );
+
+      packageGeneral.itineraries = newItineraries;
+      await queryRunner.manager.save(PackageGeneral, packageGeneral);
 
       await queryRunner.commitTransaction();
       return newItineraryIds;

@@ -181,7 +181,10 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
         return true;
     }
     async findDestinationsByIds(queryRunner, ids) {
-        return queryRunner.manager.findBy(destination_entity_1.Destination, { id: (0, typeorm_2.In)(ids) });
+        console.log("find destinations");
+        return await queryRunner.manager.getRepository(destination_entity_1.Destination).find({
+            where: { id: (0, typeorm_2.In)(ids) },
+        });
     }
     async getCountries() {
         const countries = await this.destinationRepository

@@ -271,7 +271,10 @@ export class DestinationService extends GenericService<Destination> {
     queryRunner: QueryRunner,
     ids: string[]
   ): Promise<Destination[]> {
-    return queryRunner.manager.findBy(Destination, { id: In(ids) });
+    console.log("find destinations");
+    return await queryRunner.manager.getRepository(Destination).find({
+      where: { id: In(ids) },
+    });
   }
 
   async getCountries(): Promise<CountryDto[]> {

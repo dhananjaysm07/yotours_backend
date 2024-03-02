@@ -8,6 +8,8 @@ import { ItineraryInput } from "./dto/itinerary.input";
 import { LocationDetails } from "./entities/location.entity";
 import { LocationDetailsInput } from "./dto/location.input";
 import { DestinationService } from "src/destination/destination.service";
+import { DateDetails } from "./entities/datedetails.entity";
+import { TravelDate } from "./entities/travel-date.entity";
 export declare class PackageGeneralService {
     private dataSource;
     private packageGeneralRepository;
@@ -15,8 +17,10 @@ export declare class PackageGeneralService {
     private highlightRepository;
     private photoRepository;
     private itineraryRepository;
+    private dateRepository;
+    private travelRepository;
     private destinationService;
-    constructor(dataSource: DataSource, packageGeneralRepository: Repository<PackageGeneral>, locationDetailsRepository: Repository<LocationDetails>, highlightRepository: Repository<Highlight>, photoRepository: Repository<Photo>, itineraryRepository: Repository<Itinerary>, destinationService: DestinationService);
+    constructor(dataSource: DataSource, packageGeneralRepository: Repository<PackageGeneral>, locationDetailsRepository: Repository<LocationDetails>, highlightRepository: Repository<Highlight>, photoRepository: Repository<Photo>, itineraryRepository: Repository<Itinerary>, dateRepository: Repository<DateDetails>, travelRepository: Repository<TravelDate>, destinationService: DestinationService);
     create(createPackageGeneralInput: CreatePackageGeneralInput): Promise<PackageGeneral>;
     delete(id: string): Promise<string>;
     findOne(id: string): Promise<PackageGeneral>;

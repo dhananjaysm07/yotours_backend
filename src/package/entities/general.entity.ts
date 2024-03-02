@@ -32,13 +32,6 @@ export class PackageGeneral {
   @Column({ type: "varchar", nullable: false })
   type: string;
 
-  @Field((type) => [DateDetails])
-  @OneToMany(() => DateDetails, (date) => date.packageGeneral, {
-    cascade: true,
-    eager: true,
-  })
-  dates: DateDetails[];
-
   @Field((type) => String)
   @Column({ type: "text", nullable: false })
   summary: string;
@@ -53,7 +46,23 @@ export class PackageGeneral {
   @Column({ type: "int", default: 1 })
   currentStep: number;
 
+  @Field((type) => [String])
+  @Column({ type: "varchar", nullable: true })
+  inclusion: string[];
+
+  @Field((type) => [String])
+  @Column({ type: "varchar", nullable: true })
+  exclusion: string[];
+
+  @Field((type) => [DateDetails])
+  @OneToMany(() => DateDetails, (date) => date.packageGeneral, {
+    cascade: true,
+    eager: true,
+  })
+  dates: DateDetails[];
+
   //destinations will exist already we just need to map them
+
   @Field((type) => [Destination])
   @ManyToMany(() => Destination)
   @JoinTable()

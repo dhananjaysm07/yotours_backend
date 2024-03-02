@@ -27,24 +27,37 @@ const hotel_entity_1 = require("./entities/hotel.entity");
 const sight_entity_1 = require("./entities/sight.entity");
 const intercity_entity_1 = require("./entities/intercity.entity");
 const hotelarray_entity_1 = require("./entities/hotelarray.entity");
+const datedetails_entity_1 = require("./entities/datedetails.entity");
+const travel_date_entity_1 = require("./entities/travel-date.entity");
 let PackageGeneralService = class PackageGeneralService {
-    constructor(dataSource, packageGeneralRepository, locationDetailsRepository, highlightRepository, photoRepository, itineraryRepository, destinationService) {
+    constructor(dataSource, packageGeneralRepository, locationDetailsRepository, highlightRepository, photoRepository, itineraryRepository, dateRepository, travelRepository, destinationService) {
         this.dataSource = dataSource;
         this.packageGeneralRepository = packageGeneralRepository;
         this.locationDetailsRepository = locationDetailsRepository;
         this.highlightRepository = highlightRepository;
         this.photoRepository = photoRepository;
         this.itineraryRepository = itineraryRepository;
+        this.dateRepository = dateRepository;
+        this.travelRepository = travelRepository;
         this.destinationService = destinationService;
     }
     async create(createPackageGeneralInput) {
         const queryRunner = this.dataSource.createQueryRunner();
         await queryRunner.connect();
         await queryRunner.startTransaction();
+        console.log("create package function called");
         try {
-            const newPackageGeneral = this.packageGeneralRepository.create(createPackageGeneralInput);
+            let newPackageGeneral;
+            console.log("id----", createPackageGeneralInput.id);
+            if (createPackageGeneralInput.id) {
+                newPackageGeneral = await queryRunner.manager.findOneOrFail(general_entity_1.PackageGeneral, { where: { id: createPackageGeneralInput.id } });
+            }
+            if (!createPackageGeneralInput.id || newPackageGeneral)
+                newPackageGeneral = this.packageGeneralRepository.create(createPackageGeneralInput);
+            console.log("step-1");
             if (createPackageGeneralInput.destinationIds.length > 0) {
                 const destinations = await this.destinationService.findDestinationsByIds(queryRunner, createPackageGeneralInput.destinationIds);
+                console.log("is destination", destinations);
                 if (!destinations ||
                     destinations.length !==
                         createPackageGeneralInput.destinationIds.length) {
@@ -52,21 +65,39 @@ let PackageGeneralService = class PackageGeneralService {
                 }
                 newPackageGeneral.destinations = destinations;
             }
+            console.log("step-2");
             if (createPackageGeneralInput.highlights &&
                 createPackageGeneralInput.highlights.length > 0) {
                 const highlights = createPackageGeneralInput.highlights.map((highlightInput) => this.highlightRepository.create(highlightInput));
                 newPackageGeneral.highlights = await queryRunner.manager.save(highlight_entity_1.Highlight, highlights);
             }
+            console.log("step-3");
+            if (createPackageGeneralInput.dates &&
+                createPackageGeneralInput.dates.length > 0) {
+                const dates = await Promise.all(createPackageGeneralInput.dates.map(async (date) => {
+                    const travelDates = date.travelDates.map((travelDate) => {
+                        return this.travelRepository.create(travelDate);
+                    });
+                    const dateNew = this.dateRepository.create(date);
+                    dateNew.travelDates = await queryRunner.manager.save(travel_date_entity_1.TravelDate, travelDates);
+                    return dateNew;
+                }));
+                newPackageGeneral.dates = await queryRunner.manager.save(datedetails_entity_1.DateDetails, dates);
+            }
+            console.log("step-4");
             if (createPackageGeneralInput.photos &&
                 createPackageGeneralInput.photos.length > 0) {
                 const photos = createPackageGeneralInput.photos.map((photoInput) => this.photoRepository.create(photoInput));
                 newPackageGeneral.photos = await queryRunner.manager.save(photo_entity_1.Photo, photos);
             }
+            console.log("step-5");
             const savedPackageGeneral = await queryRunner.manager.save(general_entity_1.PackageGeneral, newPackageGeneral);
+            console.log("saved package general", savedPackageGeneral);
             await queryRunner.commitTransaction();
             return savedPackageGeneral;
         }
         catch (error) {
+            console.log("error", error);
             await queryRunner.rollbackTransaction();
             throw error;
         }
@@ -128,37 +159,27 @@ let PackageGeneralService = class PackageGeneralService {
         await queryRunner.startTransaction();
         const newItineraryIds = [];
         try {
-            const packageGeneral = await queryRunner.manager.findOne(general_entity_1.PackageGeneral, {
-                where: { id },
-            });
-            if (!packageGeneral) {
-                throw new Error("Package not found");
-            }
+            const packageGeneral = await queryRunner.manager.findOneOrFail(general_entity_1.PackageGeneral, { where: { id }, relations: ["itineraries"] });
+            await queryRunner.manager.remove(packageGeneral.itineraries);
             for (const itineraryInput of itineraryInputs) {
-                let itinerary = await queryRunner.manager.findOne(itinerary_entity_1.Itinerary, {
-                    where: { id: itineraryInput.id },
-                });
-                if (!itinerary) {
-                    itinerary = queryRunner.manager.create(itinerary_entity_1.Itinerary, Object.assign(Object.assign({}, itineraryInput), { packageGeneral: { id: packageGeneral.id } }));
-                }
-                else {
-                    Object.assign(itinerary, itineraryInput);
-                }
-                itinerary = await queryRunner.manager.save(itinerary_entity_1.Itinerary, itinerary);
-                newItineraryIds.push(itinerary.id);
+                const itinerary = queryRunner.manager.create(itinerary_entity_1.Itinerary, Object.assign(Object.assign({}, itineraryInput), { packageGeneral }));
+                const savedItinerary = await queryRunner.manager.save(itinerary_entity_1.Itinerary, itinerary);
+                newItineraryIds.push(savedItinerary.id);
                 if (itineraryInput.textArrays) {
                     for (const textArrayInput of itineraryInput.textArrays) {
-                        let textArray = itinerary.textArrays.find((t) => t.section === textArrayInput.section);
-                        if (!textArray) {
-                            textArray = queryRunner.manager.create(textarray_entity_1.TextArray, Object.assign(Object.assign({}, textArrayInput), { itinerary: { id: itinerary.id } }));
-                        }
-                        else {
-                            Object.assign(textArray, textArrayInput);
-                        }
+                        let textArray = queryRunner.manager.create(textarray_entity_1.TextArray, Object.assign(Object.assign({}, textArrayInput), { itinerary: savedItinerary }));
                         textArray = await queryRunner.manager.save(textarray_entity_1.TextArray, textArray);
                     }
                 }
             }
+            const newItineraries = await Promise.all(newItineraryIds.map(async (id) => {
+                const itinerary = await queryRunner.manager.findOneOrFail(itinerary_entity_1.Itinerary, {
+                    where: { id },
+                });
+                return itinerary;
+            }));
+            packageGeneral.itineraries = newItineraries;
+            await queryRunner.manager.save(general_entity_1.PackageGeneral, packageGeneral);
             await queryRunner.commitTransaction();
             return newItineraryIds;
         }
@@ -291,7 +312,11 @@ PackageGeneralService = __decorate([
     __param(3, (0, typeorm_1.InjectRepository)(highlight_entity_1.Highlight)),
     __param(4, (0, typeorm_1.InjectRepository)(photo_entity_1.Photo)),
     __param(5, (0, typeorm_1.InjectRepository)(itinerary_entity_1.Itinerary)),
+    __param(6, (0, typeorm_1.InjectRepository)(datedetails_entity_1.DateDetails)),
+    __param(7, (0, typeorm_1.InjectRepository)(travel_date_entity_1.TravelDate)),
     __metadata("design:paramtypes", [typeorm_2.DataSource,
+        typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,

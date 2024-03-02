@@ -15,32 +15,50 @@ const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
 const highlight_input_1 = require("./highlight.input");
 const photo_input_1 = require("./photo.input");
+const date_input_1 = require("./date.input");
 let CreatePackageGeneralInput = class CreatePackageGeneralInput {
 };
 __decorate([
+    (0, graphql_1.Field)(() => String, { nullable: true }),
+    __metadata("design:type", String)
+], CreatePackageGeneralInput.prototype, "id", void 0);
+__decorate([
     (0, graphql_1.Field)(),
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreatePackageGeneralInput.prototype, "title", void 0);
 __decorate([
     (0, graphql_1.Field)(),
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreatePackageGeneralInput.prototype, "type", void 0);
 __decorate([
     (0, graphql_1.Field)(),
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreatePackageGeneralInput.prototype, "summary", void 0);
 __decorate([
     (0, graphql_1.Field)(),
     (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], CreatePackageGeneralInput.prototype, "currentStep", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => [String]),
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.IsString)({ each: true }),
+    __metadata("design:type", Array)
+], CreatePackageGeneralInput.prototype, "inclusion", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => [String]),
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.IsString)({ each: true }),
+    __metadata("design:type", Array)
+], CreatePackageGeneralInput.prototype, "exclusion", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => [date_input_1.DateDetailsInput]),
+    (0, class_validator_1.IsArray)(),
+    __metadata("design:type", Array)
+], CreatePackageGeneralInput.prototype, "dates", void 0);
 __decorate([
     (0, graphql_1.Field)(() => [graphql_1.ID]),
     (0, class_validator_1.IsArray)(),

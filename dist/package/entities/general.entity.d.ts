@@ -8,11 +8,13 @@ export declare class PackageGeneral {
     id: string;
     title: string;
     type: string;
-    dates: DateDetails[];
     summary: string;
     createdAt: Date;
     updatedAt: Date;
     currentStep: number;
+    inclusion: string[];
+    exclusion: string[];
+    dates: DateDetails[];
     destinations: Destination[];
     highlights: Highlight[];
     photos: Photo[];
