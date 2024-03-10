@@ -82,6 +82,7 @@ type Car {
   destination: Destination!
   active: Boolean!
   priority: Int
+  carBokunId: String
 }
 
 type ImageEntity {
@@ -273,16 +274,19 @@ type Query {
   getCountries: [CountryDto!]!
   getContinents: [ContinentDto!]!
   getCountriesAndContinents: [CountryAndContinent!]!
+  getUniqueDestinationLocations: [String!]!
   getAllTags: [Tag!]!
   getTagById(id: String!): Tag!
   getTours: [Tour!]!
   getFilteredTours(page: Int!, loadCount: Int!, filter: TourFilterInput!): GetFilteredToursResponse!
   findOne(id: String!): Tour!
   getCountriesAndContinentsForTours: [CountryAndContinent!]!
+  getUniqueTourLocations: [String!]!
   getAttractions: [Attraction!]!
   getAttraction(id: String!): Attraction!
   getFilteredAttractions(page: Int!, loadCount: Int!, filter: TourFilterInput!): GetFilteredAttractionResponse!
   getCountriesAndContinentsForAttractions: [CountryAndContinent!]!
+  getUniqueAttractionLocations: [String!]!
   getContent: Content!
   getThings: [Thing!]!
   getThingsForCMS: [Thing!]!
@@ -624,6 +628,7 @@ input CreateCarInput {
   tagId: ID
   destinationId: ID!
   priority: Int = 1
+  carBokunId: String!
 }
 
 input UpdateCarInput {
@@ -634,5 +639,6 @@ input UpdateCarInput {
   tagId: ID
   destinationId: ID
   priority: Int = 1
+  carBokunId: String
   carId: ID!
 }

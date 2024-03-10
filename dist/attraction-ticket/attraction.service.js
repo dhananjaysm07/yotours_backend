@@ -216,6 +216,10 @@ let AttractionService = class AttractionService extends filterQueryClass_1.Gener
         return this.attractionRepository.find({
             where: { active: true },
             relations: ["images", "destination", "tag"],
+            order: {
+                priority: "DESC",
+                attractionTitle: "ASC",
+            },
         });
     }
     findOne(id) {
@@ -239,6 +243,19 @@ let AttractionService = class AttractionService extends filterQueryClass_1.Gener
             continent: item.continent,
             attractionCount: parseInt(item.attractionCount),
         }));
+    }
+    async getAllAttractionLocations() {
+        const activeTours = await this.attractionRepository.find({
+            where: { active: true },
+            select: ["location"],
+        });
+        const uniqueLocations = [
+            ...new Set(activeTours.map((tour) => tour.location)),
+        ];
+        const sortedLocations = uniqueLocations
+            .filter((location) => location !== null)
+            .sort();
+        return sortedLocations;
     }
 };
 AttractionService = __decorate([

@@ -186,6 +186,7 @@ let ThingService = class ThingService extends filterQueryClass_1.GenericService 
         return this.thingRepository.find({
             relations: ["images", "destination", "tag"],
             order: {
+                priority: "DESC",
                 thingTitle: "ASC",
             },
         });
@@ -195,6 +196,7 @@ let ThingService = class ThingService extends filterQueryClass_1.GenericService 
             where: { active: true },
             relations: ["images", "destination", "tag"],
             order: {
+                priority: "DESC",
                 thingTitle: "ASC",
             },
         });

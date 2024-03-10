@@ -24,4 +24,5 @@ export declare class TourService extends GenericService<Tour> {
         continent: string;
         tourCount: number;
     }[]>;
+    getAllTourLocations(): Promise<string[]>;
 }

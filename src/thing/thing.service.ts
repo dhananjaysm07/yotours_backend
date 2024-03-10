@@ -282,6 +282,7 @@ export class ThingService extends GenericService<Thing> {
     return this.thingRepository.find({
       relations: ["images", "destination", "tag"],
       order: {
+        priority: "DESC",
         thingTitle: "ASC", // or 'DESC' for descending order
       },
     });
@@ -292,6 +293,7 @@ export class ThingService extends GenericService<Thing> {
       where: { active: true },
       relations: ["images", "destination", "tag"],
       order: {
+        priority: "DESC",
         thingTitle: "ASC", // or 'DESC' for descending order
       },
     });

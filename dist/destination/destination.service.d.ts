@@ -19,4 +19,5 @@ export declare class DestinationService extends GenericService<Destination> {
     getCountries(): Promise<CountryDto[]>;
     getContinents(): Promise<ContinentDto[]>;
     getCountriesAndContinents(): Promise<CountryAndContinent[]>;
+    getAllDestinationLocations(): Promise<string[]>;
 }

@@ -50,6 +50,9 @@ let AttractionResolver = class AttractionResolver {
     async getCountriesAndContinentsForAttractions() {
         return this.attractionService.getUniqueCountriesAndContinents();
     }
+    async getUniqueAttractionLocations() {
+        return this.attractionService.getAllAttractionLocations();
+    }
 };
 __decorate([
     (0, graphql_1.Mutation)(() => attraction_entity_1.Attraction),
@@ -107,6 +110,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AttractionResolver.prototype, "getCountriesAndContinentsForAttractions", null);
+__decorate([
+    (0, graphql_1.Query)(() => [String]),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AttractionResolver.prototype, "getUniqueAttractionLocations", null);
 AttractionResolver = __decorate([
     (0, graphql_1.Resolver)(() => attraction_entity_1.Attraction),
     __metadata("design:paramtypes", [attraction_service_1.AttractionService])

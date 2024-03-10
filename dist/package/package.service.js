@@ -48,7 +48,6 @@ let PackageGeneralService = class PackageGeneralService {
         console.log("create package function called");
         try {
             let newPackageGeneral;
-            console.log("id----", createPackageGeneralInput.id);
             if (createPackageGeneralInput.id) {
                 newPackageGeneral = await queryRunner.manager.findOneOrFail(general_entity_1.PackageGeneral, { where: { id: createPackageGeneralInput.id } });
             }

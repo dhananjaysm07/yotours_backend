@@ -304,6 +304,10 @@ export class AttractionService extends GenericService<Attraction> {
     return this.attractionRepository.find({
       where: { active: true },
       relations: ["images", "destination", "tag"],
+      order: {
+        priority: "DESC",
+        attractionTitle: "ASC", // or 'DESC' for descending order
+      },
     });
   }
 
@@ -332,5 +336,19 @@ export class AttractionService extends GenericService<Attraction> {
       continent: item.continent,
       attractionCount: parseInt(item.attractionCount),
     }));
+  }
+
+  async getAllAttractionLocations(): Promise<string[]> {
+    const activeTours = await this.attractionRepository.find({
+      where: { active: true },
+      select: ["location"],
+    });
+    const uniqueLocations = [
+      ...new Set(activeTours.map((tour) => tour.location)),
+    ];
+    const sortedLocations = uniqueLocations
+      .filter((location) => location !== null)
+      .sort();
+    return sortedLocations;
   }
 }

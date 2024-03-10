@@ -19,4 +19,5 @@ export declare class TourResolver {
         id: string;
     }>;
     getCountriesAndContinentsForTours(): Promise<CountryAndContinent[]>;
+    getUniqueTourLocations(): Promise<string[]>;
 }

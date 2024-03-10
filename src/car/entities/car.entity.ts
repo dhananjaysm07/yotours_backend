@@ -54,4 +54,8 @@ export class Car {
   @Max(100)
   @Column({ type: "int", nullable: true, default: 1 })
   priority: number;
+
+  @Field((type) => String, { nullable: true })
+  @Column({ type: "varchar", nullable: true })
+  carBokunId: string;
 }

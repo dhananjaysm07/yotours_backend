@@ -66,4 +66,9 @@ export class AttractionResolver {
   > {
     return this.attractionService.getUniqueCountriesAndContinents();
   }
+
+  @Query(() => [String])
+  async getUniqueAttractionLocations(): Promise<string[]> {
+    return this.attractionService.getAllAttractionLocations();
+  }
 }

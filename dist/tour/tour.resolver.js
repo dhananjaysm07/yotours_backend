@@ -49,6 +49,9 @@ let TourResolver = class TourResolver {
     async getCountriesAndContinentsForTours() {
         return this.tourService.getUniqueCountriesAndContinents();
     }
+    async getUniqueTourLocations() {
+        return this.tourService.getAllTourLocations();
+    }
 };
 __decorate([
     (0, graphql_1.Mutation)(() => tour_entity_1.Tour),
@@ -106,6 +109,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], TourResolver.prototype, "getCountriesAndContinentsForTours", null);
+__decorate([
+    (0, graphql_1.Query)(() => [String]),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], TourResolver.prototype, "getUniqueTourLocations", null);
 TourResolver = __decorate([
     (0, graphql_1.Resolver)(() => tour_entity_1.Tour),
     __metadata("design:paramtypes", [tour_service_1.TourService])

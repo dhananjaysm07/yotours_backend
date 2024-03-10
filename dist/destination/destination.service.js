@@ -113,15 +113,22 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
         }
     }
     applyFilters(queryBuilder, filter) {
+        var _a;
+        console.log("active values", filter.activeValues);
         queryBuilder
             .leftJoinAndSelect("entity.tag", "tag")
             .leftJoinAndSelect("entity.images", "ImageEntity")
             .leftJoinAndSelect("entity.attractions", "attraction")
             .leftJoinAndSelect("entity.tours", "tour")
             .leftJoinAndSelect("entity.things", "thing");
+        if (!((_a = filter.activeValues) === null || _a === void 0 ? void 0 : _a.includes(false))) {
+            queryBuilder.andWhere("tour.active IN (:...activeValues)", {
+                activeValues: [true],
+            });
+        }
         if (filter) {
             if (filter.location) {
-                queryBuilder.andWhere("entity.country = :location", {
+                queryBuilder.andWhere("entity.destinationName = :location", {
                     location: filter.location,
                 });
             }
@@ -156,13 +163,19 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
         }
     }
     async findAllDestinations() {
-        return this.destinationRepository.find({
-            relations: ["images", "tours", "attractions", "tag", "things"],
-            order: {
-                priority: "DESC",
-                destinationName: "ASC",
-            },
-        });
+        const distinations = await this.destinationRepository
+            .createQueryBuilder("destination")
+            .leftJoinAndSelect("destination.tours", "tour")
+            .leftJoinAndSelect("destination.images", "image")
+            .leftJoinAndSelect("destination.attractions", "attraction")
+            .leftJoinAndSelect("destination.tag", "tag")
+            .leftJoinAndSelect("destination.things", "thing")
+            .leftJoinAndSelect("destination.cars", "car")
+            .where("tour.active = :active", { active: true })
+            .orderBy("destination.priority", "DESC")
+            .addOrderBy("destination.destinationName", "ASC")
+            .getMany();
+        return distinations;
     }
     async findOneDestination(id) {
         return this.destinationRepository.findOne({
@@ -218,6 +231,18 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
         catch (error) {
             throw new Error("Failed to fetch countries and continents");
         }
+    }
+    async getAllDestinationLocations() {
+        const activeTours = await this.destinationRepository.find({
+            select: ["destinationName"],
+        });
+        const uniqueLocations = [
+            ...new Set(activeTours.map((destination) => destination.destinationName)),
+        ];
+        const sortedLocations = uniqueLocations
+            .filter((location) => location !== null)
+            .sort();
+        return sortedLocations;
     }
 };
 DestinationService = __decorate([

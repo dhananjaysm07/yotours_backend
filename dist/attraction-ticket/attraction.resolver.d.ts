@@ -20,4 +20,5 @@ export declare class AttractionResolver {
         id: string;
     }>;
     getCountriesAndContinentsForAttractions(): Promise<CountryAndContinent[]>;
+    getUniqueAttractionLocations(): Promise<string[]>;
 }

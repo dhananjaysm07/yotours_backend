@@ -85,8 +85,8 @@ let TourService = class TourService extends filterQueryClass_1.GenericService {
         });
         if (filter) {
             if (filter.location) {
-                queryBuilder.andWhere("entity.location = :location", {
-                    location: filter.location,
+                queryBuilder.andWhere("entity.location ILIKE :location", {
+                    location: `%${filter.location}%`,
                 });
             }
             if (filter.priceMin && filter.priceMax) {
@@ -215,6 +215,7 @@ let TourService = class TourService extends filterQueryClass_1.GenericService {
             where: { active: true },
             relations: ["images", "destination", "tag"],
             order: {
+                priority: "DESC",
                 tourTitle: "ASC",
             },
         });
@@ -240,6 +241,19 @@ let TourService = class TourService extends filterQueryClass_1.GenericService {
             continent: item.continent,
             tourCount: parseInt(item.tourCount),
         }));
+    }
+    async getAllTourLocations() {
+        const activeTours = await this.tourRepository.find({
+            where: { active: true },
+            select: ["location"],
+        });
+        const uniqueLocations = [
+            ...new Set(activeTours.map((tour) => tour.location)),
+        ];
+        const sortedLocations = uniqueLocations
+            .filter((location) => location !== null)
+            .sort();
+        return sortedLocations;
     }
 };
 TourService = __decorate([

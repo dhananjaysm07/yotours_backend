@@ -55,6 +55,9 @@ let DestinationResolver = class DestinationResolver {
     async getCountriesAndContinents() {
         return this.destinationService.getCountriesAndContinents();
     }
+    async getUniqueDestinationLocations() {
+        return this.destinationService.getAllDestinationLocations();
+    }
 };
 __decorate([
     (0, graphql_1.Mutation)(() => destination_entity_1.Destination),
@@ -118,6 +121,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], DestinationResolver.prototype, "getCountriesAndContinents", null);
+__decorate([
+    (0, graphql_1.Query)(() => [String]),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], DestinationResolver.prototype, "getUniqueDestinationLocations", null);
 DestinationResolver = __decorate([
     (0, graphql_1.Resolver)(() => destination_entity_1.Destination),
     __metadata("design:paramtypes", [destination_service_1.DestinationService])

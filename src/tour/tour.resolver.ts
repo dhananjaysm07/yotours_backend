@@ -71,4 +71,9 @@ export class TourResolver {
   async getCountriesAndContinentsForTours(): Promise<CountryAndContinent[]> {
     return this.tourService.getUniqueCountriesAndContinents();
   }
+
+  @Query(() => [String])
+  async getUniqueTourLocations(): Promise<string[]> {
+    return this.tourService.getAllTourLocations();
+  }
 }

@@ -17,4 +17,5 @@ export declare class DestinationResolver {
     getCountries(): Promise<CountryDto[]>;
     getContinents(): Promise<ContinentDto[]>;
     getCountriesAndContinents(): Promise<CountryAndContinent[]>;
+    getUniqueDestinationLocations(): Promise<string[]>;
 }

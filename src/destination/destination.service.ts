@@ -189,10 +189,16 @@ export class DestinationService extends GenericService<Destination> {
       .leftJoinAndSelect("entity.tours", "tour")
       .leftJoinAndSelect("entity.things", "thing");
 
+    if (!filter.activeValues?.includes(false)) {
+      queryBuilder.andWhere("tour.active IN (:...activeValues)", {
+        activeValues: [true],
+      });
+    }
+
     if (filter) {
       // Example: Applying location filter
       if (filter.location) {
-        queryBuilder.andWhere("entity.country = :location", {
+        queryBuilder.andWhere("entity.destinationName = :location", {
           location: filter.location,
         });
       }
@@ -235,15 +241,33 @@ export class DestinationService extends GenericService<Destination> {
       });
     }
   }
+  // async findAllDestinations(): Promise<Destination[]> {
+  //   const destination = await this.destinationRepository.find({
+  //     relations: ["images", "tours", "attractions", "tag", "things", "cars"],
+  //     order: {
+  //       priority: "DESC",
+  //       destinationName: "ASC",
+  //       // or 'DESC' for descending order
+  //     },
+  //   });
+  //   console.log("destination list", destination);
+  //   return destination;
+  // }
   async findAllDestinations(): Promise<Destination[]> {
-    return this.destinationRepository.find({
-      relations: ["images", "tours", "attractions", "tag", "things"],
-      order: {
-        priority: "DESC",
-        destinationName: "ASC",
-        // or 'DESC' for descending order
-      },
-    });
+    const distinations = await this.destinationRepository
+      .createQueryBuilder("destination")
+      .leftJoinAndSelect("destination.tours", "tour")
+      .leftJoinAndSelect("destination.images", "image")
+      .leftJoinAndSelect("destination.attractions", "attraction")
+      .leftJoinAndSelect("destination.tag", "tag")
+      .leftJoinAndSelect("destination.things", "thing")
+      .leftJoinAndSelect("destination.cars", "car")
+      .where("tour.active = :active", { active: true }) // Fetch only destinations with at least one active tour
+      .orderBy("destination.priority", "DESC")
+      .addOrderBy("destination.destinationName", "ASC")
+      .getMany();
+    // console.log("list of destinations", distinations);
+    return distinations;
   }
 
   async findOneDestination(id: string): Promise<Destination | null> {
@@ -314,5 +338,18 @@ export class DestinationService extends GenericService<Destination> {
       // Handle errors (e.g., log them, throw custom GraphQL error, etc.)
       throw new Error("Failed to fetch countries and continents");
     }
+  }
+
+  async getAllDestinationLocations(): Promise<string[]> {
+    const activeTours = await this.destinationRepository.find({
+      select: ["destinationName"],
+    });
+    const uniqueLocations = [
+      ...new Set(activeTours.map((destination) => destination.destinationName)),
+    ];
+    const sortedLocations = uniqueLocations
+      .filter((location) => location !== null)
+      .sort();
+    return sortedLocations;
   }
 }

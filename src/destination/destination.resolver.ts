@@ -7,7 +7,11 @@ import { CreateDestinationInput } from "./dto/createdestination.input";
 import { UpdateDestinationInput } from "./dto/updatedestination.input";
 import { GetFilteredDestinationResponse } from "./dto/filter-destination-input";
 import { TourFilterInput } from "src/tour/dto/filter-tour-input";
-import { ContinentDto, CountryAndContinent, CountryDto } from "./dto/country-continent.dto";
+import {
+  ContinentDto,
+  CountryAndContinent,
+  CountryDto,
+} from "./dto/country-continent.dto";
 
 @Resolver(() => Destination)
 export class DestinationResolver {
@@ -47,7 +51,7 @@ export class DestinationResolver {
     @Args("filter") filter: TourFilterInput
   ): Promise<GetFilteredDestinationResponse> {
     const { data, count } = await this.destinationService.getAllFiltered(
-      filter, 
+      filter,
       page,
       loadCount
     );
@@ -61,7 +65,7 @@ export class DestinationResolver {
   ): Promise<boolean> {
     return await this.destinationService.deleteDestination(destinationId);
   }
-  
+
   @Query((returns) => [CountryDto])
   async getCountries(): Promise<CountryDto[]> {
     return this.destinationService.getCountries();
@@ -76,6 +80,9 @@ export class DestinationResolver {
   async getCountriesAndContinents(): Promise<CountryAndContinent[]> {
     return this.destinationService.getCountriesAndContinents();
   }
+
+  @Query(() => [String])
+  async getUniqueDestinationLocations(): Promise<string[]> {
+    return this.destinationService.getAllDestinationLocations();
+  }
 }
-
-

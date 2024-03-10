@@ -34,4 +34,8 @@ export class CreateCarInput {
   @Field(() => Int, { nullable: true, defaultValue: 1 }) // Add this line
   @IsInt()
   priority: number;
+
+  @Field(() => String)
+  @IsString()
+  carBokunId: string;
 }

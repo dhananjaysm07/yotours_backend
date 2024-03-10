@@ -284,6 +284,7 @@ export class CarService extends GenericService<Car> {
     return this.carRepository.find({
       relations: ["images", "destination", "tag"],
       order: {
+        priority: "DESC",
         carTitle: "ASC", // or 'DESC' for descending order
       },
     });
@@ -294,6 +295,7 @@ export class CarService extends GenericService<Car> {
       where: { active: true },
       relations: ["images", "destination", "tag"],
       order: {
+        priority: "DESC",
         carTitle: "ASC", // or 'DESC' for descending order
       },
     });

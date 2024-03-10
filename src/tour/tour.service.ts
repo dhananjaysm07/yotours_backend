@@ -118,9 +118,15 @@ export class TourService extends GenericService<Tour> {
     });
     if (filter) {
       // Example: Applying location filter
+      // if (filter.location) {
+      //   queryBuilder.andWhere("entity.location = :location", {
+      //     location: filter.location,
+      //   });
+      // }
+
       if (filter.location) {
-        queryBuilder.andWhere("entity.location = :location", {
-          location: filter.location,
+        queryBuilder.andWhere("entity.location ILIKE :location", {
+          location: `%${filter.location}%`,
         });
       }
 
@@ -282,6 +288,7 @@ export class TourService extends GenericService<Tour> {
       where: { active: true },
       relations: ["images", "destination", "tag"],
       order: {
+        priority: "DESC",
         tourTitle: "ASC", // or 'DESC' for descending order
       },
     });
@@ -312,5 +319,19 @@ export class TourService extends GenericService<Tour> {
       continent: item.continent,
       tourCount: parseInt(item.tourCount),
     }));
+  }
+
+  async getAllTourLocations(): Promise<string[]> {
+    const activeTours = await this.tourRepository.find({
+      where: { active: true },
+      select: ["location"],
+    });
+    const uniqueLocations = [
+      ...new Set(activeTours.map((tour) => tour.location)),
+    ];
+    const sortedLocations = uniqueLocations
+      .filter((location) => location !== null)
+      .sort();
+    return sortedLocations;
   }
 }

@@ -24,4 +24,5 @@ export declare class AttractionService extends GenericService<Attraction> {
         continent: string;
         attractionCount: number;
     }[]>;
+    getAllAttractionLocations(): Promise<string[]>;
 }
