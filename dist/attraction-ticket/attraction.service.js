@@ -86,8 +86,8 @@ let AttractionService = class AttractionService extends filterQueryClass_1.Gener
         });
         if (filter) {
             if (filter.location) {
-                queryBuilder.andWhere("entity.location = :location", {
-                    location: filter.location,
+                queryBuilder.andWhere("destination.destinationName ILIKE :location", {
+                    location: `%${filter.location}%`,
                 });
             }
             if (filter.priceMin && filter.priceMax) {

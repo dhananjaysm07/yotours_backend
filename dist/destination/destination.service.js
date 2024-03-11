@@ -114,7 +114,6 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
     }
     applyFilters(queryBuilder, filter) {
         var _a;
-        console.log("active values", filter.activeValues);
         queryBuilder
             .leftJoinAndSelect("entity.tag", "tag")
             .leftJoinAndSelect("entity.images", "ImageEntity")

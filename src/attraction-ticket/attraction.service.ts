@@ -115,8 +115,8 @@ export class AttractionService extends GenericService<Attraction> {
     if (filter) {
       // Example: Applying location filter
       if (filter.location) {
-        queryBuilder.andWhere("entity.location = :location", {
-          location: filter.location,
+        queryBuilder.andWhere("destination.destinationName ILIKE :location", {
+          location: `%${filter.location}%`,
         });
       }
 

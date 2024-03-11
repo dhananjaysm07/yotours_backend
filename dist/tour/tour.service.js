@@ -85,7 +85,7 @@ let TourService = class TourService extends filterQueryClass_1.GenericService {
         });
         if (filter) {
             if (filter.location) {
-                queryBuilder.andWhere("entity.location ILIKE :location", {
+                queryBuilder.andWhere("destination.destinationName ILIKE :location", {
                     location: `%${filter.location}%`,
                 });
             }

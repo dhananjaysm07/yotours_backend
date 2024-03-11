@@ -125,7 +125,7 @@ export class TourService extends GenericService<Tour> {
       // }
 
       if (filter.location) {
-        queryBuilder.andWhere("entity.location ILIKE :location", {
+        queryBuilder.andWhere("destination.destinationName ILIKE :location", {
           location: `%${filter.location}%`,
         });
       }
