@@ -32,8 +32,11 @@ export class DestinationResolver {
     return this.destinationService.updateDestination(updateDestinationInput);
   }
   @Query(() => [Destination])
-  async getDestinations(): Promise<Destination[]> {
-    return this.destinationService.findAllDestinations();
+  async getDestinations(
+    @Args("isTourActive", { type: () => Boolean, nullable: true })
+    isTourActive?: boolean
+  ): Promise<Destination[]> {
+    return this.destinationService.findAllDestinations(isTourActive);
   }
 
   @Query(() => Destination, { nullable: true })
@@ -79,6 +82,11 @@ export class DestinationResolver {
   @Query((returns) => [CountryAndContinent])
   async getCountriesAndContinents(): Promise<CountryAndContinent[]> {
     return this.destinationService.getCountriesAndContinents();
+  }
+
+  @Query((returns) => [CountryAndContinent])
+  async getCountriesAndContinentsForCMS(): Promise<CountryAndContinent[]> {
+    return this.destinationService.getCountriesAndContinentsForCMS();
   }
 
   @Query(() => [String])

@@ -33,8 +33,8 @@ let DestinationResolver = class DestinationResolver {
     updateDestination(updateDestinationInput) {
         return this.destinationService.updateDestination(updateDestinationInput);
     }
-    async getDestinations() {
-        return this.destinationService.findAllDestinations();
+    async getDestinations(isTourActive) {
+        return this.destinationService.findAllDestinations(isTourActive);
     }
     async getDestination(id) {
         return this.destinationService.findOneDestination(id);
@@ -54,6 +54,9 @@ let DestinationResolver = class DestinationResolver {
     }
     async getCountriesAndContinents() {
         return this.destinationService.getCountriesAndContinents();
+    }
+    async getCountriesAndContinentsForCMS() {
+        return this.destinationService.getCountriesAndContinentsForCMS();
     }
     async getUniqueDestinationLocations() {
         return this.destinationService.getAllDestinationLocations();
@@ -75,8 +78,9 @@ __decorate([
 ], DestinationResolver.prototype, "updateDestination", null);
 __decorate([
     (0, graphql_1.Query)(() => [destination_entity_1.Destination]),
+    __param(0, (0, graphql_1.Args)("isTourActive", { type: () => Boolean, nullable: true })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Boolean]),
     __metadata("design:returntype", Promise)
 ], DestinationResolver.prototype, "getDestinations", null);
 __decorate([
@@ -121,6 +125,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], DestinationResolver.prototype, "getCountriesAndContinents", null);
+__decorate([
+    (0, graphql_1.Query)((returns) => [country_continent_dto_1.CountryAndContinent]),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], DestinationResolver.prototype, "getCountriesAndContinentsForCMS", null);
 __decorate([
     (0, graphql_1.Query)(() => [String]),
     __metadata("design:type", Function),

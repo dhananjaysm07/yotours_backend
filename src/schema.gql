@@ -268,12 +268,13 @@ type Query {
   getPackageGeneralWithItineraries(id: String!): PackageGeneral!
   getPackageGeneralWithLocationDetails(id: String!): PackageGeneral!
   getPackageWithItinerary(packageId: ID!): PackageGeneral!
-  getDestinations: [Destination!]!
+  getDestinations(isTourActive: Boolean): [Destination!]!
   getDestination(id: String!): Destination
   getFilteredDestination(page: Int!, loadCount: Int!, filter: TourFilterInput!): GetFilteredDestinationResponse!
   getCountries: [CountryDto!]!
   getContinents: [ContinentDto!]!
   getCountriesAndContinents: [CountryAndContinent!]!
+  getCountriesAndContinentsForCMS: [CountryAndContinent!]!
   getUniqueDestinationLocations: [String!]!
   getAllTags: [Tag!]!
   getTagById(id: String!): Tag!

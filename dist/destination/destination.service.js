@@ -161,8 +161,10 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
             });
         }
     }
-    async findAllDestinations() {
-        const distinations = await this.destinationRepository
+    async findAllDestinations(isTourActive) {
+        if (!isTourActive)
+            isTourActive = false;
+        let query = this.destinationRepository
             .createQueryBuilder("destination")
             .leftJoinAndSelect("destination.tours", "tour")
             .leftJoinAndSelect("destination.images", "image")
@@ -170,11 +172,12 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
             .leftJoinAndSelect("destination.tag", "tag")
             .leftJoinAndSelect("destination.things", "thing")
             .leftJoinAndSelect("destination.cars", "car")
-            .where("tour.active = :active", { active: true })
             .orderBy("destination.priority", "DESC")
-            .addOrderBy("destination.destinationName", "ASC")
-            .getMany();
-        return distinations;
+            .addOrderBy("destination.destinationName", "ASC");
+        if (isTourActive === false) {
+            query = query.where("tour.active = :active", { active: true });
+        }
+        return await query.getMany();
     }
     async findOneDestination(id) {
         return this.destinationRepository.findOne({
@@ -201,7 +204,9 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
     async getCountries() {
         const countries = await this.destinationRepository
             .createQueryBuilder("destination")
+            .leftJoinAndSelect("destination.tours", "tour")
             .select("DISTINCT destination.country", "country")
+            .where("tour.active = :active", { active: true })
             .getRawMany();
         return countries.map((c) => ({ country: c.country }));
     }
@@ -213,6 +218,28 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
         return continents.map((c) => ({ continent: c.continent }));
     }
     async getCountriesAndContinents() {
+        try {
+            const result = await this.destinationRepository
+                .createQueryBuilder("destination")
+                .select("destination.country", "country")
+                .addSelect("destination.continent", "continent")
+                .addSelect("COUNT(destination.id)", "destinationCount")
+                .innerJoin("destination.tours", "tour")
+                .where("tour.active = :active", { active: true })
+                .groupBy("destination.country")
+                .addGroupBy("destination.continent")
+                .getRawMany();
+            return result.map((c) => ({
+                country: c.country,
+                continent: c.continent,
+                destinationCount: parseInt(c.destinationCount),
+            }));
+        }
+        catch (error) {
+            throw new Error("Failed to fetch countries and continents");
+        }
+    }
+    async getCountriesAndContinentsForCMS() {
         try {
             const result = await this.destinationRepository
                 .createQueryBuilder("destination")

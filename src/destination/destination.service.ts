@@ -253,8 +253,10 @@ export class DestinationService extends GenericService<Destination> {
   //   console.log("destination list", destination);
   //   return destination;
   // }
-  async findAllDestinations(): Promise<Destination[]> {
-    const distinations = await this.destinationRepository
+  async findAllDestinations(isTourActive?: boolean): Promise<Destination[]> {
+    // console.log("is tour active", isTourActive);
+    if (!isTourActive) isTourActive = false;
+    let query = this.destinationRepository
       .createQueryBuilder("destination")
       .leftJoinAndSelect("destination.tours", "tour")
       .leftJoinAndSelect("destination.images", "image")
@@ -262,12 +264,16 @@ export class DestinationService extends GenericService<Destination> {
       .leftJoinAndSelect("destination.tag", "tag")
       .leftJoinAndSelect("destination.things", "thing")
       .leftJoinAndSelect("destination.cars", "car")
-      .where("tour.active = :active", { active: true }) // Fetch only destinations with at least one active tour
       .orderBy("destination.priority", "DESC")
-      .addOrderBy("destination.destinationName", "ASC")
-      .getMany();
+      .addOrderBy("destination.destinationName", "ASC");
+
+    if (isTourActive === false) {
+      query = query.where("tour.active = :active", { active: true });
+    }
+
+    return await query.getMany();
     // console.log("list of destinations", distinations);
-    return distinations;
+    // return distinations;
   }
 
   async findOneDestination(id: string): Promise<Destination | null> {
@@ -304,7 +310,9 @@ export class DestinationService extends GenericService<Destination> {
   async getCountries(): Promise<CountryDto[]> {
     const countries = await this.destinationRepository
       .createQueryBuilder("destination")
+      .leftJoinAndSelect("destination.tours", "tour")
       .select("DISTINCT destination.country", "country")
+      .where("tour.active = :active", { active: true })
       .getRawMany();
 
     return countries.map((c) => ({ country: c.country }));
@@ -320,6 +328,30 @@ export class DestinationService extends GenericService<Destination> {
   }
 
   async getCountriesAndContinents(): Promise<CountryAndContinent[]> {
+    try {
+      const result = await this.destinationRepository
+        .createQueryBuilder("destination")
+        .select("destination.country", "country")
+        .addSelect("destination.continent", "continent")
+        .addSelect("COUNT(destination.id)", "destinationCount")
+        .innerJoin("destination.tours", "tour")
+        .where("tour.active = :active", { active: true })
+        .groupBy("destination.country")
+        .addGroupBy("destination.continent")
+        .getRawMany();
+
+      return result.map((c) => ({
+        country: c.country,
+        continent: c.continent,
+        destinationCount: parseInt(c.destinationCount),
+      }));
+    } catch (error) {
+      // Handle errors (e.g., log them, throw custom GraphQL error, etc.)
+      throw new Error("Failed to fetch countries and continents");
+    }
+  }
+
+  async getCountriesAndContinentsForCMS(): Promise<CountryAndContinent[]> {
     try {
       const result = await this.destinationRepository
         .createQueryBuilder("destination")

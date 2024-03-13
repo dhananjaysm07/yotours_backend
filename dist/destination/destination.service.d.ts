@@ -12,12 +12,13 @@ export declare class DestinationService extends GenericService<Destination> {
     createDestination(createDestinationInput: CreateDestinationInput): Promise<Destination>;
     updateDestination(updateDestinationInput: UpdateDestinationInput): Promise<Destination>;
     protected applyFilters(queryBuilder: SelectQueryBuilder<Destination>, filter: TourFilterInput): void;
-    findAllDestinations(): Promise<Destination[]>;
+    findAllDestinations(isTourActive?: boolean): Promise<Destination[]>;
     findOneDestination(id: string): Promise<Destination | null>;
     deleteDestination(destinationId: string): Promise<boolean>;
     findDestinationsByIds(queryRunner: QueryRunner, ids: string[]): Promise<Destination[]>;
     getCountries(): Promise<CountryDto[]>;
     getContinents(): Promise<ContinentDto[]>;
     getCountriesAndContinents(): Promise<CountryAndContinent[]>;
+    getCountriesAndContinentsForCMS(): Promise<CountryAndContinent[]>;
     getAllDestinationLocations(): Promise<string[]>;
 }
