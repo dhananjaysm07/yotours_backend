@@ -38,4 +38,12 @@ export class CreateCarInput {
   @Field(() => String)
   @IsString()
   carBokunId: string;
+
+  @Field(() => String)
+  @IsString()
+  price: string;
+
+  @Field(() => String)
+  @IsString()
+  currency: string;
 }

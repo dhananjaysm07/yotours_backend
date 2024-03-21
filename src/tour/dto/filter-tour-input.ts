@@ -29,6 +29,9 @@ export class TourFilterInput {
 
   @Field(() => [Boolean], { nullable: true })
   activeValues?: boolean[];
+
+  @Field(() => Boolean, { nullable: true })
+  ispopular?: boolean;
 }
 
 @ObjectType()

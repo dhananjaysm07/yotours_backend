@@ -83,6 +83,8 @@ type Car {
   active: Boolean!
   priority: Int
   carBokunId: String
+  price: String
+  currency: String
 }
 
 type ImageEntity {
@@ -309,6 +311,7 @@ input TourFilterInput {
   continent: [String!]
   country: [String!]
   activeValues: [Boolean!]
+  ispopular: Boolean
 }
 
 type Mutation {
@@ -630,6 +633,8 @@ input CreateCarInput {
   destinationId: ID!
   priority: Int = 1
   carBokunId: String!
+  price: String!
+  currency: String!
 }
 
 input UpdateCarInput {
@@ -641,5 +646,7 @@ input UpdateCarInput {
   destinationId: ID
   priority: Int = 1
   carBokunId: String
+  price: String
+  currency: String
   carId: ID!
 }

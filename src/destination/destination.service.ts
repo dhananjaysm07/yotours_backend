@@ -197,6 +197,12 @@ export class DestinationService extends GenericService<Destination> {
 
     if (filter) {
       // Example: Applying location filter
+      if (filter.ispopular) {
+        queryBuilder.andWhere("entity.destinationName = :popular", {
+          popular: filter.ispopular,
+        });
+      }
+
       if (filter.location) {
         queryBuilder.andWhere("entity.destinationName = :location", {
           location: filter.location,

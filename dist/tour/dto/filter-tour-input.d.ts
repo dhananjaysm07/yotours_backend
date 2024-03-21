@@ -9,6 +9,7 @@ export declare class TourFilterInput {
     continent?: string[];
     country?: string[];
     activeValues?: boolean[];
+    ispopular?: boolean;
 }
 export declare class GetFilteredToursResponse {
     tours: Tour[];

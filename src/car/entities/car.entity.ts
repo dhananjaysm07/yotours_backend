@@ -58,4 +58,12 @@ export class Car {
   @Field((type) => String, { nullable: true })
   @Column({ type: "varchar", nullable: true })
   carBokunId: string;
+
+  @Field((type) => String, { nullable: true })
+  @Column({ type: "varchar", nullable: true })
+  price: string;
+
+  @Field((type) => String, { nullable: true })
+  @Column({ type: "varchar", nullable: true })
+  currency: string;
 }

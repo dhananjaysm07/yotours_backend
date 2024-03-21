@@ -126,6 +126,11 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
             });
         }
         if (filter) {
+            if (filter.ispopular) {
+                queryBuilder.andWhere("entity.destinationName = :popular", {
+                    popular: filter.ispopular,
+                });
+            }
             if (filter.location) {
                 queryBuilder.andWhere("entity.destinationName = :location", {
                     location: filter.location,
