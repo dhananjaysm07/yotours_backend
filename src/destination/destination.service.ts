@@ -215,6 +215,12 @@ export class DestinationService extends GenericService<Destination> {
         });
       }
 
+      if (filter.excludeCountry && filter.excludeCountry.length > 0) {
+        queryBuilder.andWhere("entity.country NOT IN (:...excludeCountry)", {
+          excludeCountry: filter.excludeCountry,
+        });
+      }
+
       // Example: Applying price range filter
       if (filter.priceMin && filter.priceMax) {
         queryBuilder.andWhere("entity.price BETWEEN :priceMin AND :priceMax", {

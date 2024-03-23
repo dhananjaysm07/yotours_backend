@@ -27,6 +27,9 @@ export class TourFilterInput {
   @Field(() => [String], { nullable: true })
   country?: string[];
 
+  @Field(() => [String], { nullable: true })
+  excludeCountry?: string[];
+
   @Field(() => [Boolean], { nullable: true })
   activeValues?: boolean[];
 

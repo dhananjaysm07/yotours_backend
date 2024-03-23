@@ -155,6 +155,15 @@ export class TourService extends GenericService<Tour> {
         });
       }
 
+      if (filter.excludeCountry && filter.excludeCountry.length > 0) {
+        queryBuilder.andWhere(
+          "destination.country NOT IN (:...excludeCountry)",
+          {
+            excludeCountry: filter.excludeCountry,
+          }
+        );
+      }
+
       // Add more conditions based on your filter parameters
     }
 

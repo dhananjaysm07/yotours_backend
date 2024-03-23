@@ -62,22 +62,22 @@ export class PackageGeneralService {
 
       console.log("step-1");
       // Handle destinations
-      if (createPackageGeneralInput.destinationIds.length > 0) {
-        const destinations =
-          await this.destinationService.findDestinationsByIds(
-            queryRunner,
-            createPackageGeneralInput.destinationIds
-          );
-        console.log("is destination", destinations);
-        if (
-          !destinations ||
-          destinations.length !==
-            createPackageGeneralInput.destinationIds.length
-        ) {
-          throw new Error("Some destinations could not be found.");
-        }
-        newPackageGeneral.destinations = destinations;
-      }
+      // if (createPackageGeneralInput.destinationIds.length > 0) {
+      //   const destinations =
+      //     await this.destinationService.findDestinationsByIds(
+      //       queryRunner,
+      //       createPackageGeneralInput.destinationIds
+      //     );
+      //   console.log("is destination", destinations);
+      //   if (
+      //     !destinations ||
+      //     destinations.length !==
+      //       createPackageGeneralInput.destinationIds.length
+      //   ) {
+      //     throw new Error("Some destinations could not be found.");
+      //   }
+      //   newPackageGeneral.destinations = destinations;
+      // }
 
       console.log("step-2");
 
