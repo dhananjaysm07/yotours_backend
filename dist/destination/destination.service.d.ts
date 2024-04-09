@@ -14,6 +14,7 @@ export declare class DestinationService extends GenericService<Destination> {
     protected applyFilters(queryBuilder: SelectQueryBuilder<Destination>, filter: TourFilterInput): void;
     findAllDestinations(isTourActive?: boolean): Promise<Destination[]>;
     findOneDestination(id: string): Promise<Destination | null>;
+    findOneDestinationByCity(destinationName: string): Promise<Destination | null>;
     deleteDestination(destinationId: string): Promise<boolean>;
     findDestinationsByIds(queryRunner: QueryRunner, ids: string[]): Promise<Destination[]>;
     getCountries(): Promise<CountryDto[]>;

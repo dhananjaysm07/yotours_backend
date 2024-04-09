@@ -8,6 +8,7 @@ export declare class TourFilterInput {
     tagName?: string[];
     continent?: string[];
     country?: string[];
+    excludeCountry?: string[];
     activeValues?: boolean[];
     ispopular?: boolean;
 }

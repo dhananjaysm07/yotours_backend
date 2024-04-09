@@ -47,6 +47,14 @@ export class DestinationResolver {
     return this.destinationService.findOneDestination(id);
   }
 
+  @Query(() => Destination, { nullable: true })
+  async getDestinationByCity(
+    @Args("destinationName", { type: () => String }) destinationName: string
+  ): Promise<Destination | null> {
+    // Assuming you have a method findOne in your service
+    return this.destinationService.findOneDestinationByCity(destinationName);
+  }
+
   @Query(() => GetFilteredDestinationResponse)
   async getFilteredDestination(
     @Args("page", { type: () => Int }) page: number,

@@ -39,6 +39,9 @@ let DestinationResolver = class DestinationResolver {
     async getDestination(id) {
         return this.destinationService.findOneDestination(id);
     }
+    async getDestinationByCity(destinationName) {
+        return this.destinationService.findOneDestinationByCity(destinationName);
+    }
     async getFilteredDestination(page, loadCount, filter) {
         const { data, count } = await this.destinationService.getAllFiltered(filter, page, loadCount);
         return { destinations: data, totalCount: count };
@@ -90,6 +93,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], DestinationResolver.prototype, "getDestination", null);
+__decorate([
+    (0, graphql_1.Query)(() => destination_entity_1.Destination, { nullable: true }),
+    __param(0, (0, graphql_1.Args)("destinationName", { type: () => String })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], DestinationResolver.prototype, "getDestinationByCity", null);
 __decorate([
     (0, graphql_1.Query)(() => filter_destination_input_1.GetFilteredDestinationResponse),
     __param(0, (0, graphql_1.Args)("page", { type: () => graphql_1.Int })),

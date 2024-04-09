@@ -127,7 +127,7 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
         }
         if (filter) {
             if (filter.ispopular) {
-                queryBuilder.andWhere("entity.destinationName = :popular", {
+                queryBuilder.andWhere("entity.isPopular = :popular", {
                     popular: filter.ispopular,
                 });
             }
@@ -139,6 +139,11 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
             if (filter.country && filter.country.length > 0) {
                 queryBuilder.andWhere("entity.country IN (:...country)", {
                     country: filter.country,
+                });
+            }
+            if (filter.excludeCountry && filter.excludeCountry.length > 0) {
+                queryBuilder.andWhere("entity.country NOT IN (:...excludeCountry)", {
+                    excludeCountry: filter.excludeCountry,
                 });
             }
             if (filter.priceMin && filter.priceMax) {
@@ -187,6 +192,12 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
     async findOneDestination(id) {
         return this.destinationRepository.findOne({
             where: { id },
+            relations: ["images", "tours"],
+        });
+    }
+    async findOneDestinationByCity(destinationName) {
+        return this.destinationRepository.findOne({
+            where: { destinationName },
             relations: ["images", "tours"],
         });
     }

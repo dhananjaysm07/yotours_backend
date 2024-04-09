@@ -110,6 +110,11 @@ let TourService = class TourService extends filterQueryClass_1.GenericService {
                     country: filter.country,
                 });
             }
+            if (filter.excludeCountry && filter.excludeCountry.length > 0) {
+                queryBuilder.andWhere("destination.country NOT IN (:...excludeCountry)", {
+                    excludeCountry: filter.excludeCountry,
+                });
+            }
         }
         if (filter && filter.startDate && filter.endDate) {
             queryBuilder.andWhere("entity.fromDate BETWEEN :fromDate AND :toDate", {

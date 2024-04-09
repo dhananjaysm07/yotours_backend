@@ -54,16 +54,6 @@ let PackageGeneralService = class PackageGeneralService {
             if (!createPackageGeneralInput.id || newPackageGeneral)
                 newPackageGeneral = this.packageGeneralRepository.create(createPackageGeneralInput);
             console.log("step-1");
-            if (createPackageGeneralInput.destinationIds.length > 0) {
-                const destinations = await this.destinationService.findDestinationsByIds(queryRunner, createPackageGeneralInput.destinationIds);
-                console.log("is destination", destinations);
-                if (!destinations ||
-                    destinations.length !==
-                        createPackageGeneralInput.destinationIds.length) {
-                    throw new Error("Some destinations could not be found.");
-                }
-                newPackageGeneral.destinations = destinations;
-            }
             console.log("step-2");
             if (createPackageGeneralInput.highlights &&
                 createPackageGeneralInput.highlights.length > 0) {

@@ -20,6 +20,8 @@ DatabaseModule = __decorate([
                 useFactory: async (configService) => ({
                     type: "postgres",
                     url: "postgres://gotrip_postgres_database_user:6myYJPYRAHDyBuUZcIDDfoHMg4ihK4cA@dpg-cmotdqen7f5s73da69eg-a.oregon-postgres.render.com/gotrip_postgres_database",
+                    password: configService.get("DB_PASSWORD", process.env.POSTGRES_PASSWORD_PRODUCTION),
+                    database: configService.get("DB_DATABASE", "yotours"),
                     entities: ["dist/**/*.entity{.ts,.js}"],
                     synchronize: true,
                     ssl: true,

@@ -111,6 +111,11 @@ let AttractionService = class AttractionService extends filterQueryClass_1.Gener
                     country: filter.country,
                 });
             }
+            if (filter.excludeCountry && filter.excludeCountry.length > 0) {
+                queryBuilder.andWhere("destination.country NOT IN (:...excludeCountry)", {
+                    excludeCountry: filter.excludeCountry,
+                });
+            }
         }
         if (filter && filter.startDate && filter.endDate) {
             queryBuilder.andWhere("entity.fromDate BETWEEN :fromDate AND :toDate", {

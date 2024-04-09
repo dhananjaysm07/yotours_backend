@@ -12,6 +12,7 @@ export declare class DestinationResolver {
     updateDestination(updateDestinationInput: UpdateDestinationInput): Promise<Destination>;
     getDestinations(isTourActive?: boolean): Promise<Destination[]>;
     getDestination(id: string): Promise<Destination | null>;
+    getDestinationByCity(destinationName: string): Promise<Destination | null>;
     getFilteredDestination(page: number, loadCount: number, filter: TourFilterInput): Promise<GetFilteredDestinationResponse>;
     deleteDestination(destinationId: string): Promise<boolean>;
     getCountries(): Promise<CountryDto[]>;

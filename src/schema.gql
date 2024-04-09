@@ -272,6 +272,7 @@ type Query {
   getPackageWithItinerary(packageId: ID!): PackageGeneral!
   getDestinations(isTourActive: Boolean): [Destination!]!
   getDestination(id: String!): Destination
+  getDestinationByCity(destinationName: String!): Destination
   getFilteredDestination(page: Int!, loadCount: Int!, filter: TourFilterInput!): GetFilteredDestinationResponse!
   getCountries: [CountryDto!]!
   getContinents: [ContinentDto!]!
@@ -310,6 +311,7 @@ input TourFilterInput {
   tagName: [String!]
   continent: [String!]
   country: [String!]
+  excludeCountry: [String!]
   activeValues: [Boolean!]
   ispopular: Boolean
 }

@@ -295,6 +295,15 @@ export class DestinationService extends GenericService<Destination> {
     });
   }
 
+  async findOneDestinationByCity(
+    destinationName: string
+  ): Promise<Destination | null> {
+    return this.destinationRepository.findOne({
+      where: { destinationName },
+      relations: ["images", "tours"],
+    });
+  }
+
   async deleteDestination(destinationId: string): Promise<boolean> {
     const destination = await this.destinationRepository.findOne({
       where: { id: destinationId },
