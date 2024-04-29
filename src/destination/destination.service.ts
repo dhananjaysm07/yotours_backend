@@ -291,7 +291,7 @@ export class DestinationService extends GenericService<Destination> {
   async findOneDestination(id: string): Promise<Destination | null> {
     return this.destinationRepository.findOne({
       where: { id },
-      relations: ["images", "tours"],
+      relations: ["images", "tours", "holidays"],
     });
   }
 
@@ -300,7 +300,7 @@ export class DestinationService extends GenericService<Destination> {
   ): Promise<Destination | null> {
     return this.destinationRepository.findOne({
       where: { destinationName },
-      relations: ["images", "tours"],
+      relations: ["images", "tours", "holidays"],
     });
   }
 

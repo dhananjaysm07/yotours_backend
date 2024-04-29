@@ -7,13 +7,14 @@ import { AuthModule } from "./auth/auth.module";
 import { DatabaseModule } from "./config/database.module";
 import { UserModule } from "./user/user.module";
 import { TagModule } from "./tag/tag.module";
-import { PackageGeneralModule } from "./package/package.module";
+// import { PackageGeneralModule } from "./package/package.module";
 import { DestinationModule } from "./destination/destination.module";
 import { TourModule } from "./tour/tour.module";
 import { AttractionModule } from "./attraction-ticket/attraction.module";
 import { ContentModule } from "./content/content.module";
 import { ThingModule } from "./thing/thing.module";
 import { CarModule } from "./car/car.module";
+import { PackageModule } from "./Holiday/holiday.module";
 // import { RoleModule } from "./role/role.module";
 @Module({
   imports: [
@@ -27,7 +28,7 @@ import { CarModule } from "./car/car.module";
     }),
     UserModule,
     AuthModule,
-    PackageGeneralModule,
+    // PackageGeneralModule,
     DestinationModule,
     TagModule,
     TourModule,
@@ -35,6 +36,7 @@ import { CarModule } from "./car/car.module";
     ContentModule,
     ThingModule,
     CarModule,
+    PackageModule,
     // RoleModule,
   ],
   providers: [],

@@ -19,6 +19,7 @@ const attraction_entity_1 = require("../../attraction-ticket/entities/attraction
 const thing_entity_1 = require("../../thing/entities/thing.entity");
 const class_validator_1 = require("class-validator");
 const car_entity_1 = require("../../car/entities/car.entity");
+const holiday_entity_1 = require("../../Holiday/entities/holiday.entity");
 let Destination = class Destination {
 };
 __decorate([
@@ -132,6 +133,11 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => car_entity_1.Car, (car) => car.destination, { eager: true }),
     __metadata("design:type", Array)
 ], Destination.prototype, "cars", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => [holiday_entity_1.Package], { nullable: true }),
+    (0, typeorm_1.ManyToMany)(() => holiday_entity_1.Package, (question) => question.destinations),
+    __metadata("design:type", Array)
+], Destination.prototype, "holidays", void 0);
 Destination = __decorate([
     (0, graphql_1.ObjectType)(),
     (0, typeorm_1.Entity)({ name: "Destination" })

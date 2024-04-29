@@ -36,7 +36,7 @@ export class DestinationResolver {
     @Args("isTourActive", { type: () => Boolean, nullable: true })
     isTourActive?: boolean
   ): Promise<Destination[]> {
-    return this.destinationService.findAllDestinations(isTourActive);
+    return this.destinationService.findAllDestinations(isTourActive); //////if istouractive=false is passed then destinations with active tours will be fetched
   }
 
   @Query(() => Destination, { nullable: true })
