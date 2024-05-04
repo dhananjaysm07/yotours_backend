@@ -16,13 +16,13 @@ const auth_module_1 = require("./auth/auth.module");
 const database_module_1 = require("./config/database.module");
 const user_module_1 = require("./user/user.module");
 const tag_module_1 = require("./tag/tag.module");
-const package_module_1 = require("./package/package.module");
 const destination_module_1 = require("./destination/destination.module");
 const tour_module_1 = require("./tour/tour.module");
 const attraction_module_1 = require("./attraction-ticket/attraction.module");
 const content_module_1 = require("./content/content.module");
 const thing_module_1 = require("./thing/thing.module");
 const car_module_1 = require("./car/car.module");
+const holiday_module_1 = require("./Holiday/holiday.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -38,7 +38,6 @@ AppModule = __decorate([
             }),
             user_module_1.UserModule,
             auth_module_1.AuthModule,
-            package_module_1.PackageGeneralModule,
             destination_module_1.DestinationModule,
             tag_module_1.TagModule,
             tour_module_1.TourModule,
@@ -46,6 +45,7 @@ AppModule = __decorate([
             content_module_1.ContentModule,
             thing_module_1.ThingModule,
             car_module_1.CarModule,
+            holiday_module_1.PackageModule,
         ],
         providers: [],
     })

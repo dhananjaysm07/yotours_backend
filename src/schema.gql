@@ -49,6 +49,119 @@ type Thing {
   priority: Int
 }
 
+type CityDataInput {
+  name: String!
+  id: String!
+}
+
+type DurationData {
+  days: Int!
+  nights: Int!
+  validity: Int!
+  validityUnit: String!
+}
+
+type DatesData {
+  bookingFromDate: String!
+  bookingToDate: String!
+  travelDates: [TravelDate!]!
+}
+
+type TravelDate {
+  fromDate: String
+  toDate: String
+}
+
+type Photo {
+  url: String
+}
+
+type SummaryData {
+  inclusions: [String!]
+  exclusions: [String!]
+  highlights: [Highlight!]
+  summary: String!
+  photos: [Photo!]
+}
+
+type Highlight {
+  title: String!
+  description: String!
+  url: String!
+}
+
+type PricingData {
+  currency: String!
+  type: String!
+  adultPrice: Int!
+  childPrice: Int!
+  maxMembers: Int!
+}
+
+type Policy {
+  option: String!
+  description: String!
+}
+
+type HotelData {
+  meals: [String!]
+  rating: String
+  name: String
+  days: Int
+  nights: Int
+  cities: [CityDataInput!]!
+}
+
+type IntercityData {
+  fromCity: CityDataInput
+  toCity: CityDataInput
+  mode: String
+  description: String
+}
+
+type SightSeeingData {
+  city: CityDataInput
+  sights: [String!]
+}
+
+type Transfers {
+  airportTransfers: Boolean
+  localTransfers: Boolean
+}
+
+type LocationData {
+  hotels: [HotelData!]
+  intercityData: [IntercityData!]
+  sightData: [SightSeeingData!]
+  transfers: Transfers
+}
+
+type DayWiseItinerary {
+  day: Int
+  description: String
+  cities: [CityDataInput!]!
+  meals: [String!]
+  inclusions: [String!]
+  exclusions: [String!]
+}
+
+type Package {
+  id: ID!
+  title: String
+  type: String
+  themes: [String!]
+  preference: [String!]
+  destinations: [Destination!]
+  durationData: DurationData
+  datesData: [DatesData!]
+  summaryData: SummaryData
+  pricingData: PricingData
+  languages: [String!]
+  cancellationPolicy: Policy
+  daywiseItinerary: [DayWiseItinerary!]
+  locationData: LocationData
+}
+
 type Destination {
   id: ID!
   destinationName: String!
@@ -70,6 +183,7 @@ type Destination {
   introduction: String
   things: [Thing!]!
   cars: [Car!]!
+  holidays: [Package!]
 }
 
 type Car {
@@ -111,98 +225,6 @@ type Tag {
   id: String!
   name: String!
   active: Boolean!
-}
-
-type Highlight {
-  id: ID!
-  title: String!
-  description: String!
-  url: String!
-}
-
-type Photo {
-  id: ID!
-  url: String!
-  packageGeneral: PackageGeneral!
-}
-
-type TextArray {
-  id: ID!
-  section: String!
-  values: [String!]!
-}
-
-type Itinerary {
-  id: ID!
-  dayNumber: Float!
-  description: String!
-  textArrays: [TextArray!]!
-}
-
-type Sight {
-  id: ID!
-}
-
-type HotelArray {
-  id: ID!
-  section: String!
-  values: [String!]!
-}
-
-type HotelDetails {
-  id: ID!
-  city: String!
-  hotelName: String!
-  rating: String!
-  days: String!
-  nights: String!
-  hotelArrays: [HotelArray!]
-}
-
-type InterCity {
-  id: ID!
-  fromCity: String!
-  toCity: String!
-  mode: String!
-  modeDescription: String!
-}
-
-type LocationDetails {
-  id: ID!
-  hotelDetails: [HotelDetails!]
-  intercityTransfers: [InterCity!]
-  sights: [Sight!]
-  airportTransfer: Boolean!
-  localTransfer: Boolean!
-}
-
-type TravelDate {
-  id: ID!
-  fromDate: String!
-  toDate: String!
-}
-
-type DateDetails {
-  id: ID!
-  bookingFromDate: String!
-  bookingToDate: String!
-  travelDates: [TravelDate!]!
-}
-
-type PackageGeneral {
-  id: ID!
-  title: String!
-  type: String!
-  summary: String!
-  currentStep: Float!
-  inclusion: [String!]!
-  exclusion: [String!]!
-  dates: [DateDetails!]!
-  destinations: [Destination!]!
-  highlights: [Highlight!]!
-  photos: [Photo!]!
-  itineraries: [Itinerary!]!
-  locationDetails: LocationDetails!
 }
 
 type GetFilteredDestinationResponse {
@@ -266,10 +288,6 @@ type GetFilteredCarResponse {
 type Query {
   findAllUser: [User!]!
   findUserById(id: String!): User!
-  getPackageGeneral(id: String!): PackageGeneral!
-  getPackageGeneralWithItineraries(id: String!): PackageGeneral!
-  getPackageGeneralWithLocationDetails(id: String!): PackageGeneral!
-  getPackageWithItinerary(packageId: ID!): PackageGeneral!
   getDestinations(isTourActive: Boolean): [Destination!]!
   getDestination(id: String!): Destination
   getDestinationByCity(destinationName: String!): Destination
@@ -300,6 +318,8 @@ type Query {
   getCarsForCMS: [Car!]!
   getCar(id: String!): Car!
   getFilteredCars(page: Int!, loadCount: Int!, filter: TourFilterInput!): GetFilteredCarResponse!
+  getallpackages: [Package!]!
+  getHoliday(id: String!): Package
 }
 
 input TourFilterInput {
@@ -322,10 +342,6 @@ type Mutation {
   removeUser(id: String!): StatusResult!
   register(registerInput: RegisterInput!): AuthenticatedPayload!
   login(loginInput: LoginInput!): AuthenticatedPayload!
-  createPackageGeneral(createPackageGeneralInput: CreatePackageGeneralInput!): PackageGeneral!
-  deletePackageGeneral(id: String!): String!
-  addItineraryToPackage(packageId: ID!, itineraryInput: [ItineraryInput!]!): [String!]!
-  addLocationDetailsToPackage(packageId: ID!, locationDetailsInput: LocationDetailsInput!): LocationDetails!
   createDestination(createDestinationInput: CreateDestinationInput!): Destination!
   updateDestination(updateDestinationInput: UpdateDestinationInput!): Destination!
   deleteDestination(destinationId: String!): Boolean!
@@ -352,6 +368,13 @@ type Mutation {
   updateCar(updateCarInput: UpdateCarInput!): Car!
   deleteCar(id: String!): Car!
   activateCar(id: String!): Car!
+  createPackage(input: UpdateGeneralDetailInput!): Package!
+  updateGeneralDetail(id: String!, input: UpdateGeneralDetailInput!): Package!
+  updateItinerary(id: String!, input: UpdateItineraryInput!): Package!
+  updateLocation(id: String!, input: UpdateLocationInput!): Package!
+  updateLanguages(id: String!, input: UpdateLanguagesInput!): Package!
+  updatePricing(id: String!, input: UpdatePricingInput!): Package!
+  updateCancellationPolicy(id: String!, input: UpdateCancellationPolicyInput!): Package!
 }
 
 input CreateUserInput {
@@ -381,93 +404,6 @@ input RegisterInput {
 input LoginInput {
   username: String!
   password: String!
-}
-
-input CreatePackageGeneralInput {
-  id: String
-  title: String!
-  type: String!
-  summary: String!
-  currentStep: Float!
-  inclusion: [String!]!
-  exclusion: [String!]!
-  dates: [DateDetailsInput!]!
-  destinationIds: [ID!]!
-  highlights: [HighlightInput!]!
-  photos: [PhotoInput!]!
-}
-
-input DateDetailsInput {
-  bookingFromDate: String!
-  bookingToDate: String!
-  travelDates: [TravelDateInput!]!
-}
-
-input TravelDateInput {
-  fromDate: String!
-  toDate: String!
-}
-
-input HighlightInput {
-  title: String!
-  description: String!
-  url: String!
-}
-
-input PhotoInput {
-  url: String!
-}
-
-input ItineraryInput {
-  id: String
-  dayNumber: Float!
-  description: String!
-  textArrays: [TextArrayInput!]!
-}
-
-input TextArrayInput {
-  id: String
-  section: String!
-  values: [String!]!
-}
-
-input LocationDetailsInput {
-  hotelDetails: [HotelDetailsInput!]
-  intercityTransfers: [IntercityTransfersInput!]
-  sights: [SightseeingInput!]
-  airportTransfer: Boolean
-  localTransfer: Boolean
-}
-
-input HotelDetailsInput {
-  id: String
-  city: String!
-  hotelName: String!
-  rating: String!
-  days: String!
-  nights: String!
-  hotelArrays: [HotelArrayInput!]!
-}
-
-input HotelArrayInput {
-  id: String
-  section: String!
-  values: [String!]!
-}
-
-input IntercityTransfersInput {
-  id: String
-  fromCity: String!
-  toCity: String!
-  mode: String!
-  modeDescription: String!
-}
-
-input SightseeingInput {
-  id: String
-  name: String!
-  description: String!
-  city: String!
 }
 
 input CreateDestinationInput {
@@ -651,4 +587,131 @@ input UpdateCarInput {
   price: String
   currency: String
   carId: ID!
+}
+
+input UpdateGeneralDetailInput {
+  title: String
+  type: String
+  themes: [String!]
+  preference: [String!]
+  destinationIds: [String!]!
+  durationData: DurationDataInput
+  datesData: [DatesDataInput!]
+  summaryData: SummaryDataInput
+}
+
+input DurationDataInput {
+  days: Int!
+  nights: Int!
+  validity: Int!
+  validityUnit: String!
+}
+
+input DatesDataInput {
+  bookingFromDate: String!
+  bookingToDate: String!
+  travelDates: [TravelDateInput!]!
+}
+
+input TravelDateInput {
+  fromDate: String!
+  toDate: String!
+}
+
+input SummaryDataInput {
+  inclusions: [String!]!
+  exclusions: [String!]!
+  highlights: [HighlightInput!]!
+  summary: String!
+  photos: [PhotoInput!]!
+}
+
+input HighlightInput {
+  title: String!
+  description: String!
+  url: String!
+}
+
+input PhotoInput {
+  url: String!
+}
+
+input UpdateItineraryInput {
+  daywiseItinerary: [DayWiseItineraryInput!]!
+}
+
+input DayWiseItineraryInput {
+  day: Int
+  description: String!
+  cities: [CityDataInp!]!
+  meals: [String!]
+  inclusions: [String!]
+  exclusions: [String!]
+}
+
+input CityDataInp {
+  name: String!
+  id: String!
+}
+
+input UpdateLocationInput {
+  locationData: LocationDataInput!
+}
+
+input LocationDataInput {
+  hotelsData: [HotelDataInput!]!
+  intercityData: [IntercityDataInput!]!
+  sightseeingData: [SightSeeingDataInput!]!
+  transfers: TransfersInput!
+}
+
+input HotelDataInput {
+  cities: [CityDataInp!]!
+  meals: [String!]!
+  rating: String!
+  name: String!
+  days: Int!
+  nights: Int!
+}
+
+input IntercityDataInput {
+  fromCity: CityDataInp!
+  toCity: CityDataInp!
+  mode: String!
+  description: String!
+}
+
+input SightSeeingDataInput {
+  city: CityDataInp!
+  sights: [String!]!
+}
+
+input TransfersInput {
+  airportTransfers: Boolean!
+  localTransfers: Boolean!
+}
+
+input UpdateLanguagesInput {
+  languages: [String!]!
+}
+
+input UpdatePricingInput {
+  pricingData: PricingDataInput!
+}
+
+input PricingDataInput {
+  currency: String!
+  type: String!
+  adultPrice: Int!
+  childPrice: Int!
+  maxMembers: Int!
+}
+
+input UpdateCancellationPolicyInput {
+  cancellationPolicy: PolicyInput!
+}
+
+input PolicyInput {
+  option: String!
+  description: String!
 }

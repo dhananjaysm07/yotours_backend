@@ -20,6 +20,7 @@ export class TourService extends GenericService<Tour> {
   }
 
   async createTour(createTourInput: CreateTourInput): Promise<Tour> {
+    console.log("creating tours.....");
     const queryRunner = this.dataSource.createQueryRunner();
 
     await queryRunner.connect();

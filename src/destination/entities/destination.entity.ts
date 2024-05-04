@@ -1,7 +1,9 @@
-import { Field, ID, ObjectType, Int } from "@nestjs/graphql";
+import { Field, ID, ObjectType, Int, InputType } from "@nestjs/graphql";
 import {
   Column,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -14,7 +16,9 @@ import { Attraction } from "src/attraction-ticket/entities/attraction.entity";
 import { Thing } from "src/thing/entities/thing.entity";
 import { Min, Max } from "class-validator";
 import { Car } from "src/car/entities/car.entity";
+import { Package } from "src/Holiday/entities/holiday.entity";
 
+// @InputType()
 @ObjectType()
 @Entity({ name: "Destination" })
 export class Destination {
@@ -111,4 +115,25 @@ export class Destination {
   @Field(() => [Car])
   @OneToMany(() => Car, (car) => car.destination, { eager: true })
   cars: Car[];
+
+  @Field(() => [Package], { nullable: true })
+  @ManyToMany(() => Package, (question) => question.destinations)
+  holidays: Package[];
+
+  // @Field(() => [Package], { nullable: true })
+  // @ManyToMany(() => Package, (packages) => packages.destinations, {
+  //   eager: true,
+  // })
+  // @JoinTable({
+  //   name: "destinations_packages_id",
+  //   joinColumn: {
+  //     name: "destinations",
+  //     referencedColumnName: "id",
+  //   },
+  //   inverseJoinColumn: {
+  //     name: "packages",
+  //     referencedColumnName: "id",
+  //   },
+  // })
+  // packages: Package[];
 }

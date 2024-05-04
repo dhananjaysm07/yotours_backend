@@ -192,13 +192,13 @@ let DestinationService = class DestinationService extends filterQueryClass_1.Gen
     async findOneDestination(id) {
         return this.destinationRepository.findOne({
             where: { id },
-            relations: ["images", "tours"],
+            relations: ["images", "tours", "holidays"],
         });
     }
     async findOneDestinationByCity(destinationName) {
         return this.destinationRepository.findOne({
             where: { destinationName },
-            relations: ["images", "tours"],
+            relations: ["images", "tours", "holidays"],
         });
     }
     async deleteDestination(destinationId) {

@@ -27,6 +27,7 @@ let TourService = class TourService extends filterQueryClass_1.GenericService {
         this.tourRepository = tourRepository;
     }
     async createTour(createTourInput) {
+        console.log("creating tours.....");
         const queryRunner = this.dataSource.createQueryRunner();
         await queryRunner.connect();
         await queryRunner.startTransaction();

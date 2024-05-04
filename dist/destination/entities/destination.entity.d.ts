@@ -4,6 +4,7 @@ import { Tag } from "src/tag/entities/tag.entity";
 import { Attraction } from "src/attraction-ticket/entities/attraction.entity";
 import { Thing } from "src/thing/entities/thing.entity";
 import { Car } from "src/car/entities/car.entity";
+import { Package } from "src/Holiday/entities/holiday.entity";
 export declare class Destination {
     id: string;
     destinationName: string;
@@ -25,4 +26,5 @@ export declare class Destination {
     introduction: string;
     things: Thing[];
     cars: Car[];
+    holidays: Package[];
 }
